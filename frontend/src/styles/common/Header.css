@@ -1,0 +1,8 @@
+.header-container {
+    height: 60px;
+    width: 100%;
+    position: sticky;
+    padding: 0.3em 0.6em;
+    background: black;
+    color: white;
+}
