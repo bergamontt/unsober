@@ -1,0 +1,8 @@
+.login-page-container {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    height: calc(100vh - 60px);
+}

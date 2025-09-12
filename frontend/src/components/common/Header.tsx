@@ -1,7 +1,9 @@
 import { Group, Flex, NavLink  } from '@mantine/core';
 import '../../styles/common/Header.css'
+import { useNavigate } from 'react-router';
 
 function Header() {
+    const navigate = useNavigate();
     return(
         <Group
             wrap="nowrap"
@@ -10,7 +12,7 @@ function Header() {
         >
             <Flex>
                 <NavLink
-                    href="#required-for-focus"
+                    onClick={() => navigate('/main')}
                     label={
                         <span style={
                             {fontWeight: "bold",

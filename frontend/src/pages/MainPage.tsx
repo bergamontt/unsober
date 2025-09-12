@@ -1,8 +1,11 @@
 import {Center, Button, Stack, Group} from "@mantine/core";
 import DarkVeil from "../components/background/DarkVeil.tsx";
 import '../styles/pages/MainPage.css'
+import {useNavigate} from "react-router";
 
 function MainPage() {
+    const navigate = useNavigate();
+    const handleLogin = () => {navigate('/login', { replace: true })};
     return(
         <div 
             style={{
@@ -19,6 +22,7 @@ function MainPage() {
                         <Button
                             variant="white"
                             radius="xl"
+                            onClick={handleLogin}
                         >
                             Увійти
                         </Button>
