@@ -1,6 +1,9 @@
 package ua.unsober.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,13 +23,18 @@ public class WithdrawalRequest {
     @UuidGenerator
     private UUID id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "student_enrollment_id", nullable = false)
     private StudentEnrollment studentEnrollment;
 
+    @NotBlank
+    @Size(max=3000)
     @Column(length=3000, nullable=false)
     private String reason;
 
+    @NotBlank
+    @Size(max=20)
     @Column(length=20, nullable=false)
     private String status;
 

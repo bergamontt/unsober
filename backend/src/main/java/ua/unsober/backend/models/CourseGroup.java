@@ -1,6 +1,10 @@
 package ua.unsober.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,16 +25,23 @@ public class CourseGroup {
     @UuidGenerator
     private UUID id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @NotNull
+    @Min(1)
     @Column(name="group_number", nullable=false)
     private Integer groupNumber;
 
+    @NotNull
+    @Positive
     @Column(name="max_students", nullable=false)
     private Integer maxStudents;
 
+    @NotNull
+    @PositiveOrZero
     @Column(name="num_enrolled", nullable=false)
     private Integer numEnrolled;
 

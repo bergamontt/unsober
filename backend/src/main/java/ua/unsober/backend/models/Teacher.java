@@ -1,6 +1,9 @@
 package ua.unsober.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,15 +23,24 @@ public class Teacher {
     @UuidGenerator
     private UUID id;
 
+    @NotBlank
+    @Size(max=100)
     @Column(name="first_name", length=100, nullable=false)
     private String firstName;
 
+    @NotBlank
+    @Size(max=100)
     @Column(name="last_name", length=100, nullable=false)
     private String lastName;
 
+    @NotBlank
+    @Size(max=100)
     @Column(name="patronymic", length=100, nullable=false)
     private String patronymic;
 
+    @NotBlank
+    @Email
+    @Size(max=200)
     @Column(length=200, unique=true, nullable=false)
     private String email;
 

@@ -1,6 +1,9 @@
 package ua.unsober.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,15 +23,19 @@ public class SubjectRecommendation {
     @UuidGenerator
     private UUID id;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable = false)
+    @JoinColumn(name = "subject_id", nullable=false)
     private Subject subject;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "specialty_id", nullable = false)
+    @JoinColumn(name = "specialty_id", nullable=false)
     private Specialty specialty;
 
-    @Column(length=50, nullable = false)
+    @NotBlank
+    @Size(max=50)
+    @Column(length=50, nullable=false)
     private String recommendation;
 
     @Version

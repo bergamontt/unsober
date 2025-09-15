@@ -1,9 +1,8 @@
 package ua.unsober.backend.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,12 +18,16 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Faculty {
     @Id
+    @GeneratedValue
     @UuidGenerator
     private UUID id;
 
+    @NotBlank
+    @Size(max=100)
     @Column(unique=true, length=100, nullable=false)
     private String name;
 
+    @Size(max=1000)
     @Column(length=1000)
     private String description;
 

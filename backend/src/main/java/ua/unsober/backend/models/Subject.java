@@ -1,6 +1,10 @@
 package ua.unsober.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,16 +24,23 @@ public class Subject {
     @UuidGenerator
     private UUID id;
 
+    @NotBlank
+    @Size(max=100)
     @Column(length=100, nullable=false)
     private String name;
 
+    @Size(max=5000)
     @Column(length=5000)
     private String annotation;
 
-    @Column(nullable=false)
+    @NotNull
+    @Digits(integer=2, fraction=1)
+    @Column(nullable=false, precision=3, scale=1)
     private Double credits;
 
-    @Column(nullable=false)
+    @NotNull
+    @Size(max=10)
+    @Column(length=10, nullable=false)
     private String term;
 
     @Version

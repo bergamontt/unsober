@@ -1,6 +1,10 @@
 package ua.unsober.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +26,12 @@ public class StudentEnrollment {
     @UuidGenerator
     private UUID id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="student_id", nullable=false)
     private Student student;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="course_id", nullable=false)
     private Course course;
@@ -34,9 +40,13 @@ public class StudentEnrollment {
     @JoinColumn(name="group_id")
     private CourseGroup group;
 
+    @NotBlank
+    @Size(max=30)
     @Column(length=30, nullable=false)
     private String status;
 
+    @NotNull
+    @Positive
     @Column(nullable=false)
     private Integer enrollmentYear;
 
