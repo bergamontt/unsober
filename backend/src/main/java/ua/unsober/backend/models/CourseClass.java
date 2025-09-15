@@ -60,9 +60,8 @@ public class CourseClass {
     @Column(length=10)
     private String location;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     @Version

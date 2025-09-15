@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"subject_id", "year"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"subject_id", "course_year"}))
 public class Course {
     @Id
     @GeneratedValue
@@ -38,8 +38,8 @@ public class Course {
     private Integer numEnrolled;
 
     @NotNull
-    @Column(nullable=false)
-    private Integer year;
+    @Column(name="course_year", nullable=false)
+    private Integer courseYear;
 
     @Version
     @Column(nullable=false)

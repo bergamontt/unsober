@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -36,7 +37,7 @@ public class Subject {
     @NotNull
     @Digits(integer=2, fraction=1)
     @Column(nullable=false, precision=3, scale=1)
-    private Double credits;
+    private BigDecimal credits;
 
     @NotNull
     @Size(max=10)
