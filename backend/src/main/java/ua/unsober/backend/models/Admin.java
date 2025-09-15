@@ -1,0 +1,36 @@
+package ua.unsober.backend.models;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.time.Instant;
+import java.util.UUID;
+
+@Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+public class Admin {
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    private UUID id;
+
+    @Column(length=100, unique=true, nullable=false)
+    private String email;
+
+    @Column(name="password_hash", nullable=false)
+    private String passwordHash;
+
+    @Version
+    @Column(nullable=false)
+    private Integer rowVersion;
+
+    @CreationTimestamp
+    @Column(name="created_at", nullable=false, updatable=false)
+    private Instant createdAt;
+}
