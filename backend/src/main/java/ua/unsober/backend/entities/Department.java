@@ -1,7 +1,6 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -19,30 +17,26 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subject {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"faculty_id", "name"}))
+public class Department {
     @Id
     @GeneratedValue
     @UuidGenerator
     private UUID id;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name="faculty_id", nullable=false)
+    private Faculty faculty;
 
     @NotBlank
     @Size(max=100)
     @Column(length=100, nullable=false)
     private String name;
 
-    @Size(max=5000)
-    @Column(length=5000)
-    private String annotation;
-
-    @NotNull
-    @Digits(integer=2, fraction=1)
-    @Column(nullable=false, precision=3, scale=1)
-    private BigDecimal credits;
-
-    @NotNull
-    @Size(max=10)
-    @Column(length=10, nullable=false)
-    private String term;
+    @Size(max=1000)
+    @Column(length=1000)
+    private String description;
 
     @Version
     @Column(nullable=false)

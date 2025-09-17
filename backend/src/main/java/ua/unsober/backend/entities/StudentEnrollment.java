@@ -1,8 +1,9 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,8 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnrollmentRequest {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"}))
+public class StudentEnrollment {
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -33,15 +35,19 @@ public class EnrollmentRequest {
     @JoinColumn(name="course_id", nullable=false)
     private Course course;
 
-    @NotBlank
-    @Size(max=3000)
-    @Column(length=3000, nullable=false)
-    private String reason;
+    @ManyToOne
+    @JoinColumn(name="group_id")
+    private CourseGroup group;
 
     @NotBlank
-    @Size(max=20)
-    @Column(length=20, nullable=false)
+    @Size(max=30)
+    @Column(length=30, nullable=false)
     private String status;
+
+    @NotNull
+    @Positive
+    @Column(nullable=false)
+    private Integer enrollmentYear;
 
     @Version
     @Column(nullable=false)

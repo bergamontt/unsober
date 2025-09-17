@@ -1,6 +1,7 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Faculty {
+public class Teacher {
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -24,15 +25,27 @@ public class Faculty {
 
     @NotBlank
     @Size(max=100)
-    @Column(unique=true, length=100, nullable=false)
-    private String name;
+    @Column(name="first_name", length=100, nullable=false)
+    private String firstName;
 
-    @Size(max=1000)
-    @Column(length=1000)
-    private String description;
+    @NotBlank
+    @Size(max=100)
+    @Column(name="last_name", length=100, nullable=false)
+    private String lastName;
+
+    @NotBlank
+    @Size(max=100)
+    @Column(name="patronymic", length=100, nullable=false)
+    private String patronymic;
+
+    @NotBlank
+    @Email
+    @Size(max=200)
+    @Column(length=200, unique=true, nullable=false)
+    private String email;
 
     @Version
-    @Column(name="row_version", nullable=false)
+    @Column(nullable=false)
     private Integer rowVersion;
 
     @CreationTimestamp

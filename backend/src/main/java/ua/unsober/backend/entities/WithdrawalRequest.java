@@ -1,4 +1,4 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectRecommendation {
+public class WithdrawalRequest {
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -25,18 +25,18 @@ public class SubjectRecommendation {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "subject_id", nullable=false)
-    private Subject subject;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "specialty_id", nullable=false)
-    private Specialty specialty;
+    @JoinColumn(name = "student_enrollment_id", nullable = false)
+    private StudentEnrollment studentEnrollment;
 
     @NotBlank
-    @Size(max=50)
-    @Column(length=50, nullable=false)
-    private String recommendation;
+    @Size(max=3000)
+    @Column(length=3000, nullable=false)
+    private String reason;
+
+    @NotBlank
+    @Size(max=20)
+    @Column(length=20, nullable=false)
+    private String status;
 
     @Version
     @Column(nullable=false)

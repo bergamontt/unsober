@@ -1,7 +1,9 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +18,8 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"subject_id", "course_year"}))
-public class Course {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "group_number"}))
+public class CourseGroup {
     @Id
     @GeneratedValue
     @UuidGenerator
@@ -25,21 +27,23 @@ public class Course {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name="subject_id", nullable = false)
-    private Subject subject;
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
-    @PositiveOrZero
-    @Column(name="max_students")
+    @NotNull
+    @Min(1)
+    @Column(name="group_number", nullable=false)
+    private Integer groupNumber;
+
+    @NotNull
+    @Positive
+    @Column(name="max_students", nullable=false)
     private Integer maxStudents;
 
     @NotNull
     @PositiveOrZero
     @Column(name="num_enrolled", nullable=false)
     private Integer numEnrolled;
-
-    @NotNull
-    @Column(name="course_year", nullable=false)
-    private Integer courseYear;
 
     @Version
     @Column(nullable=false)

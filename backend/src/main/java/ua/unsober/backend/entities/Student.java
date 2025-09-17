@@ -1,4 +1,4 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
