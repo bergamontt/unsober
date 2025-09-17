@@ -1,4 +1,4 @@
-package ua.unsober.backend.models;
+package ua.unsober.backend.dtos.request;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -14,35 +14,16 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"faculty_id", "name"}))
-public class Department {
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    private UUID id;
-
+public class DepartmentRequestDto {
     @NotNull
-    @ManyToOne
-    @JoinColumn(name="faculty_id", nullable=false)
-    private Faculty faculty;
+    private UUID facultyId;
 
     @NotBlank
     @Size(max=100)
-    @Column(length=100, nullable=false)
     private String name;
 
     @Size(max=1000)
-    @Column(length=1000)
     private String description;
-
-    @Version
-    @Column(nullable=false)
-    private Integer rowVersion;
-
-    @CreationTimestamp
-    @Column(name="created_at", nullable=false, updatable=false)
-    private Instant createdAt;
 }

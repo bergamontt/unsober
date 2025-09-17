@@ -51,9 +51,10 @@ public class CourseClass {
     @Column(name="week_day", length=10, nullable=false)
     private String weekDay;
 
+    @NotNull
     @Min(1)
     @Max(7)
-    @Column(name="class_number")
+    @Column(name="class_number", nullable=false)
     private Integer classNumber;
 
     @Size(max=10)
