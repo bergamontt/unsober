@@ -1,6 +1,5 @@
 package ua.unsober.backend.dtos.request;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,12 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor

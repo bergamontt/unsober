@@ -62,6 +62,10 @@ public class CourseClass {
     private String location;
 
     @ManyToOne
+    @JoinColumn(name = "building_id")
+    private Building building;
+
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
