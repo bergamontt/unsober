@@ -1,7 +1,8 @@
-import { Group, Flex, NavLink  } from '@mantine/core';
+import { Group, Flex, NavLink, Space  } from '@mantine/core';
 import '../../styles/common/Header.css';
 import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
+import LanguageMenu from './LanguageMenu';
 
 function Header() {
     const navigate = useNavigate();
@@ -27,6 +28,10 @@ function Header() {
                 />
             </Flex>
             <Flex>
+                <LanguageMenu />
+
+                <Space w="xl" />
+
                 <NavLink
                     href="#required-for-focus"
                     label={t("disciplines")}
