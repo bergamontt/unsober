@@ -1,54 +1,51 @@
-import { Group, Flex, NavLink, Space  } from '@mantine/core';
-import '../../styles/common/Header.css';
+import { Tabs  } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
-import LanguageMenu from './LanguageMenu';
+import '../../styles/common/Header.css';
 
 function Header() {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const logoStyle = {
+        fontWeight: "bold",
+        fontSize: "1.2em"
+    };
     return(
-        <Group
-            wrap="nowrap"
-            className="header-container"
-            justify="space-between"
+        <Tabs
+            variant='unstyled'
+            className='header-container'
         >
-            <Flex>
-                <NavLink
-                    onClick={() => navigate('/main')}
-                    label={
-                        <span style={
-                            {fontWeight: "bold",
-                             fontSize: "1.2em"}
-                        }>
-                            UNSOBER
-                        </span>
-                    }
+            <Tabs.List >
+               <Tabs.Tab
+                    value="logo"
                     bg="black"
-                />
-            </Flex>
-            <Flex>
-                <LanguageMenu />
-
-                <Space w="xl" />
-
-                <NavLink
-                    href="#required-for-focus"
-                    label={t("disciplines")}
+                    mr="auto"
+                        onClick={() => navigate('/main')}
+                >
+                    <span style={logoStyle}>
+                        UNSOBER
+                    </span>
+                </Tabs.Tab>
+                <Tabs.Tab
+                    value="disciplines"
                     bg="black"
-                />
-                <NavLink
-                    href="#required-for-focus"
-                    label={t("schedule")}
+                >
+                    {t("disciplines")}
+                </Tabs.Tab>
+                <Tabs.Tab
+                    value='schedule'
+                    bg='black'
+                >
+                    {t("schedule")}
+                </Tabs.Tab>
+                <Tabs.Tab
+                    value='profile'
                     bg="black"
-                />
-                <NavLink
-                    href="#required-for-focus"
-                    label={t("profile")}
-                    bg="black"
-                />
-            </Flex>
-        </Group>
+                >
+                    {t("profile")}
+                </Tabs.Tab>
+            </Tabs.List>
+        </Tabs>
     );
 }
 

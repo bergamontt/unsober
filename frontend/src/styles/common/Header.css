@@ -6,3 +6,15 @@
     background: black;
     color: white;
 }
+
+.header-container .mantine-Tabs-tab {
+    border-bottom: 2px solid transparent;
+}
+
+.header-container .mantine-Tabs-tab:hover {
+    border-bottom: 2px solid white;
+}
+
+.header-container .mantine-Tabs-tab[data-active] {
+    border-bottom: 2px solid white;
+}
