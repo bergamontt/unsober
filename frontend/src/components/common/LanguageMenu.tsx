@@ -1,8 +1,9 @@
 import { Button, Menu, Box } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import ReactCountryFlag from "react-country-flag";
-import type { JSX } from "react/jsx-runtime";
+import { useState, type JSX } from "react";
+import uaFlag from "../../assets/ua.svg";
+import gbFlag from "../../assets/gb.svg";
+import cnFlag from "../../assets/cn.svg";
 
 type LanguageOption = {
   code: string;
@@ -11,9 +12,9 @@ type LanguageOption = {
 };
 
 const languages: LanguageOption[] = [
-  { code: "uk", label: "Українська", icon: <ReactCountryFlag countryCode="UA" svg style={{ width: 20, height: 20 }} /> },
-  { code: "en", label: "English", icon: <ReactCountryFlag countryCode="GB" svg style={{ width: 20, height: 20 }} /> },
-  { code: "zh", label: "中文", icon: <ReactCountryFlag countryCode="CN" svg style={{ width: 20, height: 20 }} /> },
+  { code: "uk", label: "Українська", icon: <img src={uaFlag} style={{ width: 20, height: 20 }} /> },
+  { code: "en", label: "English", icon: <img src={gbFlag} style={{ width: 20, height: 20 }} /> },
+  { code: "zh", label: "中文", icon: <img src={cnFlag} style={{ width: 20, height: 20 }} /> },
 ];
 
 function LanguageMenu() {
