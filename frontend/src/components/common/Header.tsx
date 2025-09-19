@@ -1,9 +1,11 @@
 import { Group, Flex, NavLink  } from '@mantine/core';
-import '../../styles/common/Header.css'
+import '../../styles/common/Header.css';
 import { useNavigate } from 'react-router';
+import { useTranslation } from "react-i18next";
 
 function Header() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     return(
         <Group
             wrap="nowrap"
@@ -27,17 +29,17 @@ function Header() {
             <Flex>
                 <NavLink
                     href="#required-for-focus"
-                    label="Дисципліни"
+                    label={t("disciplines")}
                     bg="black"
                 />
                 <NavLink
                     href="#required-for-focus"
-                    label="Розклад"
+                    label={t("schedule")}
                     bg="black"
                 />
                 <NavLink
                     href="#required-for-focus"
-                    label="Профіль"
+                    label={t("profile")}
                     bg="black"
                 />
             </Flex>

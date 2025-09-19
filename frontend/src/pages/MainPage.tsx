@@ -1,20 +1,22 @@
-import {Center, Button, Stack, Group} from "@mantine/core";
+import { Center, Button, Stack, Group } from "@mantine/core";
 import DarkVeil from "../components/background/DarkVeil.tsx";
-import '../styles/pages/MainPage.css'
-import {useNavigate} from "react-router";
+import '../styles/pages/MainPage.css';
+import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 function MainPage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
-    const handleLogin = () => {navigate('/login', { replace: true })};
-    return(
-        <div 
+    const handleLogin = () => { navigate('/login', { replace: true }) };
+    return (
+        <div
             style={{
                 width: '100%',
                 height: 'calc(100vh - 60px)'
             }}>
             <Center className="annotation-container">
-                <Stack align="center">
-                    Система автоматизованого <br/> запису на вибиркові дисципліни
+                <Stack align="center" style={{ whiteSpace: "pre-line" }}>
+                    {t("mainPageGreeting")}
                     <Group
                         grow
                         w="80%"
@@ -24,14 +26,14 @@ function MainPage() {
                             radius="xl"
                             onClick={handleLogin}
                         >
-                            Увійти
+                            {t("logIn")}
                         </Button>
                         <Button
                             variant="outline"
                             color="indigo"
                             radius="xl"
                         >
-                            Новини
+                            {t("news")}
                         </Button>
                     </Group>
                 </Stack>

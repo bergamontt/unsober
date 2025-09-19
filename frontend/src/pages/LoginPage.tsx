@@ -1,10 +1,12 @@
 import PrismaticBurst from "../components/background/PrismaticBurst";
 import {Center, Fieldset, TextInput, PasswordInput, Title, Button, Text} from "@mantine/core";
 import Icon from "../components/common/Icon";
-import '../styles/pages/LoginPage.css'
-import login from '../assets/login.svg'
+import '../styles/pages/LoginPage.css';
+import login from '../assets/login.svg';
+import { useTranslation } from "react-i18next";
 
 function LoginPage() {
+    const { t } = useTranslation();
     return(
         <div
             style={{
@@ -22,14 +24,14 @@ function LoginPage() {
                     p="2em"
                 >
                     <Title order={2} c="white">
-                        Увійти в обліковий запис
+                        {t("logInHeader")}
                     </Title>
-                    <Text size="sm" mt="xs" c="white">
-                        Увійдіть, щоби переглянути список дисциплін <br/> та ваш персональний розклад
+                    <Text size="sm" mt="xs" c="white" style={{ whiteSpace: "pre-line" }}>
+                        {t("logInSubtext")}
                     </Text>
                     <TextInput
-                        label="Робоча пошта"
-                        placeholder="Ваша пошта"
+                        label={t("workEmail")}
+                        placeholder={t("yourEmail")}
                         size="md"
                         mt="lg"
                         radius="md"
@@ -37,8 +39,8 @@ function LoginPage() {
                         c="white"
                     />
                     <PasswordInput
-                        label="Пароль"
-                        placeholder="Ваш пароль"
+                        label={t("password")}
+                        placeholder={t("yourPassword")}
                         mt="md"
                         size="md"
                         radius="md"
@@ -56,7 +58,7 @@ function LoginPage() {
                         justify="space-between"
                         fullWidth
                     >
-                        Увійти
+                        {t("logIn")}
                     </Button>
                 </Fieldset>
             </Center>
