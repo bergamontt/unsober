@@ -13,17 +13,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnrollmentRequestRequestDto {
-    @NotNull
+    @NotNull(message = "{enrollmentRequest.studentId.required}")
     private UUID studentId;
 
-    @NotNull
+    @NotNull(message = "{enrollmentRequest.courseId.required}")
     private UUID courseId;
 
-    @NotBlank
-    @Size(max=3000)
+    @NotBlank(message = "{enrollmentRequest.reason.required}")
+    @Size(max = 3000, message = "{enrollmentRequest.reason.size}")
     private String reason;
 
-    @NotBlank
-    @Size(max=20)
+    @NotBlank(message = "{enrollmentRequest.status.required}")
+    @Size(max = 20, message = "{enrollmentRequest.status.size}")
     private String status;
 }

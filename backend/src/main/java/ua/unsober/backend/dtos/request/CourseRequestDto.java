@@ -12,16 +12,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseRequestDto {
-    @NotNull
+    @NotNull(message = "{course.subjectId.required}")
     private UUID subjectId;
 
-    @PositiveOrZero
+    @PositiveOrZero(message = "{course.maxStudents.non-negative}")
     private Integer maxStudents;
 
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "{course.numEnrolled.required}")
+    @PositiveOrZero(message = "{course.numEnrolled.non-negative}")
     private Integer numEnrolled;
 
-    @NotNull
+    @NotNull(message = "{course.courseYear.required}")
     private Integer courseYear;
 }

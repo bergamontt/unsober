@@ -13,13 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentRequestDto {
-    @NotNull
+    @NotNull(message = "{department.facultyId.required}")
     private UUID facultyId;
 
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{department.name.required}")
+    @Size(max = 100, message = "{department.name.size}")
     private String name;
 
-    @Size(max=1000)
+    @Size(max = 1000, message = "{department.description.size}")
     private String description;
 }

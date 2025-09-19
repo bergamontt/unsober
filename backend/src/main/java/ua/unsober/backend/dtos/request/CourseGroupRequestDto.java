@@ -13,14 +13,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseGroupRequestDto {
-    @NotNull
+    @NotNull(message = "{courseGroup.courseId.required}")
     private UUID courseId;
 
-    @NotNull
-    @Min(1)
+    @NotNull(message = "{courseGroup.groupNumber.required}")
+    @Min(value = 1, message = "{courseGroup.groupNumber.min}")
     private Integer groupNumber;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "{courseGroup.maxStudents.required}")
+    @Positive(message = "{courseGroup.maxStudents.positive}")
     private Integer maxStudents;
 }

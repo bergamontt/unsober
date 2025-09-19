@@ -13,13 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubjectRecommendationRequestDto {
-    @NotNull
+    @NotNull(message = "{subjectRecommendation.subjectId.required}")
     private UUID subjectId;
 
-    @NotNull
+    @NotNull(message = "{subjectRecommendation.specialtyId.required}")
     private UUID specialtyId;
 
-    @NotBlank
-    @Size(max=50)
+    @NotBlank(message = "{subjectRecommendation.recommendation.required}")
+    @Size(max = 50, message = "{subjectRecommendation.recommendation.size}")
     private String recommendation;
 }

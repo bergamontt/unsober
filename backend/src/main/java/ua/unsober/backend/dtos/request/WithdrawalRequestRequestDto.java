@@ -13,14 +13,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WithdrawalRequestRequestDto {
-    @NotNull
+    @NotNull(message = "{withdrawal.studentEnrollmentId.required}")
     private UUID studentEnrollmentId;
 
-    @NotBlank
-    @Size(max=3000)
+    @NotBlank(message = "{withdrawal.reason.required}")
+    @Size(max = 3000, message = "{withdrawal.reason.size}")
     private String reason;
 
-    @NotBlank
-    @Size(max=20)
+    @NotBlank(message = "{withdrawal.status.required}")
+    @Size(max = 20, message = "{withdrawal.status.size}")
     private String status;
 }

@@ -11,20 +11,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherRequestDto {
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{teacher.firstName.required}")
+    @Size(max = 100, message = "{teacher.firstName.size}")
     private String firstName;
 
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{teacher.lastName.required}")
+    @Size(max = 100, message = "{teacher.lastName.size}")
     private String lastName;
 
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{teacher.patronymic.required}")
+    @Size(max = 100, message = "{teacher.patronymic.size}")
     private String patronymic;
 
-    @NotBlank
-    @Email
-    @Size(max=200)
+    @NotBlank(message = "{teacher.email.required}")
+    @Email(message = "{teacher.email.invalid}")
+    @Size(max = 200, message = "{teacher.email.size}")
     private String email;
 }

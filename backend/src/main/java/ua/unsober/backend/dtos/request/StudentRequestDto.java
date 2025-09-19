@@ -11,34 +11,34 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentRequestDto {
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{student.firstName.required}")
+    @Size(max = 100, message = "{student.firstName.size}")
     private String firstName;
 
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{student.lastName.required}")
+    @Size(max = 100, message = "{student.lastName.size}")
     private String lastName;
 
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{student.patronymic.required}")
+    @Size(max = 100, message = "{student.patronymic.size}")
     private String patronymic;
 
-    @NotBlank
-    @Size(max=50)
+    @NotBlank(message = "{student.recordBookNumber.required}")
+    @Size(max = 50, message = "{student.recordBookNumber.size}")
     private String recordBookNumber;
 
-    @NotBlank
-    @Email
-    @Size(max=200)
+    @NotBlank(message = "{student.email.required}")
+    @Email(message = "{student.email.invalid}")
+    @Size(max = 200, message = "{student.email.size}")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{student.password.required}")
     private String password;
 
-    @NotNull
+    @NotNull(message = "{student.specialtyId.required}")
     private UUID specialtyId;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "{student.studyYear.required}")
+    @Positive(message = "{student.studyYear.positive}")
     private Integer studyYear;
 }

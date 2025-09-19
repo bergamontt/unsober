@@ -13,14 +13,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SpecialtyRequestDto {
-    @NotNull
+    @NotNull(message = "{specialty.departmentId.required}")
     private UUID departmentId;
 
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{specialty.name.required}")
+    @Size(max = 100, message = "{specialty.name.size}")
     private String name;
 
-    @NotBlank
-    @Size(max=1000)
+    @NotBlank(message = "{specialty.description.required}")
+    @Size(max = 1000, message = "{specialty.description.size}")
     private String description;
 }

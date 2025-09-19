@@ -14,19 +14,19 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentEnrollmentRequestDto {
-    @NotNull
+    @NotNull(message = "{studentEnrollment.studentId.required}")
     private UUID studentId;
 
-    @NotNull
+    @NotNull(message = "{studentEnrollment.courseId.required}")
     private UUID courseId;
 
     private UUID groupId;
 
-    @NotBlank
-    @Size(max=30)
+    @NotBlank(message = "{studentEnrollment.status.required}")
+    @Size(max = 30, message = "{studentEnrollment.status.size}")
     private String status;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "{studentEnrollment.enrollmentYear.required}")
+    @Positive(message = "{studentEnrollment.enrollmentYear.positive}")
     private Integer enrollmentYear;
 }

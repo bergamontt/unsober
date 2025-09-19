@@ -14,18 +14,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubjectRequestDto {
-    @NotBlank
-    @Size(max=100)
+    @NotBlank(message = "{subject.name.required}")
+    @Size(max = 100, message = "{subject.name.size}")
     private String name;
 
-    @Size(max=5000)
+    @Size(max = 5000, message = "{subject.annotation.size}")
     private String annotation;
 
-    @NotNull
-    @Digits(integer=2, fraction=1)
+    @NotNull(message = "{subject.credits.required}")
+    @Digits(integer = 2, fraction = 1, message = "{subject.credits.digits}")
     private BigDecimal credits;
 
-    @NotNull
-    @Size(max=10)
+    @NotNull(message = "{subject.term.required}")
+    @Size(max = 10, message = "{subject.term.size}")
     private String term;
 }

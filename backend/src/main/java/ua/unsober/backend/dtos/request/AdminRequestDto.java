@@ -5,17 +5,17 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminRequestDto {
-    @NotBlank
-    @Email
-    @Size(max=200)
+    @NotBlank(message = "{admin.email.required}")
+    @Email(message = "{admin.email.invalid}")
+    @Size(max = 200, message = "{admin.email.size}")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{admin.password.required}")
     private String password;
 }
