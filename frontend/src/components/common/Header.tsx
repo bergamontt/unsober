@@ -16,11 +16,11 @@ function Header() {
             className='header-container'
         >
             <Tabs.List >
-               <Tabs.Tab
+                <Tabs.Tab
                     value="logo"
                     bg="black"
                     mr="auto"
-                        onClick={() => navigate('/main')}
+                    onClick={() => navigate('/main')}
                 >
                     <span style={logoStyle}>
                         UNSOBER
