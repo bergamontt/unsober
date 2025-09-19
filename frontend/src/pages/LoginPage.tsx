@@ -65,7 +65,7 @@ function LoginPage() {
             <PrismaticBurst
                 animationType="rotate"
                 intensity={0.65}
-                speed={0.08}
+                speed={0.1}
                 distort={4.2}
                 rayCount={0}
                 colors={['#000000ff', '#11035cff', '#000000ff']}

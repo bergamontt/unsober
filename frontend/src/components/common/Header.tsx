@@ -12,15 +12,16 @@ function Header() {
     };
     return(
         <Tabs
+            color="indigo"
             variant='unstyled'
             className='header-container'
         >
-            <Tabs.List >
+            <Tabs.List>
                 <Tabs.Tab
                     value="logo"
                     bg="black"
                     mr="auto"
-                    onClick={() => navigate('/main')}
+                    onClick={() => navigate('/')}
                 >
                     <span style={logoStyle}>
                         UNSOBER
@@ -41,6 +42,7 @@ function Header() {
                 <Tabs.Tab
                     value='profile'
                     bg="black"
+                    onClick={() => navigate('/profile')}
                 >
                     {t("profile")}
                 </Tabs.Tab>

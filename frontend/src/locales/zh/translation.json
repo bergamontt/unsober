@@ -11,5 +11,9 @@
   "yourEmail": "您的邮箱",
   "password": "密码",
   "yourPassword": "您的密码",
-  "settings": "設定"
+  "settings": "設定",
+  "user": "用户",
+  "speciality": "专业",
+  "email": "电子邮件",
+  "recordBookNumber": "学籍簿号"
 }

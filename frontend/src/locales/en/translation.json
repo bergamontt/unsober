@@ -11,5 +11,9 @@
   "yourEmail": "Your Email",
   "password": "Password",
   "yourPassword": "Your Password",
-  "settings": "Settings"
+  "settings": "Settings",
+  "user": "User",
+  "speciality": "Speciality",
+  "email": "Email",
+  "recordBookNumber": "Record book number"
 }

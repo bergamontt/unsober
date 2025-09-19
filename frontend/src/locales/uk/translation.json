@@ -11,5 +11,9 @@
   "yourEmail": "Ваша пошта",
   "password": "Пароль",
   "yourPassword": "Ваш пароль",
-  "settings": "Налаштування"
+  "settings": "Налаштування",
+  "user": "Користувач",
+  "speciality": "Спеціальність",
+  "email": "Імейл",
+  "recordBookNumber": "Номер залікової книжки"
 }
