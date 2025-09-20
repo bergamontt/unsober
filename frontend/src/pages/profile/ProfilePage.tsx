@@ -9,7 +9,7 @@ import settings from '../../assets/settings.svg'
 import schedule from '../../assets/schedule.svg'
 
 function ProfilePage() {
-    const { t } = useTranslation();
+    const { t } = useTranslation("sections");
     return (
         <Center
             w="100%"

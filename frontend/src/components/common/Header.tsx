@@ -1,11 +1,11 @@
-import { Tabs, Text } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
 import '../../styles/common/Header.css';
 
 function Header() {
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t } = useTranslation("sections");
     const logoStyle = {
         fontWeight: "bold",
         fontSize: "1.2em"

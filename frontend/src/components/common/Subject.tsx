@@ -9,7 +9,7 @@ type SubjectProps = {
 }
 
 function Subject({name, speciality, isRecomended=false}: SubjectProps) {
-    const {t} = useTranslation();
+    const {t} = useTranslation("subjectSearch");
     return (
         <Group
             justify="space-between"

@@ -6,7 +6,7 @@ import login from '../assets/login.svg';
 import { useTranslation } from "react-i18next";
 
 function LoginPage() {
-    const { t } = useTranslation();
+    const { t } = useTranslation("auth");
     return(
         <div
             style={{
