@@ -22,11 +22,9 @@ function ProfilePage() {
                 color="indigo"
                 orientation="vertical"
                 defaultValue="profile"
-                pt="4em"
+                pt="3em"
             >
-                <Tabs.List
-                    w="150px"
-                >
+                <Tabs.List w="150px">
                     <Tabs.Tab
                         value="profile"
                         leftSection={<Icon src={user}/>}

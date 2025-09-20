@@ -14,15 +14,33 @@ function ProfilePanel() {
     };
     return(
         <Stack pl="6em" gap="4">
-            <Title order={1} pb="0.4em"> {t('profile')} </Title>
-            <Title order={3}> {t('user')} </Title>
-            <Text size="lg"> {profile.lastName} {profile.firstName} {profile.patronymic} </Text>
-            <Title order={3}> {t('speciality')} </Title>
-            <Text size="lg"> {profile.speciality}, {profile.studyYear}-тий рік навчання </Text>
-            <Title order={3}> {t('email')} </Title>
-            <Text size="lg"> {profile.email} </Text>
-            <Title order={3}> {t('recordBookNumber')} </Title>
-            <Text size="lg"> {profile.recordBookNumber} </Text>
+            <Title order={1} pb="0.4em">
+                {t('profile')}
+            </Title>
+            <Title order={3}>
+                {t('user')}
+            </Title>
+            <Text size="lg">
+                {profile.lastName} {profile.firstName} {profile.patronymic}
+            </Text>
+            <Title order={3}>
+                {t('speciality')}
+            </Title>
+            <Text size="lg">
+                {profile.speciality}, {profile.studyYear}-тий рік навчання
+            </Text>
+            <Title order={3}>
+                {t('email')}
+            </Title>
+            <Text size="lg">
+                {profile.email}
+            </Text>
+            <Title order={3}>
+                {t('recordBookNumber')}
+                </Title>
+            <Text size="lg">
+                {profile.recordBookNumber}
+            </Text>
         </Stack>
     );
 }

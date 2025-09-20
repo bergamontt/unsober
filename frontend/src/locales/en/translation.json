@@ -1,5 +1,5 @@
 {
-  "disciplines": "Disciplines",
+  "subjects": "Subjects",
   "schedule": "Schedule",
   "profile": "Profile",
   "logIn": "Log In",
@@ -15,5 +15,10 @@
   "user": "User",
   "speciality": "Speciality",
   "email": "Email",
-  "recordBookNumber": "Record book number"
+  "recordBookNumber": "Record book number",
+  "subjectCatalog": "Subject catalogue",
+  "subjectSearchbarLabel": "Search for subjects",
+  "subjectSearchbarDescr": "Enter the name of the subject",
+  "subjectSearchbarPlchldr": "Name of discipline",
+  "recommended": "Recommended"
 }

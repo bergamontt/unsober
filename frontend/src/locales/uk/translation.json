@@ -1,5 +1,5 @@
 {
-  "disciplines": "Дисципліни",
+  "subjects": "Дисципліни",
   "schedule": "Розклад",
   "profile": "Профіль",
   "logIn": "Увійти",
@@ -15,5 +15,10 @@
   "user": "Користувач",
   "speciality": "Спеціальність",
   "email": "Імейл",
-  "recordBookNumber": "Номер залікової книжки"
+  "recordBookNumber": "Номер залікової книжки",
+  "subjectCatalog": "Каталог дисциплін",
+  "subjectSearchbarLabel": "Пошук дисциплін",
+  "subjectSearchbarDescr": "Введіть назву дисципліни",
+  "subjectSearchbarPlchldr": "Назва дисципліни",
+  "recommended": "Рекомендовано"
 }

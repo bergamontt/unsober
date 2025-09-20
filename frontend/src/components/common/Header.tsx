@@ -1,4 +1,4 @@
-import { Tabs  } from '@mantine/core';
+import { Tabs, Text } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
 import '../../styles/common/Header.css';
@@ -30,8 +30,9 @@ function Header() {
                 <Tabs.Tab
                     value="disciplines"
                     bg="black"
+                    onClick={() => navigate('/subjects')}
                 >
-                    {t("disciplines")}
+                    {t("subjects")}
                 </Tabs.Tab>
                 <Tabs.Tab
                     value='schedule'
