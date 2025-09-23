@@ -3,7 +3,10 @@ package ua.unsober.backend.controller;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.CourseClassRequestDto;
+import ua.unsober.backend.dtos.response.CourseClassResponseDto;
+import ua.unsober.backend.dtos.response.CourseResponseDto;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -11,54 +14,63 @@ import java.util.UUID;
 public class CourseClassController {
 
     @PostMapping
-    public CourseClassRequestDto create(@Valid @RequestBody CourseClassRequestDto dto) {
-        return dto;
+    public CourseClassResponseDto create(@Valid @RequestBody CourseClassRequestDto dto) {
+        return CourseClassResponseDto.builder()
+                .id(UUID.randomUUID())
+                .course(new CourseResponseDto())
+                .title(dto.getTitle())
+                .type(dto.getType())
+                .weeksList(dto.getWeeksList())
+                .weekDay(dto.getWeekDay())
+                .classNumber(dto.getClassNumber())
+                .location(dto.getLocation())
+                .build();
     }
 
     @GetMapping
-    public CourseClassRequestDto[] getAll() {
-        return new CourseClassRequestDto[]{
-                new CourseClassRequestDto(
-                        UUID.randomUUID(),
-                        UUID.randomUUID(),
-                        "Sample Class",
-                        "Lecture",
-                        new Integer[]{1, 2, 3},
-                        "Monday",
-                        1,
-                        "Room 101",
-                        UUID.randomUUID()
-                )
-        };
-    }
-
-    @GetMapping("/{id}")
-    public CourseClassRequestDto getById(@PathVariable UUID id) {
-        return new CourseClassRequestDto(
-                UUID.randomUUID(),
-                UUID.randomUUID(),
-                "Sample Class",
-                "Lecture",
-                new Integer[]{1, 2, 3},
-                "Monday",
-                1,
-                "313",
-                UUID.randomUUID()
+    public List<CourseClassResponseDto> getAll() {
+        return List.of(
+                CourseClassResponseDto.builder()
+                        .id(UUID.randomUUID())
+                        .course(new CourseResponseDto())
+                        .title("Лекція з ООП")
+                        .type("Lecture")
+                        .weeksList(List.of(1, 2, 3))
+                        .weekDay("Monday")
+                        .classNumber(3)
+                        .location("1-223")
+                        .build()
         );
     }
 
-    @PutMapping("/{id}")
-    public CourseClassRequestDto replace(
-            @PathVariable UUID id,
-            @Valid @RequestBody CourseClassRequestDto dto) {
-        return dto;
+    @GetMapping("/{id}")
+    public CourseClassResponseDto getById(@PathVariable UUID id) {
+        return CourseClassResponseDto.builder()
+                .id(id)
+                .course(new CourseResponseDto())
+                .title("Лекція з ООП")
+                .type("Lecture")
+                .weeksList(List.of(1, 2, 3))
+                .weekDay("Monday")
+                .classNumber(3)
+                .location("1-223")
+                .build();
     }
 
     @PatchMapping("/{id}")
-    public CourseClassRequestDto update(
+    public CourseClassResponseDto update(
             @PathVariable UUID id,
             @RequestBody CourseClassRequestDto dto) {
-        return dto;
+        return CourseClassResponseDto.builder()
+                .id(id)
+                .course(new CourseResponseDto())
+                .title(dto.getTitle() == null ? "Лекція з ООП" : dto.getTitle())
+                .type(dto.getType() == null ? "Lecture" : dto.getType())
+                .weeksList(dto.getWeeksList()  == null ? List.of(1, 2, 3) : dto.getWeeksList())
+                .weekDay(dto.getWeekDay() == null ? "Monday" : dto.getWeekDay())
+                .classNumber(dto.getClassNumber() == null ? 3 : dto.getClassNumber())
+                .location(dto.getLocation()  == null ? "1-223" : dto.getLocation())
+                .build();
     }
 
     @DeleteMapping("/{id}")

@@ -18,10 +18,6 @@ public class CourseRequestDto {
     @PositiveOrZero(message = "{course.maxStudents.non-negative}")
     private Integer maxStudents;
 
-    @NotNull(message = "{course.numEnrolled.required}")
-    @PositiveOrZero(message = "{course.numEnrolled.non-negative}")
-    private Integer numEnrolled;
-
     @NotNull(message = "{course.courseYear.required}")
     private Integer courseYear;
 }

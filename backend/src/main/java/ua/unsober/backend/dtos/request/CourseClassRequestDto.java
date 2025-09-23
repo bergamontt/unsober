@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -26,7 +27,7 @@ public class CourseClassRequestDto {
     private String type;
 
     @NotNull(message = "{courseClass.weeksList.required}")
-    private Integer[] weeksList;
+    private List<Integer> weeksList;
 
     @NotBlank(message = "{courseClass.weekDay.required}")
     @Size(max = 10, message = "{courseClass.weekDay.size}")

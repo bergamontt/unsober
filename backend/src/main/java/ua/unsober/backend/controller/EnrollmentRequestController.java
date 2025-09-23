@@ -3,7 +3,12 @@ package ua.unsober.backend.controller;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.EnrollmentRequestRequestDto;
+import ua.unsober.backend.dtos.response.CourseResponseDto;
+import ua.unsober.backend.dtos.response.EnrollmentRequestResponseDto;
+import ua.unsober.backend.dtos.response.StudentResponseDto;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -11,44 +16,55 @@ import java.util.UUID;
 public class EnrollmentRequestController {
 
     @PostMapping
-    public EnrollmentRequestRequestDto create(@Valid @RequestBody EnrollmentRequestRequestDto dto) {
-        return dto;
+    public EnrollmentRequestResponseDto create(@Valid @RequestBody EnrollmentRequestRequestDto dto) {
+        return EnrollmentRequestResponseDto.builder()
+                .id(UUID.randomUUID())
+                .course(new CourseResponseDto())
+                .student(new StudentResponseDto())
+                .reason(dto.getReason())
+                .status("Received")
+                .createdAt(Instant.now())
+                .build();
     }
 
     @GetMapping
-    public EnrollmentRequestRequestDto[] getAll() {
-        return new EnrollmentRequestRequestDto[]{
-                new EnrollmentRequestRequestDto(
-                        UUID.randomUUID(),
-                        UUID.randomUUID(),
-                        "Sample reason",
-                        "Pending"
-                )
-        };
-    }
-
-    @GetMapping("/{id}")
-    public EnrollmentRequestRequestDto getById(@PathVariable UUID id) {
-        return new EnrollmentRequestRequestDto(
-                UUID.randomUUID(),
-                UUID.randomUUID(),
-                "Sample reason",
-                "Pending"
+    public List<EnrollmentRequestResponseDto> getAll() {
+        return List.of(
+                EnrollmentRequestResponseDto.builder()
+                        .id(UUID.randomUUID())
+                        .course(new CourseResponseDto())
+                        .student(new StudentResponseDto())
+                        .reason("Запишіть на інфопошук :(")
+                        .status("Declined")
+                        .createdAt(Instant.now())
+                        .build()
         );
     }
 
-    @PutMapping("/{id}")
-    public EnrollmentRequestRequestDto replace(
-            @PathVariable UUID id,
-            @Valid @RequestBody EnrollmentRequestRequestDto dto) {
-        return dto;
+    @GetMapping("/{id}")
+    public EnrollmentRequestResponseDto getById(@PathVariable UUID id) {
+        return EnrollmentRequestResponseDto.builder()
+                .id(id)
+                .course(new CourseResponseDto())
+                .student(new StudentResponseDto())
+                .reason("Запишіть на інфопошук :(")
+                .status("Declined")
+                .createdAt(Instant.now())
+                .build();
     }
 
     @PatchMapping("/{id}")
-    public EnrollmentRequestRequestDto update(
+    public EnrollmentRequestResponseDto update(
             @PathVariable UUID id,
             @RequestBody EnrollmentRequestRequestDto dto) {
-        return dto;
+        return EnrollmentRequestResponseDto.builder()
+                .id(id)
+                .course(new CourseResponseDto())
+                .student(new StudentResponseDto())
+                .reason(dto.getReason() == null ? "Запишіть на інфопошук :(" : dto.getReason())
+                .status("Received")
+                .createdAt(Instant.now())
+                .build();
     }
 
     @DeleteMapping("/{id}")

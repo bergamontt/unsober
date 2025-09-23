@@ -3,7 +3,9 @@ package ua.unsober.backend.controller;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.AdminRequestDto;
+import ua.unsober.backend.dtos.response.AdminResponseDto;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -11,40 +13,39 @@ import java.util.UUID;
 public class AdminController {
 
     @PostMapping
-    public AdminRequestDto create(@Valid @RequestBody AdminRequestDto dto) {
-        return dto;
+    public AdminResponseDto create(@Valid @RequestBody AdminRequestDto dto) {
+        return AdminResponseDto.builder()
+                .id(UUID.randomUUID())
+                .email("example@example.com")
+                .build();
     }
 
     @GetMapping
-    public AdminRequestDto[] getAll() {
-        return new AdminRequestDto[]{
-                new AdminRequestDto(
-                        "example@example.com",
-                        "password"
-                )
-        };
-    }
-
-    @GetMapping("/{id}")
-    public AdminRequestDto getById(@PathVariable UUID id) {
-        return new AdminRequestDto(
-                "example@example.com",
-                "password"
+    public List<AdminResponseDto> getAll() {
+        return List.of(
+                AdminResponseDto.builder()
+                        .id(UUID.randomUUID())
+                        .email("example@example.com")
+                        .build()
         );
     }
 
-    @PutMapping("/{id}")
-    public AdminRequestDto replace(
-            @PathVariable UUID id,
-            @Valid @RequestBody AdminRequestDto dto) {
-        return dto;
+    @GetMapping("/{id}")
+    public AdminResponseDto getById(@PathVariable UUID id) {
+        return AdminResponseDto.builder()
+                .id(id)
+                .email("example@example.com")
+                .build();
     }
 
     @PatchMapping("/{id}")
-    public AdminRequestDto update(
+    public AdminResponseDto update(
             @PathVariable UUID id,
             @RequestBody AdminRequestDto dto) {
-        return dto;
+        return AdminResponseDto.builder()
+                .id(id)
+                .email(dto.getEmail() == null ? "example@example.com" : dto.getEmail())
+                .build();
     }
 
     @DeleteMapping("/{id}")

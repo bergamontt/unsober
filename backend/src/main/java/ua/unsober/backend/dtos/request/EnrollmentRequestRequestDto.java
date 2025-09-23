@@ -22,8 +22,4 @@ public class EnrollmentRequestRequestDto {
     @NotBlank(message = "{enrollmentRequest.reason.required}")
     @Size(max = 3000, message = "{enrollmentRequest.reason.size}")
     private String reason;
-
-    @NotBlank(message = "{enrollmentRequest.status.required}")
-    @Size(max = 20, message = "{enrollmentRequest.status.size}")
-    private String status;
 }

@@ -34,8 +34,4 @@ public class Faculty {
     @Version
     @Column(name="row_version", nullable=false)
     private Integer rowVersion;
-
-    @CreationTimestamp
-    @Column(name="created_at", nullable=false, updatable=false)
-    private Instant createdAt;
 }

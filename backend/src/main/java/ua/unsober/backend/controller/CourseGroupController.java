@@ -3,7 +3,10 @@ package ua.unsober.backend.controller;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.CourseGroupRequestDto;
+import ua.unsober.backend.dtos.response.CourseGroupResponseDto;
+import ua.unsober.backend.dtos.response.CourseResponseDto;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -11,42 +14,51 @@ import java.util.UUID;
 public class CourseGroupController {
 
     @PostMapping
-    public CourseGroupRequestDto create(@Valid @RequestBody CourseGroupRequestDto dto) {
-        return dto;
+    public CourseGroupResponseDto create(@Valid @RequestBody CourseGroupRequestDto dto) {
+        return CourseGroupResponseDto.builder()
+                .id(UUID.randomUUID())
+                .course(new CourseResponseDto())
+                .maxStudents(dto.getMaxStudents())
+                .groupNumber(dto.getGroupNumber())
+                .numEnrolled(0)
+                .build();
     }
 
     @GetMapping
-    public CourseGroupRequestDto[] getAll() {
-        return new CourseGroupRequestDto[]{
-                new CourseGroupRequestDto(
-                        UUID.randomUUID(),
-                        1,
-                        30
-                )
-        };
-    }
-
-    @GetMapping("/{id}")
-    public CourseGroupRequestDto getById(@PathVariable UUID id) {
-        return new CourseGroupRequestDto(
-                UUID.randomUUID(),
-                1,
-                30
+    public List<CourseGroupResponseDto> getAll() {
+        return List.of(
+                CourseGroupResponseDto.builder()
+                        .id(UUID.randomUUID())
+                        .course(new CourseResponseDto())
+                        .maxStudents(10)
+                        .groupNumber(2)
+                        .numEnrolled(8)
+                        .build()
         );
     }
 
-    @PutMapping("/{id}")
-    public CourseGroupRequestDto replace(
-            @PathVariable UUID id,
-            @Valid @RequestBody CourseGroupRequestDto dto) {
-        return dto;
+    @GetMapping("/{id}")
+    public CourseGroupResponseDto getById(@PathVariable UUID id) {
+        return CourseGroupResponseDto.builder()
+                .id(id)
+                .course(new CourseResponseDto())
+                .maxStudents(10)
+                .groupNumber(2)
+                .numEnrolled(8)
+                .build();
     }
 
     @PatchMapping("/{id}")
-    public CourseGroupRequestDto update(
+    public CourseGroupResponseDto update(
             @PathVariable UUID id,
             @RequestBody CourseGroupRequestDto dto) {
-        return dto;
+        return CourseGroupResponseDto.builder()
+                .id(id)
+                .course(new CourseResponseDto())
+                .maxStudents(dto.getMaxStudents() == null ? 10 : dto.getMaxStudents())
+                .groupNumber(dto.getGroupNumber() == null ? 2 : dto.getGroupNumber())
+                .numEnrolled(8)
+                .build();
     }
 
     @DeleteMapping("/{id}")

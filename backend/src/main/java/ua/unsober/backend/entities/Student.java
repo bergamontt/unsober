@@ -65,8 +65,4 @@ public class Student {
     @Version
     @Column(nullable=false)
     private Integer rowVersion;
-
-    @CreationTimestamp
-    @Column(name="created_at", nullable=false, updatable=false)
-    private Instant createdAt;
 }
