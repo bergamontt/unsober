@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 
 function MainPage() {
-    const { t } = useTranslation();
+    const { t } = useTranslation(["common", "sections", "auth"]);
     const navigate = useNavigate();
     const handleLogin = () => { navigate('/login', { replace: true }) };
     return (
@@ -16,7 +16,7 @@ function MainPage() {
             }}>
             <Center className="annotation-container">
                 <Stack align="center" style={{ whiteSpace: "pre-line" }}>
-                    {t("mainPageGreeting")}
+                    {t("common:mainPageGreeting")}
                     <Group
                         grow
                         w="80%"
@@ -26,14 +26,14 @@ function MainPage() {
                             radius="xl"
                             onClick={handleLogin}
                         >
-                            {t("logIn")}
+                            {t("auth:logIn")}
                         </Button>
                         <Button
                             variant="outline"
                             color="indigo"
                             radius="xl"
                         >
-                            {t("news")}
+                            {t("sections:news")}
                         </Button>
                     </Group>
                 </Stack>

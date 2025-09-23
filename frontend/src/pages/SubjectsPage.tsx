@@ -4,7 +4,7 @@ import Searchbar from "../components/common/Searchbar";
 import Subject from "../components/common/Subject";
 
 function SubjectsPage() {
-    const {t} = useTranslation(); 
+    const {t} = useTranslation("subjectSearch"); 
     return (
         <Center
             w="100%"

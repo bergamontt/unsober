@@ -2,7 +2,7 @@ import { Stack, Title, Text } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 
 function ProfilePanel() {
-    const {t} = useTranslation();
+    const { t } = useTranslation(["sections", "profile"]);
     const profile = {
         firstName: "Мамбо",
         lastName: "Джамбо",
@@ -12,32 +12,32 @@ function ProfilePanel() {
         speciality: "Інженерія програмного забезпечення",
         studyYear: 4
     };
-    return(
+    return (
         <Stack pl="6em" gap="4">
             <Title order={1} pb="0.4em">
-                {t('profile')}
+                {t('sections:profile')}
             </Title>
             <Title order={3}>
-                {t('user')}
+                {t('profile:user')}
             </Title>
             <Text size="lg">
                 {profile.lastName} {profile.firstName} {profile.patronymic}
             </Text>
             <Title order={3}>
-                {t('speciality')}
+                {t('profile:speciality')}
             </Title>
             <Text size="lg">
                 {profile.speciality}, {profile.studyYear}-тий рік навчання
             </Text>
             <Title order={3}>
-                {t('email')}
+                {t('profile:email')}
             </Title>
             <Text size="lg">
                 {profile.email}
             </Text>
             <Title order={3}>
-                {t('recordBookNumber')}
-                </Title>
+                {t('profile:recordBookNumber')}
+            </Title>
             <Text size="lg">
                 {profile.recordBookNumber}
             </Text>
