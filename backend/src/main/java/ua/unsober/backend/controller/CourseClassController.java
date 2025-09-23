@@ -69,7 +69,7 @@ public class CourseClassController {
                 .weeksList(dto.getWeeksList()  == null ? List.of(1, 2, 3) : dto.getWeeksList())
                 .weekDay(dto.getWeekDay() == null ? "Monday" : dto.getWeekDay())
                 .classNumber(dto.getClassNumber() == null ? 3 : dto.getClassNumber())
-                .location(dto.getLocation()  == null ? "1-223" : dto.getLocation())
+                .location(dto.getLocation() == null ? "1-223" : dto.getLocation())
                 .build();
     }
 
