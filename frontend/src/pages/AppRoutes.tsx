@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Overlay from "./Overlay.tsx";
 import MainPage from "./MainPage.tsx";
 import LoginPage from "./LoginPage.tsx";
-import ProfilePage from './profile/ProfilePage.tsx';
+import ProfilePage from './ProfilePage.tsx';
 import SubjectsPage from './SubjectsPage.tsx';
 
 function AppRoutes() {

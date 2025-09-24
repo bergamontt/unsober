@@ -6,7 +6,7 @@ i18n
     .use(initReactI18next)
     .use(Backend)
     .init({
-        lng: "zh",
+        lng: "uk",
         fallbackLng: "en",
         debug: true,
         ns: ["auth", "common", "profile", "sections", "subjectSearch"],

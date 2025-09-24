@@ -1,12 +1,12 @@
 import { Center, Tabs, Divider  } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import ProfilePanel from "./ProfilePanel";
-import SchedulePanel from "./SchedulePanel";
-import SettingsPanel from "./SettingsPanel";
-import Icon from "../../components/common/Icon";
-import user from '../../assets/user.svg'
-import settings from '../../assets/settings.svg'
-import schedule from '../../assets/schedule.svg'
+import ProfilePanel from "../components/profile/ProfilePanel.tsx";
+import SchedulePanel from "../components/profile/SchedulePanel.tsx";
+import SettingsPanel from "../components/profile/SettingsPanel.tsx";
+import Icon from "../components/common/Icon.tsx";
+import user from '../assets/user.svg'
+import settings from '../assets/settings.svg'
+import schedule from '../assets/schedule.svg'
 
 function ProfilePage() {
     const { t } = useTranslation("sections");

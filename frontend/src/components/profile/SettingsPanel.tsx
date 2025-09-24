@@ -1,5 +1,5 @@
 import { Stack } from "@mantine/core";
-import LanguageMenu from "../../components/common/LanguageMenu";
+import LanguageMenu from "./LanguageMenu.tsx";
 
 function SettingsPanel() {
     return(
