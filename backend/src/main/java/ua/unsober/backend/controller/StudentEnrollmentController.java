@@ -114,5 +114,4 @@ public class StudentEnrollmentController {
         courseGroup.setNumEnrolled(courseGroup.getNumEnrolled() - 1);
         course.setNumEnrolled(course.getNumEnrolled() - 1);
     }
-
 }
