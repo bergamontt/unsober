@@ -100,8 +100,6 @@ public class StudentEnrollmentController {
         }
         if(dto.getEnrollmentYear() != null)
             enrollment.setEnrollmentYear(course.getNumEnrolled());
-        if(dto.getStatus() != null)
-            enrollment.setStatus(dto.getStatus());
         return enrollment;
     }
 

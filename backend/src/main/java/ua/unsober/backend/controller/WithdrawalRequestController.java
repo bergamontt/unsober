@@ -21,7 +21,6 @@ public class WithdrawalRequestController {
                 .id(UUID.randomUUID())
                 .studentEnrollment(new StudentEnrollmentResponseDto())
                 .reason(dto.getReason())
-                .status(dto.getStatus())
                 .createdAt(Instant.now())
                 .build();
     }
@@ -58,7 +57,7 @@ public class WithdrawalRequestController {
                 .id(id)
                 .studentEnrollment(new StudentEnrollmentResponseDto())
                 .reason(Optional.ofNullable(dto.getReason()).orElse("Відповідно до особистих обставин"))
-                .status(Optional.ofNullable(dto.getStatus()).orElse("pending"))
+                .status("pending")
                 .createdAt(Instant.now())
                 .build();
     }
