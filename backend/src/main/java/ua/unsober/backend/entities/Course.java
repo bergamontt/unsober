@@ -4,18 +4,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"subject_id", "course_year"}))
 public class Course {
     @Id

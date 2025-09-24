@@ -1,16 +1,15 @@
 package ua.unsober.backend.service;
 
-import ua.unsober.backend.dtos.request.SpecialtyRequestDto;
+import ua.unsober.backend.dtos.request.SpecialityRequestDto;
 import ua.unsober.backend.dtos.response.SpecialityResponseDto;
-import ua.unsober.backend.entities.Specialty;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface SpecialityService {
-    SpecialityResponseDto create(SpecialtyRequestDto dto);
-    List<Specialty> getAll();
+    SpecialityResponseDto create(SpecialityRequestDto dto);
+    List<SpecialityResponseDto> getAll();
     SpecialityResponseDto getById(UUID id);
-    SpecialityResponseDto update(UUID id, SpecialtyRequestDto dto);
+    SpecialityResponseDto update(UUID id, SpecialityRequestDto dto);
     void delete(UUID id);
 }

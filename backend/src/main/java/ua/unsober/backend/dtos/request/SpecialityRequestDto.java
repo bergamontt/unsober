@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpecialtyRequestDto {
+public class SpecialityRequestDto {
     @NotNull(message = "{specialty.departmentId.required}")
     private UUID departmentId;
 

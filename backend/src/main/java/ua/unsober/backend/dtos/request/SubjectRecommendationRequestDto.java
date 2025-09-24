@@ -17,7 +17,7 @@ public class SubjectRecommendationRequestDto {
     private UUID subjectId;
 
     @NotNull(message = "{subjectRecommendation.specialtyId.required}")
-    private UUID specialtyId;
+    private UUID specialityId;
 
     @NotBlank(message = "{subjectRecommendation.recommendation.required}")
     @Size(max = 50, message = "{subjectRecommendation.recommendation.size}")

@@ -36,7 +36,7 @@ public class StudentRequestDto {
     private String password;
 
     @NotNull(message = "{student.specialtyId.required}")
-    private UUID specialtyId;
+    private UUID specialityId;
 
     @NotNull(message = "{student.studyYear.required}")
     @Positive(message = "{student.studyYear.positive}")

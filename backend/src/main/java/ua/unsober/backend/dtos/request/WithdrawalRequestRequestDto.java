@@ -19,8 +19,4 @@ public class WithdrawalRequestRequestDto {
     @NotBlank(message = "{withdrawal.reason.required}")
     @Size(max = 3000, message = "{withdrawal.reason.size}")
     private String reason;
-
-    @NotBlank(message = "{withdrawal.status.required}")
-    @Size(max = 20, message = "{withdrawal.status.size}")
-    private String status;
 }

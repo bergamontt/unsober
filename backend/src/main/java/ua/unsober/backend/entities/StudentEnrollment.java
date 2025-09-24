@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"}))
 public class StudentEnrollment {
     @Id

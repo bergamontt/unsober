@@ -41,5 +41,7 @@ public class CourseClassRequestDto {
     @Size(max = 10, message = "{courseClass.location.size}")
     private String location;
 
+    private UUID buildingId;
+
     private UUID teacherId;
 }

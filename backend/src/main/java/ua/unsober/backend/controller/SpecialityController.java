@@ -2,7 +2,7 @@ package ua.unsober.backend.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import ua.unsober.backend.dtos.request.SpecialtyRequestDto;
+import ua.unsober.backend.dtos.request.SpecialityRequestDto;
 import ua.unsober.backend.dtos.response.DepartmentResponseDto;
 import ua.unsober.backend.dtos.response.SpecialityResponseDto;
 
@@ -11,11 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/specialties")
-public class SpecialtyController {
+@RequestMapping("/specialities")
+public class SpecialityController {
 
     @PostMapping
-    public SpecialityResponseDto create(@Valid @RequestBody SpecialtyRequestDto dto) {
+    public SpecialityResponseDto create(@Valid @RequestBody SpecialityRequestDto dto) {
         return SpecialityResponseDto.builder()
                 .id(UUID.randomUUID())
                 .department(new DepartmentResponseDto())
@@ -49,7 +49,7 @@ public class SpecialtyController {
     @PatchMapping("/{id}")
     public SpecialityResponseDto update(
             @PathVariable UUID id,
-            @RequestBody SpecialtyRequestDto dto) {
+            @RequestBody SpecialityRequestDto dto) {
         return SpecialityResponseDto.builder()
                 .id(id)
                 .department(new DepartmentResponseDto())

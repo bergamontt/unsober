@@ -3,18 +3,18 @@ package ua.unsober.backend.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CourseClass {
     @Id
     @GeneratedValue
