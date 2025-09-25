@@ -35,6 +35,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql:42.7.7")
     runtimeOnly("com.h2database:h2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("org.jsoup:jsoup:1.21.2")
 }
 
 tasks.withType<Test> {
