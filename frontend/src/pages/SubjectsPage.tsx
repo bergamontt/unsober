@@ -8,19 +8,17 @@ function SubjectsPage() {
     const {t} = useTranslation("subjectSearch"); 
     return (
         <PageWrapper>
-            <Stack w='1200px' pt="3em" mih='calc(100vh - 60px)' pl="1em" pr="1em">
-                <Title order={2}>{t('subjectCatalog')} </Title>
-                <Searchbar
-                    label={t('subjectSearchbarLabel')}
-                    description={t('subjectSearchbarDescr')}
-                    placeholder={t('subjectSearchbarPlchldr')}
-                />
-                <Stack align="stretch" justify="space-between" flex={1}>
-                    <SubjectPreview />
-                    <Center mb="sm">
-                        <Pagination total={10} color="indigo"/>
-                    </Center>
-                </Stack>
+            <Title>{t('subjectCatalog')} </Title>
+            <Searchbar
+                label={t('subjectSearchbarLabel')}
+                description={t('subjectSearchbarDescr')}
+                placeholder={t('subjectSearchbarPlchldr')}
+            />
+            <Stack align="stretch" justify="space-between" flex={1}>
+                <SubjectPreview />
+                <Center>
+                    <Pagination total={10} color="indigo"/>
+                </Center>
             </Stack>
         </PageWrapper>
     );

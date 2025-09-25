@@ -4,6 +4,7 @@ import MainPage from "./MainPage.tsx";
 import LoginPage from "./LoginPage.tsx";
 import ProfilePage from './ProfilePage.tsx';
 import SubjectsPage from './SubjectsPage.tsx';
+import SubjectPage from './SubjectPage.tsx';
 
 function AppRoutes() {
     return (
@@ -13,6 +14,7 @@ function AppRoutes() {
                 <Route path="login" element={<LoginPage />}/>
                 <Route path="profile" element={<ProfilePage />}/>
                 <Route path="subjects" element={<SubjectsPage />}/>
+                <Route path="subject" element={<SubjectPage />}/>
             </Route>
         </Routes>
     );
