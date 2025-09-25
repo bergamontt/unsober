@@ -1,0 +1,17 @@
+{
+    "annotation": "– Aнотація",
+    "faculty": "Факультет",
+    "department": "Кафедра",
+    "educationlevel": "Освітній рівень",
+    "academicYear": "Навчальний рік",
+    "semester": "Семестр",
+    "recommendedCourse": "Рекомендований курс",
+    "numOfcredits": "Кількість кредитів",
+    "weeklyHours": "Тижневі години",
+    "limitations": "Обмеження",
+    "maxNumOfStudents": "Максимальна кількість студентів",
+    "numOfStudentsPerGroup": "Кількість студентів у групі",
+    "numOfEnrolledStudents": "Кількість записаних студентів",
+    "numOfGroups": "Кількість груп",
+    "details": "Детальніше"
+}

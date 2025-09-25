@@ -1,0 +1,17 @@
+{
+    "annotation": "– Annotation",
+    "faculty": "Faculty",
+    "department": "Department",
+    "educationlevel": "Education level",
+    "academicYear": "Academic year",
+    "semester": "Semester",
+    "recommendedCourse": "Recommended course",
+    "numOfcredits": "Number of credits",
+    "weeklyHours": "Weekly hours",
+    "limitations": "Limitations",
+    "maxNumOfStudents": "Maximum number of students",
+    "numOfStudentsPerGroup": "Number of students per group",
+    "numOfEnrolledStudents": "Number of enrolled students",
+    "numOfGroups": "Number of groups",
+    "details": "Details"
+}

@@ -1,4 +1,4 @@
-import { Center, Tabs, Divider  } from "@mantine/core";
+import { Tabs, Divider  } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import ProfilePanel from "../components/profile/ProfilePanel.tsx";
 import SchedulePanel from "../components/profile/SchedulePanel.tsx";
@@ -7,14 +7,12 @@ import Icon from "../components/common/Icon.tsx";
 import user from '../assets/user.svg'
 import settings from '../assets/settings.svg'
 import schedule from '../assets/schedule.svg'
+import PageWrapper from "../components/common/PageWrapper.tsx";
 
 function ProfilePage() {
     const { t } = useTranslation("sections");
     return (
-        <Center
-            w="100%"
-            h='calc(100vh - 60px)'
-        >
+        <PageWrapper>
             <Tabs
                 w='1200px'
                 h='calc(100vh - 60px)'
@@ -59,7 +57,7 @@ function ProfilePage() {
                 </Tabs.Panel>
 
             </Tabs>
-        </Center>
+        </PageWrapper>
     );
 }
 

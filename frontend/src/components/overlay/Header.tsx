@@ -15,6 +15,7 @@ function Header() {
             color="indigo"
             variant='unstyled'
             className='header-container'
+            pos="sticky"
         >
             <Tabs.List>
                 <Tabs.Tab

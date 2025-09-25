@@ -9,7 +9,7 @@ i18n
         lng: "uk",
         fallbackLng: "en",
         debug: true,
-        ns: ["auth", "common", "profile", "sections", "subjectSearch"],
+        ns: ["auth", "common", "profile", "sections", "subjectSearch", "subjectPreview"],
         defaultNS: "common",
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json",

@@ -1,8 +1,8 @@
 import { Center, Button, Stack, Group } from "@mantine/core";
 import DarkVeil from "../components/background/DarkVeil.tsx";
-import '../styles/pages/MainPage.css';
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import '../styles/pages/MainPage.css';
 
 function MainPage() {
     const { t } = useTranslation(["common", "sections", "auth"]);
