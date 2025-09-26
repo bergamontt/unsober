@@ -6,6 +6,7 @@ import ua.unsober.backend.dtos.request.EnrollmentRequestRequestDto;
 import ua.unsober.backend.dtos.response.CourseResponseDto;
 import ua.unsober.backend.dtos.response.EnrollmentRequestResponseDto;
 import ua.unsober.backend.dtos.response.StudentResponseDto;
+import ua.unsober.backend.enums.RequestStatus;
 
 import java.time.Instant;
 import java.util.List;
@@ -22,7 +23,7 @@ public class EnrollmentRequestController {
                 .course(new CourseResponseDto())
                 .student(new StudentResponseDto())
                 .reason(dto.getReason())
-                .status("Received")
+                .status(RequestStatus.PENDING)
                 .createdAt(Instant.now())
                 .build();
     }
@@ -35,7 +36,7 @@ public class EnrollmentRequestController {
                         .course(new CourseResponseDto())
                         .student(new StudentResponseDto())
                         .reason("Запишіть на інфопошук :(")
-                        .status("Declined")
+                        .status(RequestStatus.DECLINED)
                         .createdAt(Instant.now())
                         .build()
         );
@@ -48,7 +49,7 @@ public class EnrollmentRequestController {
                 .course(new CourseResponseDto())
                 .student(new StudentResponseDto())
                 .reason("Запишіть на інфопошук :(")
-                .status("Declined")
+                .status(RequestStatus.DECLINED)
                 .createdAt(Instant.now())
                 .build();
     }
@@ -62,7 +63,7 @@ public class EnrollmentRequestController {
                 .course(new CourseResponseDto())
                 .student(new StudentResponseDto())
                 .reason(dto.getReason() == null ? "Запишіть на інфопошук :(" : dto.getReason())
-                .status("Received")
+                .status(RequestStatus.PENDING)
                 .createdAt(Instant.now())
                 .build();
     }

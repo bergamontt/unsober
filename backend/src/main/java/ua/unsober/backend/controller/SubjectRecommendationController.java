@@ -6,6 +6,7 @@ import ua.unsober.backend.dtos.request.SubjectRecommendationRequestDto;
 import ua.unsober.backend.dtos.response.SpecialityResponseDto;
 import ua.unsober.backend.dtos.response.SubjectRecommendationResponseDto;
 import ua.unsober.backend.dtos.response.SubjectResponseDto;
+import ua.unsober.backend.enums.Recommendation;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class SubjectRecommendationController {
                         .id(UUID.randomUUID())
                         .subject(new SubjectResponseDto())
                         .speciality(new SpecialityResponseDto())
-                        .recommendation("Рекомендується для основного курсу")
+                        .recommendation(Recommendation.PROF_ORIENTED)
                         .build()
         );
     }
@@ -43,7 +44,7 @@ public class SubjectRecommendationController {
                 .id(id)
                 .subject(new SubjectResponseDto())
                 .speciality(new SpecialityResponseDto())
-                .recommendation("Рекомендується для основного курсу")
+                .recommendation(Recommendation.PROF_ORIENTED)
                 .build();
     }
 
@@ -55,7 +56,7 @@ public class SubjectRecommendationController {
                 .id(id)
                 .subject(new SubjectResponseDto())
                 .speciality(new SpecialityResponseDto())
-                .recommendation(Optional.ofNullable(dto.getRecommendation()).orElse("Рекомендується для основного курсу"))
+                .recommendation(Optional.ofNullable(dto.getRecommendation()).orElse(Recommendation.PROF_ORIENTED))
                 .build();
     }
 

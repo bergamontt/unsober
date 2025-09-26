@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.enums.RequestStatus;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -35,10 +36,10 @@ public class WithdrawalRequest {
     @Column(length=3000, nullable=false)
     private String reason;
 
-    @NotBlank
-    @Size(max=20)
-    @Column(length=20, nullable=false)
-    private String status;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RequestStatus status;
 
     @Version
     @Column(nullable=false)

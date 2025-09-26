@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.enums.ClassType;
+import ua.unsober.backend.enums.WeekDay;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +19,9 @@ public class CourseClassResponseDto {
     private CourseResponseDto course;
     private CourseGroupResponseDto group;
     private String title;
-    private String type;
+    private ClassType type;
     private List<Integer> weeksList;
-    private String weekDay;
+    private WeekDay weekDay;
     private Integer classNumber;
     private String location;
     private BuildingResponseDto building;

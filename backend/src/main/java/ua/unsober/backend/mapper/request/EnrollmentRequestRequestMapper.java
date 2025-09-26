@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.EnrollmentRequestRequestDto;
 import ua.unsober.backend.entities.EnrollmentRequest;
+import ua.unsober.backend.enums.RequestStatus;
 import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
 import ua.unsober.backend.repository.CourseRepository;
 import ua.unsober.backend.repository.StudentRepository;
@@ -19,7 +20,7 @@ public class EnrollmentRequestRequestMapper {
         if (dto == null) return null;
         EnrollmentRequest entity = EnrollmentRequest.builder()
                 .reason(dto.getReason())
-                .status("Processed")
+                .status(RequestStatus.PENDING)
                 .build();
 
         java.util.UUID studentId = dto.getStudentId();

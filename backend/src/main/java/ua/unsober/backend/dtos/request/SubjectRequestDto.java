@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.enums.Term;
 
 import java.math.BigDecimal;
 
@@ -26,6 +27,5 @@ public class SubjectRequestDto {
     private BigDecimal credits;
 
     @NotNull(message = "{subject.term.required}")
-    @Size(max = 10, message = "{subject.term.size}")
-    private String term;
+    private Term term;
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.enums.Term;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -17,5 +18,5 @@ public class SubjectResponseDto {
     private String name;
     private String annotation;
     private BigDecimal credits;
-    private String term;
+    private Term term;
 }

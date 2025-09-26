@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.enums.Term;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -40,9 +41,9 @@ public class Subject {
     private BigDecimal credits;
 
     @NotNull
-    @Size(max=10)
-    @Column(length=10, nullable=false)
-    private String term;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Term term;
 
     @Version
     @Column(nullable=false)

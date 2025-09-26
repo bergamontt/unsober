@@ -3,6 +3,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.SubjectRequestDto;
+import ua.unsober.backend.enums.Term;
 import ua.unsober.backend.utils.crawler.EntityPageParser;
 
 import java.math.BigDecimal;
@@ -39,15 +40,15 @@ public class SubjectPageParser implements EntityPageParser<SubjectRequestDto> {
         return credits;
     }
 
-    private String getTerm(Document doc) {
-        String term = "";
+    private Term getTerm(Document doc) {
+        Term term = null;
         Element termElement = doc.selectFirst("tr:has(th:matchesOwn(Осінь|Весна|Літо)) th");
         if (termElement != null) {
             String raw = termElement.text().trim();
             switch (raw) {
-                case "Осінь" -> term = "Winter";
-                case "Весна" -> term = "Spring";
-                case "Літо"  -> term = "Summer";
+                case "Осінь" -> term = Term.AUTUMN;
+                case "Весна" -> term = Term.SPRING;
+                case "Літо"  -> term = Term.SUMMER;
             }
         }
         return term;

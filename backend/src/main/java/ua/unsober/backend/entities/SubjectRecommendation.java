@@ -1,14 +1,13 @@
 package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.enums.Recommendation;
 
 import java.util.UUID;
 
@@ -33,10 +32,10 @@ public class SubjectRecommendation {
     @JoinColumn(name = "specialty_id", nullable=false)
     private Speciality speciality;
 
-    @NotBlank
-    @Size(max=50)
-    @Column(length=50, nullable=false)
-    private String recommendation;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Recommendation recommendation;
 
     @Version
     @Column(nullable=false)

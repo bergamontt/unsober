@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.enums.RequestStatus;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -17,6 +18,6 @@ public class EnrollmentRequestResponseDto {
     private StudentResponseDto student;
     private CourseResponseDto course;
     private String reason;
-    private String status;
+    private RequestStatus status;
     private Instant createdAt;
 }

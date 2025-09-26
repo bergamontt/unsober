@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.WithdrawalRequestRequestDto;
 import ua.unsober.backend.entities.WithdrawalRequest;
+import ua.unsober.backend.enums.RequestStatus;
 import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
 import ua.unsober.backend.repository.StudentEnrollmentRepository;
 
@@ -18,7 +19,7 @@ public class WithdrawalRequestMapper {
             return null;
         WithdrawalRequest entity = WithdrawalRequest.builder()
                 .reason(dto.getReason())
-                .status("Processed")
+                .status(RequestStatus.PENDING)
                 .build();
 
         java.util.UUID studentEnrollmentId = dto.getStudentEnrollmentId();

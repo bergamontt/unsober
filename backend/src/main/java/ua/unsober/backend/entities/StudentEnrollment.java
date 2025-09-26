@@ -1,16 +1,15 @@
 package ua.unsober.backend.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.enums.EnrollmentStatus;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -41,10 +40,10 @@ public class StudentEnrollment {
     @JoinColumn(name="group_id")
     private CourseGroup group;
 
-    @NotBlank
-    @Size(max=30)
-    @Column(length=30, nullable=false)
-    private String status;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EnrollmentStatus status;
 
     @NotNull
     @Positive

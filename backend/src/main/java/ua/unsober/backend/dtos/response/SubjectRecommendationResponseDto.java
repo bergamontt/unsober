@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.enums.Recommendation;
 
 import java.util.UUID;
 
@@ -15,5 +16,5 @@ public class SubjectRecommendationResponseDto {
     private UUID id;
     private SubjectResponseDto subject;
     private SpecialityResponseDto speciality;
-    private String recommendation;
+    private Recommendation recommendation;
 }

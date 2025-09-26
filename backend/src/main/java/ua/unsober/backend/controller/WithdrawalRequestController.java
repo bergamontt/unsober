@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.WithdrawalRequestRequestDto;
 import ua.unsober.backend.dtos.response.StudentEnrollmentResponseDto;
 import ua.unsober.backend.dtos.response.WithdrawalRequestResponseDto;
+import ua.unsober.backend.enums.RequestStatus;
 
 import java.time.Instant;
 import java.util.List;
@@ -32,7 +33,7 @@ public class WithdrawalRequestController {
                         .id(UUID.randomUUID())
                         .studentEnrollment(new StudentEnrollmentResponseDto())
                         .reason("Відповідно до особистих обставин")
-                        .status("pending")
+                        .status(RequestStatus.PENDING)
                         .createdAt(Instant.now())
                         .build()
         );
@@ -44,7 +45,7 @@ public class WithdrawalRequestController {
                 .id(id)
                 .studentEnrollment(new StudentEnrollmentResponseDto())
                 .reason("Відповідно до особистих обставин")
-                .status("pending")
+                .status(RequestStatus.PENDING)
                 .createdAt(Instant.now())
                 .build();
     }
@@ -57,7 +58,7 @@ public class WithdrawalRequestController {
                 .id(id)
                 .studentEnrollment(new StudentEnrollmentResponseDto())
                 .reason(Optional.ofNullable(dto.getReason()).orElse("Відповідно до особистих обставин"))
-                .status("pending")
+                .status(RequestStatus.PENDING)
                 .createdAt(Instant.now())
                 .build();
     }

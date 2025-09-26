@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.CourseClassRequestDto;
 import ua.unsober.backend.dtos.response.CourseClassResponseDto;
 import ua.unsober.backend.dtos.response.CourseResponseDto;
+import ua.unsober.backend.enums.ClassType;
+import ua.unsober.backend.enums.WeekDay;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,9 +36,9 @@ public class CourseClassController {
                         .id(UUID.randomUUID())
                         .course(new CourseResponseDto())
                         .title("Лекція з ООП")
-                        .type("Lecture")
+                        .type(ClassType.LECTURE)
                         .weeksList(List.of(1, 2, 3))
-                        .weekDay("Monday")
+                        .weekDay(WeekDay.MONDAY)
                         .classNumber(3)
                         .location("1-223")
                         .build()
@@ -49,9 +51,9 @@ public class CourseClassController {
                 .id(id)
                 .course(new CourseResponseDto())
                 .title("Лекція з ООП")
-                .type("Lecture")
+                .type(ClassType.LECTURE)
                 .weeksList(List.of(1, 2, 3))
-                .weekDay("Monday")
+                .weekDay(WeekDay.MONDAY)
                 .classNumber(3)
                 .location("1-223")
                 .build();
@@ -65,9 +67,9 @@ public class CourseClassController {
                 .id(id)
                 .course(new CourseResponseDto())
                 .title(dto.getTitle() == null ? "Лекція з ООП" : dto.getTitle())
-                .type(dto.getType() == null ? "Lecture" : dto.getType())
+                .type(dto.getType() == null ? ClassType.LECTURE : dto.getType())
                 .weeksList(dto.getWeeksList()  == null ? List.of(1, 2, 3) : dto.getWeeksList())
-                .weekDay(dto.getWeekDay() == null ? "Monday" : dto.getWeekDay())
+                .weekDay(dto.getWeekDay() == null ? WeekDay.MONDAY : dto.getWeekDay())
                 .classNumber(dto.getClassNumber() == null ? 3 : dto.getClassNumber())
                 .location(dto.getLocation() == null ? "1-223" : dto.getLocation())
                 .build();

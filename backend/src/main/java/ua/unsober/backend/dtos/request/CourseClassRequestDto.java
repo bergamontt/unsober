@@ -4,6 +4,8 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.enums.ClassType;
+import ua.unsober.backend.enums.WeekDay;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,16 +24,14 @@ public class CourseClassRequestDto {
     @Size(max = 100, message = "{courseClass.title.size}")
     private String title;
 
-    @NotBlank(message = "{courseClass.type.required}")
-    @Size(max = 100, message = "{courseClass.type.size}")
-    private String type;
+    @NotNull(message = "{courseClass.type.required}")
+    private ClassType type;
 
     @NotNull(message = "{courseClass.weeksList.required}")
     private List<Integer> weeksList;
 
-    @NotBlank(message = "{courseClass.weekDay.required}")
-    @Size(max = 10, message = "{courseClass.weekDay.size}")
-    private String weekDay;
+    @NotNull(message = "{courseClass.weekDay.required}")
+    private WeekDay weekDay;
 
     @NotNull(message = "{courseClass.classNumber.required}")
     @Min(value = 1, message = "{courseClass.classNumber.min}")

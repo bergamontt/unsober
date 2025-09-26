@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.enums.ClassType;
+import ua.unsober.backend.enums.WeekDay;
 
 import java.util.UUID;
 
@@ -36,20 +38,20 @@ public class CourseClass {
     @Column(length=100, nullable=false)
     private String title;
 
-    @NotBlank
-    @Size(max=100)
-    @Column(length=100, nullable=false)
-    private String type;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ClassType type;
 
     @NotBlank
     @Size(max=100)
     @Column(name="weeks_list", length=100, nullable=false)
     private String weeksList;
 
-    @NotBlank
-    @Size(max=10)
-    @Column(name="week_day", length=10, nullable=false)
-    private String weekDay;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private WeekDay weekDay;
 
     @NotNull
     @Min(1)
