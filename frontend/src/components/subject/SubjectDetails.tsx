@@ -1,18 +1,19 @@
-import { Blockquote, Group, Table } from "@mantine/core";
+import type { Subject } from "../../services/models/Subject";
+import { Blockquote, Stack, Table } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import infoCircle from '../../assets/infoCircle.svg'
 import Icon from "../common/Icon";
 
-function SubjectDetails() {
+interface SubjectDetailsProps {
+    subject: Subject;
+}
+
+function SubjectDetails({subject} : SubjectDetailsProps) {
     const {t} = useTranslation("subjectPreview"); 
     return (
-        <Group gap={0}>
-            <Blockquote color="indigo" cite={t('annotation')} iconSize={35} icon={<Icon src={infoCircle}/>} mt="0.8em">
-                Методика побудови комп’ютерних алгоритмів.
-                Математичний апарат аналізу алгоритмів, поняття ефективності алгоритмів,
-                базові алгоритми розв’язання типових класів задач.
-                Основні методи розв’язання задач:
-                «розділяй і пануй», бектрекінг, символьні обчислення, використання евристик. 
+        <Stack align="stretch" justify="center" gap={0} >
+            <Blockquote color="indigo" cite={t('annotation')} iconSize={35} icon={<Icon src={infoCircle}/>} mt="0.8em" w="100%">
+                {subject?.annotation} 
             </Blockquote>
             
             <Table mt="1em" variant="vertical" withTableBorder highlightOnHover captionSide="top">                                
@@ -40,7 +41,7 @@ function SubjectDetails() {
             
                     <Table.Tr>
                         <Table.Th>{t('semester')}</Table.Th>
-                        <Table.Td>Осінній</Table.Td>
+                        <Table.Td>{subject.term}</Table.Td>
                     </Table.Tr>
             
                     <Table.Tr>
@@ -50,7 +51,7 @@ function SubjectDetails() {
             
                     <Table.Tr>
                         <Table.Th>{t('numOfcredits')}</Table.Th>
-                        <Table.Td>5.0 кред.</Table.Td>
+                        <Table.Td>{subject.credits}</Table.Td>
                     </Table.Tr>
             
                     <Table.Tr>
@@ -87,7 +88,7 @@ function SubjectDetails() {
 
                 </Table.Tbody>
             </Table>
-        </Group>
+        </Stack>
     );
 }
 

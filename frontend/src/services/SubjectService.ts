@@ -8,7 +8,7 @@ export const getSubjects = async (
     const response = await api.get<Page<Subject>>("/subjects", {
         params: {
             page: params.page ?? 0,
-            size: params.size ?? 10,
+            size: params.size ?? 15,
             sort: params.sort,
         },
     });

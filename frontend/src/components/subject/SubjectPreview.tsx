@@ -1,20 +1,25 @@
+import type { Subject } from "../../services/models/Subject.ts";
 import {Accordion} from "@mantine/core";
 import SubjectItem from "./SubjectItem.tsx";
 import SubjectPanel from "./SubjectPanel.tsx";
 
-function SubjectPreview() {
+interface SubjectPreviewProps {
+    subject : Subject
+}
+
+function SubjectPreview({subject} : SubjectPreviewProps) {
     return(
         <Accordion >
-            <Accordion.Item key="foo" value="foo">
+            <Accordion.Item key={subject.id} value={subject.id}>
                 <Accordion.Control>
                     <SubjectItem
-                        name="Основи коп'ютерних алгоритмів"
+                        name={subject.name}
                         speciality="ФІ"
                         isRecommended={true}
                     />
                 </Accordion.Control>
                 <Accordion.Panel>
-                    <SubjectPanel/>
+                    <SubjectPanel subject={subject}/>
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>

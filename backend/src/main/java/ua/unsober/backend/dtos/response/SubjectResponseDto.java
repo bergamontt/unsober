@@ -18,5 +18,5 @@ public class SubjectResponseDto {
     private String name;
     private String annotation;
     private BigDecimal credits;
-    private Term term;
+    private String term;
 }

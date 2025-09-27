@@ -1,14 +1,19 @@
-import { Group, Button } from "@mantine/core";
+import type { Subject } from "../../services/models/Subject";
+import { Stack, Button } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import SubjectDetails from "./SubjectDetails";
 
-function SubjectPanel() {
+interface SubjectPanelProps {
+    subject: Subject;
+}
+
+function SubjectPanel({subject} : SubjectPanelProps) {
     const navigate = useNavigate();
     const {t} = useTranslation("subjectPreview"); 
     return(
-        <Group gap={0}>
-            <SubjectDetails/>
+        <Stack gap={0}>
+            <SubjectDetails subject={subject}/>
             <Button
                 variant="outline"
                 color="indigo"
@@ -17,7 +22,7 @@ function SubjectPanel() {
             >
                 {t('details')}
             </Button>
-        </Group>
+        </Stack>
     );
 }
 
