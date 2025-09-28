@@ -1,7 +1,7 @@
 export const Term = {
     AUTUMN: 'AUTUMN',
-    SPRING: 'Spring',
-    SUMMER: 'Summer'
+    SPRING: 'SPRING',
+    SUMMER: 'SUMMER'
 } as const;
 
 export type Term = typeof Term[keyof typeof Term];

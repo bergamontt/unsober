@@ -14,3 +14,12 @@ export const getSubjects = async (
     });
     return response.data;
 };
+
+export const getSubject = async (
+    id: string | undefined | null
+): Promise<Subject | null> => {
+    if (!id)
+        return null;
+    const response = await api.get<Subject>(`/subjects/${id}`);
+    return response.data;
+};

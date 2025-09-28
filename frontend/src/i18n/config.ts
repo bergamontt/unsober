@@ -8,7 +8,7 @@ i18n
     .init({
         lng: "uk",
         fallbackLng: "en",
-        debug: true,
+        debug: false,
         ns: ["auth", "common", "profile", "sections", "subjectSearch", "subjectPreview"],
         defaultNS: "common",
         backend: {

@@ -14,7 +14,7 @@ function AppRoutes() {
                 <Route path="login" element={<LoginPage />}/>
                 <Route path="profile" element={<ProfilePage />}/>
                 <Route path="subjects" element={<SubjectsPage />}/>
-                <Route path="subject" element={<SubjectPage />}/>
+                <Route path="subject/:id" element={<SubjectPage />}/>
             </Route>
         </Routes>
     );

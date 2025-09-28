@@ -18,7 +18,7 @@ function SubjectPanel({subject} : SubjectPanelProps) {
                 variant="outline"
                 color="indigo"
                 mt="md" fullWidth
-                onClick={() => navigate('/subject')}
+                onClick={() => navigate(`/subject/${subject.id}`)}
             >
                 {t('details')}
             </Button>

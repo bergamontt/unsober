@@ -1,4 +1,4 @@
-import type { Subject } from "../../services/models/Subject";
+import { type Subject } from "../../services/models/Subject";
 import { Blockquote, Stack, Table } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import infoCircle from '../../assets/infoCircle.svg'
@@ -41,7 +41,7 @@ function SubjectDetails({subject} : SubjectDetailsProps) {
             
                     <Table.Tr>
                         <Table.Th>{t('semester')}</Table.Th>
-                        <Table.Td>{subject.term}</Table.Td>
+                        <Table.Td>{t(subject.term)}</Table.Td>
                     </Table.Tr>
             
                     <Table.Tr>

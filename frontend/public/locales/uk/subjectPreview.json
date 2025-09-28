@@ -13,5 +13,8 @@
     "numOfStudentsPerGroup": "Кількість студентів у групі",
     "numOfEnrolledStudents": "Кількість записаних студентів",
     "numOfGroups": "Кількість груп",
-    "details": "Детальніше"
+    "details": "Детальніше",
+    "AUTUMN": "Осінь",
+    "SPRING": "Весна",
+    "SUMMER": "Літо"
 }

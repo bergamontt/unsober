@@ -13,5 +13,8 @@
     "numOfStudentsPerGroup": "Number of students per group",
     "numOfEnrolledStudents": "Number of enrolled students",
     "numOfGroups": "Number of groups",
-    "details": "Details"
+    "details": "Details",
+    "AUTUMN": "Autumn",
+    "SPRING": "String",
+    "SUMMER": "Summer"
 }
