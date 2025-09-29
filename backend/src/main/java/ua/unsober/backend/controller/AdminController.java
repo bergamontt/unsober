@@ -1,54 +1,41 @@
 package ua.unsober.backend.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.AdminRequestDto;
 import ua.unsober.backend.dtos.response.AdminResponseDto;
+import ua.unsober.backend.service.AdminService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/admins")
+@RequiredArgsConstructor
 public class AdminController {
+
+    private final AdminService adminService;
 
     @PostMapping
     public AdminResponseDto create(@Valid @RequestBody AdminRequestDto dto) {
-        return AdminResponseDto.builder()
-                .id(UUID.randomUUID())
-                .email("example@example.com")
-                .build();
-    }
-
-    @GetMapping
-    public List<AdminResponseDto> getAll() {
-        return List.of(
-                AdminResponseDto.builder()
-                        .id(UUID.randomUUID())
-                        .email("example@example.com")
-                        .build()
-        );
+        return adminService.create(dto);
     }
 
     @GetMapping("/{id}")
     public AdminResponseDto getById(@PathVariable UUID id) {
-        return AdminResponseDto.builder()
-                .id(id)
-                .email("example@example.com")
-                .build();
+        return adminService.getById(id);
     }
 
     @PatchMapping("/{id}")
     public AdminResponseDto update(
             @PathVariable UUID id,
             @RequestBody AdminRequestDto dto) {
-        return AdminResponseDto.builder()
-                .id(id)
-                .email(dto.getEmail() == null ? "example@example.com" : dto.getEmail())
-                .build();
+        return adminService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
+        adminService.delete(id);
     }
 }
+

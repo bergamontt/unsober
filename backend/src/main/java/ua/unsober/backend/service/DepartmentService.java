@@ -11,5 +11,5 @@ public interface DepartmentService {
     List<DepartmentResponseDto> getAll();
     DepartmentResponseDto getById(UUID id);
     DepartmentResponseDto update(UUID id, DepartmentRequestDto dto);
-    void delete(DepartmentRequestDto dto);
+    void delete(UUID id);
 }

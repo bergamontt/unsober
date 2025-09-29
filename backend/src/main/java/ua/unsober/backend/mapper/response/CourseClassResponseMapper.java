@@ -16,7 +16,7 @@ public class CourseClassResponseMapper {
     private final BuildingResponseMapper buildingResponseMapper;
     private final TeacherResponseMapper teacherResponseMapper;
 
-    CourseClassResponseDto toDto(CourseClass courseClass){
+    public CourseClassResponseDto toDto(CourseClass courseClass){
         if(courseClass == null)
             return null;
         List<Integer> weeksList = Arrays.stream(courseClass.getWeeksList()

@@ -1,58 +1,48 @@
 package ua.unsober.backend.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.FacultyRequestDto;
 import ua.unsober.backend.dtos.response.FacultyResponseDto;
+import ua.unsober.backend.service.FacultyService;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/faculties")
+@RequiredArgsConstructor
 public class FacultyController {
+
+    private final FacultyService facultyService;
 
     @PostMapping
     public FacultyResponseDto create(@Valid @RequestBody FacultyRequestDto dto) {
-        return FacultyResponseDto.builder()
-                .id(UUID.randomUUID())
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .build();
+        return facultyService.create(dto);
     }
 
     @GetMapping
     public List<FacultyResponseDto> getAll() {
-        return List.of(
-                FacultyResponseDto.builder()
-                        .id(UUID.randomUUID())
-                        .name("Кафедра математики")
-                        .description("Кафедра математики.")
-                        .build()
-        );
+        return facultyService.getAll();
     }
 
     @GetMapping("/{id}")
     public FacultyResponseDto getById(@PathVariable UUID id) {
-        return FacultyResponseDto.builder()
-                .id(id)
-                .name("Кафедра математики")
-                .description("Кафедра математики.")
-                .build();
+        return facultyService.getById(id);
     }
 
     @PatchMapping("/{id}")
     public FacultyResponseDto update(
             @PathVariable UUID id,
             @RequestBody FacultyRequestDto dto) {
-        return FacultyResponseDto.builder()
-                .id(id)
-                .name(dto.getName() == null ? "Кафедра математики" : dto.getName())
-                .description(dto.getDescription() == null ? "Кафедра математики." : dto.getDescription())
-                .build();
+        return facultyService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {}
+    public void delete(@PathVariable UUID id) {
+        facultyService.delete(id);
+    }
 }
+
 

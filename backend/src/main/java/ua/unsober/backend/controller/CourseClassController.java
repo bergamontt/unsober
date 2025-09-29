@@ -1,81 +1,47 @@
 package ua.unsober.backend.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.CourseClassRequestDto;
 import ua.unsober.backend.dtos.response.CourseClassResponseDto;
-import ua.unsober.backend.dtos.response.CourseResponseDto;
-import ua.unsober.backend.enums.ClassType;
-import ua.unsober.backend.enums.WeekDay;
+import ua.unsober.backend.service.CourseClassService;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/course-classes")
+@RequiredArgsConstructor
 public class CourseClassController {
+
+    private final CourseClassService courseClassService;
 
     @PostMapping
     public CourseClassResponseDto create(@Valid @RequestBody CourseClassRequestDto dto) {
-        return CourseClassResponseDto.builder()
-                .id(UUID.randomUUID())
-                .course(new CourseResponseDto())
-                .title(dto.getTitle())
-                .type(dto.getType())
-                .weeksList(dto.getWeeksList())
-                .weekDay(dto.getWeekDay())
-                .classNumber(dto.getClassNumber())
-                .location(dto.getLocation())
-                .build();
+        return courseClassService.create(dto);
     }
 
     @GetMapping
     public List<CourseClassResponseDto> getAll() {
-        return List.of(
-                CourseClassResponseDto.builder()
-                        .id(UUID.randomUUID())
-                        .course(new CourseResponseDto())
-                        .title("Лекція з ООП")
-                        .type(ClassType.LECTURE)
-                        .weeksList(List.of(1, 2, 3))
-                        .weekDay(WeekDay.MONDAY)
-                        .classNumber(3)
-                        .location("1-223")
-                        .build()
-        );
+        return courseClassService.getAll();
     }
 
     @GetMapping("/{id}")
     public CourseClassResponseDto getById(@PathVariable UUID id) {
-        return CourseClassResponseDto.builder()
-                .id(id)
-                .course(new CourseResponseDto())
-                .title("Лекція з ООП")
-                .type(ClassType.LECTURE)
-                .weeksList(List.of(1, 2, 3))
-                .weekDay(WeekDay.MONDAY)
-                .classNumber(3)
-                .location("1-223")
-                .build();
+        return courseClassService.getById(id);
     }
 
     @PatchMapping("/{id}")
     public CourseClassResponseDto update(
             @PathVariable UUID id,
             @RequestBody CourseClassRequestDto dto) {
-        return CourseClassResponseDto.builder()
-                .id(id)
-                .course(new CourseResponseDto())
-                .title(dto.getTitle() == null ? "Лекція з ООП" : dto.getTitle())
-                .type(dto.getType() == null ? ClassType.LECTURE : dto.getType())
-                .weeksList(dto.getWeeksList()  == null ? List.of(1, 2, 3) : dto.getWeeksList())
-                .weekDay(dto.getWeekDay() == null ? WeekDay.MONDAY : dto.getWeekDay())
-                .classNumber(dto.getClassNumber() == null ? 3 : dto.getClassNumber())
-                .location(dto.getLocation() == null ? "1-223" : dto.getLocation())
-                .build();
+        return courseClassService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {}
+    public void delete(@PathVariable UUID id) {
+        courseClassService.delete(id);
+    }
 }
 

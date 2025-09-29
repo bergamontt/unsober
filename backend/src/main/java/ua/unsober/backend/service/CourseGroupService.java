@@ -11,5 +11,5 @@ public interface CourseGroupService {
     List<CourseGroupResponseDto> getAll();
     CourseGroupResponseDto getById(UUID id);
     CourseGroupResponseDto update(UUID id, CourseGroupRequestDto dto);
-    void delete(CourseGroupRequestDto dto);
+    void delete(UUID id);
 }
