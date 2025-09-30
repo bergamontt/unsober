@@ -5,7 +5,7 @@ import api from './api';
 export const getSubjects = async (
     params: PageableParams = {}
 ): Promise<Page<Subject>> => {
-    const response = await api.get<Page<Subject>>("/subjects", {
+    const response = await api.get<Page<Subject>>("/subject", {
         params: {
             page: params.page ?? 0,
             size: params.size ?? 15,
@@ -20,6 +20,6 @@ export const getSubject = async (
 ): Promise<Subject | null> => {
     if (!id)
         return null;
-    const response = await api.get<Subject>(`/subjects/${id}`);
+    const response = await api.get<Subject>(`/subject/${id}`);
     return response.data;
 };
