@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class LocalizedEntityNotFoundException {
+public class LocalizedEntityNotFoundExceptionFactory {
     private final MessageSource messageSource;
 
-    public EntityNotFoundException forEntity(String code, Object... args) {
+    public EntityNotFoundException get(String code, Object... args) {
         String message = messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
         return new EntityNotFoundException(message);
     }

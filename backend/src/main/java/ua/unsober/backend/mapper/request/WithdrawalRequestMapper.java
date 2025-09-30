@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.WithdrawalRequestRequestDto;
 import ua.unsober.backend.entities.WithdrawalRequest;
 import ua.unsober.backend.enums.RequestStatus;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.repository.StudentEnrollmentRepository;
 
 @Component
 @RequiredArgsConstructor
 public class WithdrawalRequestMapper {
     private final StudentEnrollmentRepository studentEnrollmentRepository;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     public WithdrawalRequest toEntity(WithdrawalRequestRequestDto dto) {
         if (dto == null)
@@ -25,7 +25,7 @@ public class WithdrawalRequestMapper {
         java.util.UUID studentEnrollmentId = dto.getStudentEnrollmentId();
         if (studentEnrollmentId != null) {
             entity.setStudentEnrollment(studentEnrollmentRepository.findById(studentEnrollmentId).orElseThrow(() ->
-                    notFound.forEntity("error.student-enrollment.notfound", studentEnrollmentId)));
+                    notFound.get("error.student-enrollment.notfound", studentEnrollmentId)));
         }
         return entity;
     }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.StudentRequestDto;
 import ua.unsober.backend.dtos.response.StudentResponseDto;
 import ua.unsober.backend.entities.Student;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.StudentRequestMapper;
 import ua.unsober.backend.mapper.response.StudentResponseMapper;
 import ua.unsober.backend.repository.StudentRepository;
@@ -20,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentRequestMapper requestMapper;
     private final StudentResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public StudentResponseDto create(StudentRequestDto dto) {
@@ -40,13 +40,13 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 studentRepository.findById(id).orElseThrow(() ->
-                        notFound.forEntity("error.student.notfound", id)));
+                        notFound.get("error.student.notfound", id)));
     }
 
     @Override
     public StudentResponseDto update(UUID id, StudentRequestDto dto) {
         Student student = studentRepository.findById(id).orElseThrow(() ->
-                notFound.forEntity("error.student.notfound", id));
+                notFound.get("error.student.notfound", id));
         Student newStudent = requestMapper.toEntity(dto);
         if (newStudent.getFirstName() != null)
             student.setFirstName(newStudent.getFirstName());
@@ -74,7 +74,7 @@ public class StudentServiceImpl implements StudentService {
         if (studentRepository.existsById(id)) {
             studentRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.student.notfound", id);
+            throw notFound.get("error.student.notfound", id);
         }
     }
 }

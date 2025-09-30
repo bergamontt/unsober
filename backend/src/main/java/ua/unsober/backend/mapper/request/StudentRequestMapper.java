@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.StudentRequestDto;
 import ua.unsober.backend.entities.Student;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.repository.SpecialityRepository;
 
 @Component
 @RequiredArgsConstructor
 public class StudentRequestMapper {
     private final SpecialityRepository specialityRepository;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     public Student toEntity(StudentRequestDto dto) {
         if (dto == null) return null;
@@ -28,7 +28,7 @@ public class StudentRequestMapper {
         java.util.UUID specialityId = dto.getSpecialityId();
         if (specialityId != null) {
             entity.setSpeciality(specialityRepository.findById(specialityId).orElseThrow(() ->
-                    notFound.forEntity("error.speciality.notfound", specialityId)));
+                    notFound.get("error.speciality.notfound", specialityId)));
         }
         return entity;
     }

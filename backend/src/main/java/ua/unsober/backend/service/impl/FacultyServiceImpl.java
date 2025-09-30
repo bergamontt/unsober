@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.FacultyRequestDto;
 import ua.unsober.backend.dtos.response.FacultyResponseDto;
 import ua.unsober.backend.entities.Faculty;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.FacultyRequestMapper;
 import ua.unsober.backend.mapper.response.FacultyResponseMapper;
 import ua.unsober.backend.repository.FacultyRepository;
@@ -21,7 +21,7 @@ public class FacultyServiceImpl implements FacultyService {
     private final FacultyRepository facultyRepository;
     private final FacultyRequestMapper requestMapper;
     private final FacultyResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public FacultyResponseDto create(FacultyRequestDto dto) {
@@ -41,14 +41,14 @@ public class FacultyServiceImpl implements FacultyService {
     public FacultyResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 facultyRepository.findById(id)
-                        .orElseThrow(() -> notFound.forEntity("error.faculty.notfound", id))
+                        .orElseThrow(() -> notFound.get("error.faculty.notfound", id))
         );
     }
 
     @Override
     public FacultyResponseDto update(UUID id, FacultyRequestDto dto) {
         Faculty faculty = facultyRepository.findById(id)
-                .orElseThrow(() -> notFound.forEntity("error.faculty.notfound", id));
+                .orElseThrow(() -> notFound.get("error.faculty.notfound", id));
 
         Faculty newFaculty = requestMapper.toEntity(dto);
 
@@ -68,7 +68,7 @@ public class FacultyServiceImpl implements FacultyService {
         if (facultyRepository.existsById(id)) {
             facultyRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.faculty.notfound", id);
+            throw notFound.get("error.faculty.notfound", id);
         }
     }
 }

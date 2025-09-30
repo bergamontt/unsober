@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.CourseGroupRequestDto;
 import ua.unsober.backend.entities.CourseGroup;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.repository.CourseRepository;
 
 @Component
 @RequiredArgsConstructor
 public class CourseGroupRequestMapper {
     private final CourseRepository courseRepository;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     public CourseGroup toEntity(CourseGroupRequestDto dto) {
         if (dto == null) return null;
@@ -24,7 +24,7 @@ public class CourseGroupRequestMapper {
         java.util.UUID courseId = dto.getCourseId();
         if (courseId != null) {
             entity.setCourse(courseRepository.findById(courseId).orElseThrow(() ->
-                    notFound.forEntity("error.course.notfound", courseId)));
+                    notFound.get("error.course.notfound", courseId)));
         }
         return entity;
     }

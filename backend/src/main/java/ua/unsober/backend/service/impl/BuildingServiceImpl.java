@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.BuildingRequestDto;
 import ua.unsober.backend.dtos.response.BuildingResponseDto;
 import ua.unsober.backend.entities.Building;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.BuildingRequestMapper;
 import ua.unsober.backend.mapper.response.BuildingResponseMapper;
 import ua.unsober.backend.repository.BuildingRepository;
@@ -21,7 +21,7 @@ public class BuildingServiceImpl implements BuildingService {
     private final BuildingRepository buildingRepository;
     private final BuildingRequestMapper requestMapper;
     private final BuildingResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public BuildingResponseDto create(BuildingRequestDto dto) {
@@ -42,14 +42,14 @@ public class BuildingServiceImpl implements BuildingService {
     public BuildingResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 buildingRepository.findById(id)
-                        .orElseThrow(() -> notFound.forEntity("error.building.notfound", id))
+                        .orElseThrow(() -> notFound.get("error.building.notfound", id))
         );
     }
 
     @Override
     public BuildingResponseDto update(UUID id, BuildingRequestDto dto) {
         Building building = buildingRepository.findById(id)
-                .orElseThrow(() -> notFound.forEntity("error.building.notfound", id));
+                .orElseThrow(() -> notFound.get("error.building.notfound", id));
 
         Building newBuilding = requestMapper.toEntity(dto);
 
@@ -75,7 +75,7 @@ public class BuildingServiceImpl implements BuildingService {
         if (buildingRepository.existsById(id)) {
             buildingRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.building.notfound", id);
+            throw notFound.get("error.building.notfound", id);
         }
     }
 }

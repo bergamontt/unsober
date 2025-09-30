@@ -12,7 +12,7 @@ import ua.unsober.backend.service.SubjectService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/subjects")
+@RequestMapping("/subject")
 @RequiredArgsConstructor
 public class SubjectController {
     private final SubjectService subjectService;

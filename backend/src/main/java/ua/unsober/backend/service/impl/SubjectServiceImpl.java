@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.SubjectRequestDto;
 import ua.unsober.backend.dtos.response.SubjectResponseDto;
 import ua.unsober.backend.entities.Subject;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.SubjectRequestMapper;
 import ua.unsober.backend.mapper.response.SubjectResponseMapper;
 import ua.unsober.backend.repository.SubjectRepository;
@@ -21,7 +21,7 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
     private final SubjectRequestMapper requestMapper;
     private final SubjectResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public SubjectResponseDto create(SubjectRequestDto dto) {
@@ -38,13 +38,13 @@ public class SubjectServiceImpl implements SubjectService {
     public SubjectResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 subjectRepository.findById(id).orElseThrow(() ->
-                        notFound.forEntity("error.subject.notfound", id)));
+                        notFound.get("error.subject.notfound", id)));
     }
 
     @Override
     public SubjectResponseDto update(UUID id, SubjectRequestDto dto) {
         Subject subject = subjectRepository.findById(id).orElseThrow(() ->
-                notFound.forEntity("error.subject.notfound", id));
+                notFound.get("error.subject.notfound", id));
         Subject newSubject = requestMapper.toEntity(dto);
         if (newSubject.getName() != null)
             subject.setName(newSubject.getName());
@@ -63,7 +63,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (subjectRepository.existsById(id)) {
             subjectRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.subject.notfound", id);
+            throw notFound.get("error.subject.notfound", id);
         }
     }
 }

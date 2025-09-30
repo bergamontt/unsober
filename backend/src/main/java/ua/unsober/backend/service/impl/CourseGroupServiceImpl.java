@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.CourseGroupRequestDto;
 import ua.unsober.backend.dtos.response.CourseGroupResponseDto;
 import ua.unsober.backend.entities.CourseGroup;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.CourseGroupRequestMapper;
 import ua.unsober.backend.mapper.response.CourseGroupResponseMapper;
 import ua.unsober.backend.repository.CourseGroupRepository;
@@ -21,7 +21,7 @@ public class CourseGroupServiceImpl implements CourseGroupService {
     private final CourseGroupRepository courseGroupRepository;
     private final CourseGroupRequestMapper requestMapper;
     private final CourseGroupResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public CourseGroupResponseDto create(CourseGroupRequestDto dto) {
@@ -41,14 +41,14 @@ public class CourseGroupServiceImpl implements CourseGroupService {
     public CourseGroupResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 courseGroupRepository.findById(id)
-                        .orElseThrow(() -> notFound.forEntity("error.course-group.notfound", id))
+                        .orElseThrow(() -> notFound.get("error.course-group.notfound", id))
         );
     }
 
     @Override
     public CourseGroupResponseDto update(UUID id, CourseGroupRequestDto dto) {
         CourseGroup courseGroup = courseGroupRepository.findById(id)
-                .orElseThrow(() -> notFound.forEntity("error.course-group.notfound", id));
+                .orElseThrow(() -> notFound.get("error.course-group.notfound", id));
 
         CourseGroup newCourseGroup = requestMapper.toEntity(dto);
 
@@ -71,7 +71,7 @@ public class CourseGroupServiceImpl implements CourseGroupService {
         if (courseGroupRepository.existsById(id)) {
             courseGroupRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.course-group.notfound", id);
+            throw notFound.get("error.course-group.notfound", id);
         }
     }
 }

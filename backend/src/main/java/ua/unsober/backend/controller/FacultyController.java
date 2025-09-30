@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/faculties")
+@RequestMapping("/faculty")
 @RequiredArgsConstructor
 public class FacultyController {
 

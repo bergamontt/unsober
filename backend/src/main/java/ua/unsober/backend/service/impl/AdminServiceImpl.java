@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.AdminRequestDto;
 import ua.unsober.backend.dtos.response.AdminResponseDto;
 import ua.unsober.backend.entities.Admin;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.AdminRequestMapper;
 import ua.unsober.backend.mapper.response.AdminResponseMapper;
 import ua.unsober.backend.repository.AdminRepository;
@@ -19,7 +19,7 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final AdminRequestMapper requestMapper;
     private final AdminResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public AdminResponseDto create(AdminRequestDto dto) {
@@ -32,14 +32,14 @@ public class AdminServiceImpl implements AdminService {
     public AdminResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 adminRepository.findById(id).orElseThrow(()->
-                        notFound.forEntity("error.admin.notfound", id))
+                        notFound.get("error.admin.notfound", id))
         );
     }
 
     @Override
     public AdminResponseDto update(UUID id, AdminRequestDto dto) {
         Admin admin = adminRepository.findById(id).orElseThrow(() ->
-                notFound.forEntity("error.admin.notfound", id));
+                notFound.get("error.admin.notfound", id));
         Admin newAdmin = requestMapper.toEntity(dto);
         if(newAdmin.getEmail() != null)
             admin.setEmail(newAdmin.getEmail());
@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
         if(adminRepository.existsById(id)) {
             adminRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.admin.notfound", id);
+            throw notFound.get("error.admin.notfound", id);
         }
     }
 }

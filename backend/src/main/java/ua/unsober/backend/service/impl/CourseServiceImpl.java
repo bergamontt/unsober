@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.CourseRequestDto;
 import ua.unsober.backend.dtos.response.CourseResponseDto;
 import ua.unsober.backend.entities.Course;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.CourseRequestMapper;
 import ua.unsober.backend.mapper.response.CourseResponseMapper;
 import ua.unsober.backend.repository.CourseRepository;
@@ -20,7 +20,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseRequestMapper requestMapper;
     private final CourseResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     @Override
     public CourseResponseDto create(CourseRequestDto dto) {
@@ -40,13 +40,13 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 courseRepository.findById(id).orElseThrow(() ->
-                        notFound.forEntity("error.course.notfound", id)));
+                        notFound.get("error.course.notfound", id)));
     }
 
     @Override
     public CourseResponseDto update(UUID id, CourseRequestDto dto) {
         Course course = courseRepository.findById(id).orElseThrow(() ->
-                notFound.forEntity("error.course.notfound", id));
+                notFound.get("error.course.notfound", id));
         Course newCourse = requestMapper.toEntity(dto);
         if (newCourse.getSubject() != null)
             course.setSubject(newCourse.getSubject());
@@ -64,7 +64,7 @@ public class CourseServiceImpl implements CourseService {
         if (courseRepository.existsById(id)) {
             courseRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.course.notfound", id);
+            throw notFound.get("error.course.notfound", id);
         }
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.EnrollmentRequestRequestDto;
 import ua.unsober.backend.entities.EnrollmentRequest;
 import ua.unsober.backend.enums.RequestStatus;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.repository.CourseRepository;
 import ua.unsober.backend.repository.StudentRepository;
 
@@ -14,7 +14,7 @@ import ua.unsober.backend.repository.StudentRepository;
 public class EnrollmentRequestRequestMapper {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     public EnrollmentRequest toEntity(EnrollmentRequestRequestDto dto) {
         if (dto == null) return null;
@@ -27,11 +27,11 @@ public class EnrollmentRequestRequestMapper {
         java.util.UUID courseId = dto.getCourseId();
         if (studentId != null) {
             entity.setStudent(studentRepository.findById(studentId).orElseThrow(() ->
-                    notFound.forEntity("error.student.notfound", studentId)));
+                    notFound.get("error.student.notfound", studentId)));
         }
         if (courseId != null) {
             entity.setCourse(courseRepository.findById(courseId).orElseThrow(() ->
-                    notFound.forEntity("error.course.notfound", courseId)));
+                    notFound.get("error.course.notfound", courseId)));
         }
         return entity;
     }

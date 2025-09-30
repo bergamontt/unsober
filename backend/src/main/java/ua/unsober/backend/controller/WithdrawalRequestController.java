@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/withdrawal-requests")
+@RequestMapping("/withdrawal-request")
 public class WithdrawalRequestController {
 
     @PostMapping

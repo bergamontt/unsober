@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/specialities")
+@RequestMapping("/speciality")
 public class SpecialityController {
 
     @PostMapping

@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.DepartmentRequestDto;
 import ua.unsober.backend.entities.Department;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.repository.FacultyRepository;
 
 @Component
 @RequiredArgsConstructor
 public class DepartmentRequestMapper {
     private final FacultyRepository facultyRepository;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     public Department toEntity(DepartmentRequestDto dto) {
         if (dto == null) return null;
@@ -23,7 +23,7 @@ public class DepartmentRequestMapper {
         java.util.UUID facultyId = dto.getFacultyId();
         if (facultyId != null) {
             entity.setFaculty(facultyRepository.findById(facultyId).orElseThrow(() ->
-                    notFound.forEntity("error.faculty.notfound", facultyId)));
+                    notFound.get("error.faculty.notfound", facultyId)));
         }
         return entity;
     }

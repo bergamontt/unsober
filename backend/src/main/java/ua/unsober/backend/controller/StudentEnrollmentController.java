@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/student-enrollments")
+@RequestMapping("/student-enrollment")
 public class StudentEnrollmentController {
     private final CourseResponseDto course;
 

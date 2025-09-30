@@ -10,7 +10,7 @@ import ua.unsober.backend.service.AdminService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/admins")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
 

@@ -1,11 +1,11 @@
 package ua.unsober.backend.service.impl;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.dtos.request.DepartmentRequestDto;
 import ua.unsober.backend.dtos.response.DepartmentResponseDto;
 import ua.unsober.backend.entities.Department;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.mapper.request.DepartmentRequestMapper;
 import ua.unsober.backend.mapper.response.DepartmentResponseMapper;
 import ua.unsober.backend.repository.DepartmentRepository;
@@ -15,13 +15,23 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private DepartmentRequestMapper requestMapper;
+    private DepartmentResponseMapper responseMapper;
+    private LocalizedEntityNotFoundExceptionFactory notFound;
 
-    private final DepartmentRepository departmentRepository;
-    private final DepartmentRequestMapper requestMapper;
-    private final DepartmentResponseMapper responseMapper;
-    private final LocalizedEntityNotFoundException notFound;
+    @Autowired
+    public void setResponseMapper(DepartmentResponseMapper responseMapper) {
+        this.responseMapper = responseMapper;
+    }
+
+    @Autowired
+    public void setNotFound(LocalizedEntityNotFoundExceptionFactory notFound) {
+        this.notFound = notFound;
+    }
 
     @Override
     public DepartmentResponseDto create(DepartmentRequestDto dto) {
@@ -41,14 +51,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentResponseDto getById(UUID id) {
         return responseMapper.toDto(
                 departmentRepository.findById(id)
-                        .orElseThrow(() -> notFound.forEntity("error.department.notfound", id))
+                        .orElseThrow(() -> notFound.get("error.department.notfound", id))
         );
     }
 
     @Override
     public DepartmentResponseDto update(UUID id, DepartmentRequestDto dto) {
         Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> notFound.forEntity("error.department.notfound", id));
+                .orElseThrow(() -> notFound.get("error.department.notfound", id));
 
         Department newDepartment = requestMapper.toEntity(dto);
 
@@ -71,7 +81,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (departmentRepository.existsById(id)) {
             departmentRepository.deleteById(id);
         } else {
-            throw notFound.forEntity("error.department.notfound", id);
+            throw notFound.get("error.department.notfound", id);
         }
     }
 }

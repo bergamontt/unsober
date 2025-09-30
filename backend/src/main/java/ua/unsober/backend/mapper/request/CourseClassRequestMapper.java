@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.dtos.request.CourseClassRequestDto;
 import ua.unsober.backend.entities.CourseClass;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundException;
+import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.repository.*;
 
 import java.util.UUID;
@@ -17,7 +17,7 @@ public class CourseClassRequestMapper {
     private final CourseGroupRepository groupRepository;
     private final BuildingRepository buildingRepository;
     private final TeacherRepository teacherRepository;
-    private final LocalizedEntityNotFoundException notFound;
+    private final LocalizedEntityNotFoundExceptionFactory notFound;
 
     public CourseClass toEntity(CourseClassRequestDto dto){
         if(dto == null)
@@ -39,19 +39,19 @@ public class CourseClassRequestMapper {
         UUID buildingId = dto.getBuildingId();
         if(courseId != null) {
             entity.setCourse(courseRepository.findById(courseId).orElseThrow(() ->
-                    notFound.forEntity("error.course.notfound", courseId)));
+                    notFound.get("error.course.notfound", courseId)));
         }
         if(groupId != null) {
             entity.setGroup(groupRepository.findById(groupId).orElseThrow(() ->
-                    notFound.forEntity("error.course-group.notfound", groupId)));
+                    notFound.get("error.course-group.notfound", groupId)));
         }
         if(buildingId != null) {
             entity.setBuilding(buildingRepository.findById(buildingId).orElseThrow(() ->
-                    notFound.forEntity("error.building.notfound", buildingId)));
+                    notFound.get("error.building.notfound", buildingId)));
         }
         if(teacherId != null){
             entity.setTeacher(teacherRepository.findById(teacherId).orElseThrow(() ->
-                    notFound.forEntity("error.teacher.notfound", teacherId)));
+                    notFound.get("error.teacher.notfound", teacherId)));
         }
         return entity;
     }
