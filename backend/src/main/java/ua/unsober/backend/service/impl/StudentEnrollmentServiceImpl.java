@@ -7,9 +7,7 @@ import ua.unsober.backend.dtos.response.StudentEnrollmentResponseDto;
 import ua.unsober.backend.entities.Course;
 import ua.unsober.backend.entities.CourseGroup;
 import ua.unsober.backend.entities.StudentEnrollment;
-import ua.unsober.backend.exceptions.CourseFullException;
-import ua.unsober.backend.exceptions.GroupFullException;
-import ua.unsober.backend.exceptions.LocalizedEntityNotFoundExceptionFactory;
+import ua.unsober.backend.exceptions.*;
 import ua.unsober.backend.mapper.request.StudentEnrollmentRequestMapper;
 import ua.unsober.backend.mapper.response.StudentEnrollmentResponseMapper;
 import ua.unsober.backend.repository.CourseGroupRepository;
@@ -30,13 +28,15 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     private final StudentEnrollmentRequestMapper requestMapper;
     private final StudentEnrollmentResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
+    private final LocalizedCourseFullExceptionFactory courseFull;
+    private final LocalizedGroupFullExceptionFactory groupFull;
 
     private Course validateCourse(UUID courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> notFound.get("error.course.notfound", courseId));
 
         if (course.getNumEnrolled() >= course.getMaxStudents())
-            throw new CourseFullException("Course with id " + course.getId() + " is full");
+            throw courseFull.get();
 
         return course;
     }
@@ -46,7 +46,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
                 .orElseThrow(() -> notFound.get("error.course-group.notfound", groupId));
 
         if (courseGroup.getNumEnrolled() >= courseGroup.getMaxStudents())
-            throw new GroupFullException("Group with id " + courseGroup.getId() + " is full");
+            throw groupFull.get();
 
         return courseGroup;
     }
@@ -93,10 +93,19 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id).orElseThrow(() ->
                 notFound.get("error.student-enrollment.notfound", id));
 
-        if (dto.getCourseId() != null)
-            enrollment.setCourse(validateCourse(dto.getCourseId()));
-        if (dto.getGroupId() != null)
-            enrollment.setGroup(validateGroup(dto.getGroupId()));
+        if (dto.getCourseId() != null){
+            Course oldCourse = enrollment.getCourse();
+            Course newCourse = validateCourse(dto.getCourseId());
+            oldCourse.setNumEnrolled(oldCourse.getNumEnrolled() - 1);
+            newCourse.setNumEnrolled(newCourse.getNumEnrolled() + 1);
+            enrollment.setCourse(newCourse);
+        }
+        if (dto.getGroupId() != null){
+            CourseGroup oldGroup = enrollment.getGroup();
+            CourseGroup newGroup = validateGroup(dto.getGroupId());
+            oldGroup.setNumEnrolled(oldGroup.getNumEnrolled() - 1);
+            newGroup.setNumEnrolled(newGroup.getNumEnrolled() + 1);
+        }
 
         StudentEnrollment newEnrollment = requestMapper.toEntity(dto);
 

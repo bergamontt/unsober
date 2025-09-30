@@ -4,14 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.SubjectRecommendationRequestDto;
-import ua.unsober.backend.dtos.response.SpecialityResponseDto;
 import ua.unsober.backend.dtos.response.SubjectRecommendationResponseDto;
-import ua.unsober.backend.dtos.response.SubjectResponseDto;
-import ua.unsober.backend.enums.Recommendation;
 import ua.unsober.backend.service.SubjectRecommendationService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
