@@ -1,11 +1,13 @@
 package ua.unsober.backend.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.WithdrawalRequestRequestDto;
 import ua.unsober.backend.dtos.response.StudentEnrollmentResponseDto;
 import ua.unsober.backend.dtos.response.WithdrawalRequestResponseDto;
 import ua.unsober.backend.enums.RequestStatus;
+import ua.unsober.backend.service.WithdrawalRequestService;
 
 import java.time.Instant;
 import java.util.List;
@@ -14,56 +16,36 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/withdrawal-request")
+@RequiredArgsConstructor
 public class WithdrawalRequestController {
+
+    private final WithdrawalRequestService withdrawalRequestService;
 
     @PostMapping
     public WithdrawalRequestResponseDto create(@Valid @RequestBody WithdrawalRequestRequestDto dto) {
-        return WithdrawalRequestResponseDto.builder()
-                .id(UUID.randomUUID())
-                .studentEnrollment(new StudentEnrollmentResponseDto())
-                .reason(dto.getReason())
-                .createdAt(Instant.now())
-                .build();
+        return withdrawalRequestService.create(dto);
     }
 
     @GetMapping
     public List<WithdrawalRequestResponseDto> getAll() {
-        return List.of(
-                WithdrawalRequestResponseDto.builder()
-                        .id(UUID.randomUUID())
-                        .studentEnrollment(new StudentEnrollmentResponseDto())
-                        .reason("Відповідно до особистих обставин")
-                        .status(RequestStatus.PENDING)
-                        .createdAt(Instant.now())
-                        .build()
-        );
+        return withdrawalRequestService.getAll();
     }
 
     @GetMapping("/{id}")
     public WithdrawalRequestResponseDto getById(@PathVariable UUID id) {
-        return WithdrawalRequestResponseDto.builder()
-                .id(id)
-                .studentEnrollment(new StudentEnrollmentResponseDto())
-                .reason("Відповідно до особистих обставин")
-                .status(RequestStatus.PENDING)
-                .createdAt(Instant.now())
-                .build();
+        return withdrawalRequestService.getById(id);
     }
 
     @PatchMapping("/{id}")
     public WithdrawalRequestResponseDto update(
             @PathVariable UUID id,
             @RequestBody WithdrawalRequestRequestDto dto) {
-        return WithdrawalRequestResponseDto.builder()
-                .id(id)
-                .studentEnrollment(new StudentEnrollmentResponseDto())
-                .reason(Optional.ofNullable(dto.getReason()).orElse("Відповідно до особистих обставин"))
-                .status(RequestStatus.PENDING)
-                .createdAt(Instant.now())
-                .build();
+        return withdrawalRequestService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {}
+    public void delete(@PathVariable UUID id) {
+        withdrawalRequestService.delete(id);
+    }
 
 }

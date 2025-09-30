@@ -10,7 +10,7 @@ import ua.unsober.backend.repository.StudentEnrollmentRepository;
 
 @Component
 @RequiredArgsConstructor
-public class WithdrawalRequestMapper {
+public class WithdrawalRequestRequestMapper {
     private final StudentEnrollmentRepository studentEnrollmentRepository;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 

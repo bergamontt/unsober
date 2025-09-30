@@ -1,10 +1,12 @@
 package ua.unsober.backend.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ua.unsober.backend.dtos.request.SpecialityRequestDto;
 import ua.unsober.backend.dtos.response.DepartmentResponseDto;
 import ua.unsober.backend.dtos.response.SpecialityResponseDto;
+import ua.unsober.backend.service.SpecialityService;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,53 +14,36 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/speciality")
+@RequiredArgsConstructor
 public class SpecialityController {
+
+    private final SpecialityService specialityService;
 
     @PostMapping
     public SpecialityResponseDto create(@Valid @RequestBody SpecialityRequestDto dto) {
-        return SpecialityResponseDto.builder()
-                .id(UUID.randomUUID())
-                .department(new DepartmentResponseDto())
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .build();
+        return specialityService.create(dto);
     }
 
     @GetMapping
     public List<SpecialityResponseDto> getAll() {
-        return List.of(
-                SpecialityResponseDto.builder()
-                        .id(UUID.randomUUID())
-                        .department(new DepartmentResponseDto())
-                        .name("Прикладна математика")
-                        .description("description: bla-bla")
-                        .build()
-        );
+        return specialityService.getAll();
     }
 
     @GetMapping("/{id}")
     public SpecialityResponseDto getById(@PathVariable UUID id) {
-        return SpecialityResponseDto.builder()
-                .id(id)
-                .department(new DepartmentResponseDto())
-                .name("Прикладна математика")
-                .description("description: bla-bla")
-                .build();
+        return specialityService.getById(id);
     }
 
     @PatchMapping("/{id}")
     public SpecialityResponseDto update(
             @PathVariable UUID id,
             @RequestBody SpecialityRequestDto dto) {
-        return SpecialityResponseDto.builder()
-                .id(id)
-                .department(new DepartmentResponseDto())
-                .name(Optional.ofNullable(dto.getName()).orElse("Прикладна математика"))
-                .description(Optional.ofNullable(dto.getDescription()).orElse("description: bla-bla"))
-                .build();
+        return specialityService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {}
+    public void delete(@PathVariable UUID id) {
+        specialityService.delete(id);
+    }
 
 }
