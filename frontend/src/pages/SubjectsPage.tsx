@@ -28,7 +28,7 @@ function SubjectsPage() {
                 <Stack align="stretch" gap={0}>
                     {pages &&
                     pages.content.map((subject) => (
-                        <SubjectPreview subject={subject} />
+                        <SubjectPreview subject={subject} key={subject.id}/>
                     ))}
                 </Stack>
                 <Center>
