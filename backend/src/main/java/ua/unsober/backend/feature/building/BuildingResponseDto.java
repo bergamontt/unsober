@@ -18,4 +18,5 @@ public class BuildingResponseDto {
     private String address;
     private BigDecimal latitude;
     private BigDecimal longitude;
+    private byte[] photo;
 }

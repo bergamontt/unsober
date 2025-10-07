@@ -25,6 +25,8 @@ public class MapServiceImpl implements MapService {
 
     @Override
     public byte[] getMap(BigDecimal latitude, BigDecimal longitude) {
+        if(latitude == null || longitude == null)
+            return null;
         double lon = longitude.doubleValue();
         double lat = latitude.doubleValue();
         String url = String.format(Locale.US, formatUrl, lon, lat, lon, lat, apiKey);

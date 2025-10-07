@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.building;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
+import ua.unsober.backend.feature.map.MapService;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,12 +16,13 @@ public class BuildingServiceImpl implements BuildingService {
     private final BuildingRequestMapper requestMapper;
     private final BuildingResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
+    private final MapService mapService;
 
     @Override
     public BuildingResponseDto create(BuildingRequestDto dto) {
-        return responseMapper.toDto(
-                buildingRepository.save(requestMapper.toEntity(dto))
-        );
+        BuildingResponseDto response = responseMapper.toDto(
+                buildingRepository.save(requestMapper.toEntity(dto)));
+        return addMap(response);
     }
 
     @Override
@@ -28,14 +30,17 @@ public class BuildingServiceImpl implements BuildingService {
         return buildingRepository.findAll()
                 .stream()
                 .map(responseMapper::toDto)
+                .map(this::addMap)
                 .toList();
     }
 
     @Override
     public BuildingResponseDto getById(UUID id) {
-        return responseMapper.toDto(
-                buildingRepository.findById(id)
-                        .orElseThrow(() -> notFound.get("error.building.notfound", id))
+        return addMap(
+                responseMapper.toDto(
+                        buildingRepository.findById(id)
+                                .orElseThrow(() -> notFound.get("error.building.notfound", id))
+                )
         );
     }
 
@@ -60,7 +65,7 @@ public class BuildingServiceImpl implements BuildingService {
         }
 
         Building updated = buildingRepository.save(building);
-        return responseMapper.toDto(updated);
+        return addMap(responseMapper.toDto(updated));
     }
 
     @Override
@@ -70,6 +75,11 @@ public class BuildingServiceImpl implements BuildingService {
         } else {
             throw notFound.get("error.building.notfound", id);
         }
+    }
+
+    private BuildingResponseDto addMap(BuildingResponseDto dto) {
+        dto.setPhoto(mapService.getMap(dto.getLatitude(), dto.getLongitude()));
+        return dto;
     }
 }
 
