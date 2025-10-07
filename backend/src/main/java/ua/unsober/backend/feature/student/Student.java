@@ -7,8 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.feature.course.Course;
 import ua.unsober.backend.feature.speciality.Speciality;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -66,4 +69,12 @@ public class Student {
     @Version
     @Column(nullable=false)
     private Integer rowVersion;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_enrollment",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> courses = new HashSet<>();
 }
