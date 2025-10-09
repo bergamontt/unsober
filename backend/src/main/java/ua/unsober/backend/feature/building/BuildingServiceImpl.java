@@ -3,7 +3,6 @@ package ua.unsober.backend.feature.building;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
-import ua.unsober.backend.feature.map.MapService;
 
 import java.util.List;
 import java.util.UUID;

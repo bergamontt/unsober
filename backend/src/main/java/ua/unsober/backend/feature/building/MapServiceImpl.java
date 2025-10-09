@@ -1,6 +1,7 @@
-package ua.unsober.backend.feature.map;
+package ua.unsober.backend.feature.building;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 @Service
+@ConditionalOnProperty(name="geoapify.api-key")
 public class MapServiceImpl implements MapService {
     private final static String formatUrl = "https://maps.geoapify.com/v1/staticmap?" +
             "style=osm-carto" +
@@ -20,7 +22,6 @@ public class MapServiceImpl implements MapService {
 
     @Value("${geoapify.api-key}")
     private String apiKey;
-
     private final RestClient restClient = RestClient.create();
 
     @Override

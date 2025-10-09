@@ -1,4 +1,4 @@
-package ua.unsober.backend.feature.map;
+package ua.unsober.backend.feature.building;
 
 import java.math.BigDecimal;
 
