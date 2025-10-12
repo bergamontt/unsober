@@ -1,7 +1,7 @@
 package ua.unsober.backend.common.utils.crawler.saz;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.springframework.stereotype.Component;
 import ua.unsober.backend.feature.subject.SubjectRequestDto;
 import ua.unsober.backend.common.enums.Term;
 import ua.unsober.backend.common.utils.crawler.EntityPageParser;
@@ -9,7 +9,6 @@ import ua.unsober.backend.common.utils.crawler.EntityPageParser;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Component
 public class SubjectPageParser implements EntityPageParser<SubjectRequestDto> {
     @Override
     public SubjectRequestDto extract(Document doc) {

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Component;
 import ua.unsober.backend.common.utils.crawler.EntityPageFinder;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-@Component
 @RequiredArgsConstructor
 public class SubjectPageFinder implements EntityPageFinder {
     private final SazQueryEngine sazQueryEngine;

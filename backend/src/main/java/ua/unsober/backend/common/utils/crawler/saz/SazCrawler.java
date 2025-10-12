@@ -1,13 +1,11 @@
 package ua.unsober.backend.common.utils.crawler.saz;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import ua.unsober.backend.feature.subject.SubjectRequestDto;
 
 import java.util.Collections;
 import java.util.List;
 
-@Component
 @RequiredArgsConstructor
 public class SazCrawler {
     private final SubjectPageFinder finder;

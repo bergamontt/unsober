@@ -9,8 +9,6 @@ import java.util.Map;
 
 @Setter
 @Getter
-@Component
-@ConfigurationProperties(prefix = "saz-crawler")
 public class SazCookies {
     private Map<String, String> cookies;
 }

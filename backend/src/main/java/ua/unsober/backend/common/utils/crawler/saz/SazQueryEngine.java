@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Map;
 
-@Component
 @RequiredArgsConstructor
 public class SazQueryEngine {
     private final SazCookies cookies;
