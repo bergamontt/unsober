@@ -38,6 +38,7 @@ function Header() {
                 <Tabs.Tab
                     value='schedule'
                     bg='black'
+                    onClick={() => navigate('/schedule')}
                 >
                     {t("schedule")}
                 </Tabs.Tab>

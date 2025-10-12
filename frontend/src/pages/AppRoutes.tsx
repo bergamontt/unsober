@@ -5,6 +5,7 @@ import LoginPage from "./LoginPage.tsx";
 import ProfilePage from './ProfilePage.tsx';
 import SubjectsPage from './SubjectsPage.tsx';
 import SubjectPage from './SubjectPage.tsx';
+import SchedulePage from './SchedulePage.tsx';
 
 function AppRoutes() {
     return (
@@ -15,6 +16,7 @@ function AppRoutes() {
                 <Route path="profile" element={<ProfilePage />}/>
                 <Route path="subjects" element={<SubjectsPage />}/>
                 <Route path="subject/:id" element={<SubjectPage />}/>
+                <Route path="schedule" element={<SchedulePage />}/>
             </Route>
         </Routes>
     );
