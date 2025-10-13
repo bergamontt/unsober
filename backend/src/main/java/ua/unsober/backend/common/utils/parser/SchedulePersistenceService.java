@@ -45,8 +45,16 @@ public class SchedulePersistenceService {
                 if (classDto == null)
                     continue;
                 String subjectName = classDto.getClassName();
-                Subject subject = subjectRepository.findByName(subjectName)
-                        .orElseThrow(() -> new EntityNotFoundException("Subject not found: " + subjectName));
+                List<Subject> subjects = subjectRepository.findByName(subjectName);
+                if(subjects.isEmpty())
+                    throw new EntityNotFoundException("Subject not found: " + subjectName);
+                Subject subject;
+                if(subjects.size() > 1){
+                    subject = subjectRepository.findByNameAndSpecialityName(subjectName, schedule.getSpecialityName())
+                            .orElseThrow(() -> new EntityNotFoundException("Subject not found: " + subjectName + " for " + schedule.getSpecialityName()));
+                } else {
+                    subject = subjects.getFirst();
+                }
                 Course course = courseRepository.findBySubjectIdAndCourseYear(subject.getId(), yearOfStudy)
                         .orElseGet(() -> createCourseForSubject(subject, yearOfStudy));
                 String groupRaw = classDto.getGroup();

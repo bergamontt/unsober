@@ -27,8 +27,8 @@ public class Subject {
     private UUID id;
 
     @NotBlank
-    @Size(max=100)
-    @Column(length=100, nullable=false)
+    @Size(max=255)
+    @Column(nullable=false)
     private String name;
 
     @Size(max=5000)

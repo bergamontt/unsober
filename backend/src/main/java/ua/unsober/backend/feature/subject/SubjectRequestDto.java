@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class SubjectRequestDto {
     @NotBlank(message = "{subject.name.required}")
-    @Size(max = 100, message = "{subject.name.size}")
+    @Size(max = 255, message = "{subject.name.size}")
     private String name;
 
     @Size(max = 5000, message = "{subject.annotation.size}")

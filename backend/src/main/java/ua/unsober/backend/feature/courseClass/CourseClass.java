@@ -63,8 +63,8 @@ public class CourseClass {
     @Column(name="class_number", nullable=false)
     private Integer classNumber;
 
-    @Size(max=10)
-    @Column(length=10)
+    @Size(max=100)
+    @Column(length=100)
     private String location;
 
     @ManyToOne

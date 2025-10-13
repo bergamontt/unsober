@@ -22,7 +22,7 @@ public class FieldParser {
         String cellStringValue = cell.getStringCellValue();
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(cellStringValue);
-        return matcher.find() ? matcher.group(1) : "";
+        return matcher.find() ? matcher.group(1).trim().replace("`", "'") : "";
     }
 
     public int parseYearOfStudy(Cell cell) {
@@ -35,8 +35,8 @@ public class FieldParser {
     public String[] parseClassAndLecturer(Cell cell) {
         String cellStringValue = cell.getStringCellValue();
         String[] classAndLecturer = cellStringValue.split(",");
-        classAndLecturer[0] = classAndLecturer[0].trim();
-        classAndLecturer[1] = classAndLecturer[1].trim();
+        classAndLecturer[0] = classAndLecturer[0].trim().replace("`", "'");
+        classAndLecturer[1] = classAndLecturer[1].trim().replace("`", "'");
         return classAndLecturer;
     }
 
@@ -63,21 +63,15 @@ public class FieldParser {
 
     public List<Integer> parseWeeks(Cell cell) {
         String weeks = cell.getStringCellValue().trim();
-        if (isWeeksRange(weeks))
-            return parseWeeksRange(weeks);
-        if (isCommaSeparatedWeeks(weeks))
-            return parseCommaSeparatedWeeks(weeks);
-        if (isSingleWeek(weeks))
-            return parseSingleWeek(weeks);
-        return new ArrayList<>();
+        return parseWeekString(weeks);
     }
 
     public String parseDayName(Cell cell) {
-        return cell.getStringCellValue();
+        return cell.getStringCellValue().trim();
     }
 
     public String parseLocation(Cell cell) {
-        return cell.getStringCellValue();
+        return cell.getStringCellValue().trim();
     }
 
     private boolean hasOverlappingClasses(Cell cell) {
@@ -90,6 +84,16 @@ public class FieldParser {
         LocalTime startTime = lastClass.getStartTime();
         LocalTime endTime = lastClass.getEndTime();
         return new LocalTime[]{startTime, endTime};
+    }
+
+    private List<Integer> parseWeekString(String weeks){
+        if (isCommaSeparatedWeeks(weeks))
+            return parseCommaSeparatedWeeks(weeks);
+        if (isWeeksRange(weeks))
+            return parseWeeksRange(weeks);
+        if (isSingleWeek(weeks))
+            return parseSingleWeek(weeks);
+        return new ArrayList<>();
     }
 
     private boolean isWeeksRange(String weeks) {
@@ -113,8 +117,8 @@ public class FieldParser {
         String[] weekArray = weeks.split(",");
         List<Integer> weekList = new ArrayList<>();
         for (String week : weekArray) {
-            int weekNumber = Integer.parseInt(week.trim());
-            weekList.add(weekNumber);
+            List<Integer> weekNums = parseWeekString(week.trim());
+            weekList.addAll(weekNums);
         }
         return weekList;
     }

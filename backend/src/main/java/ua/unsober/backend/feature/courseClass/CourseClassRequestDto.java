@@ -38,7 +38,7 @@ public class CourseClassRequestDto {
     @Max(value = 7, message = "{courseClass.classNumber.max}")
     private Integer classNumber;
 
-    @Size(max = 10, message = "{courseClass.location.size}")
+    @Size(max = 100, message = "{courseClass.location.size}")
     private String location;
 
     private UUID buildingId;

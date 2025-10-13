@@ -21,7 +21,7 @@ public class SubjectPageParser implements EntityPageParser<SubjectRequestDto> {
     }
 
     private String getName(Document doc) {
-        return Objects.requireNonNull(doc.selectFirst(".page-header h1")).ownText().trim();
+        return Objects.requireNonNull(doc.selectFirst(".page-header h1")).ownText().trim().replaceAll("`", "'");
     }
 
     private String getAnnotation(Document doc) {

@@ -2,7 +2,6 @@ package ua.unsober.backend.feature.speciality;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,19 +23,17 @@ public class Speciality {
     @UuidGenerator
     private UUID id;
 
-    @NotNull
     @ManyToOne
-    @JoinColumn(name="department_id", nullable=false)
+    @JoinColumn(name="department_id")
     private Department department;
 
     @NotBlank
     @Size(max=100)
-    @Column(length=100, nullable=false)
+    @Column(length=100, nullable=false, unique=true)
     private String name;
 
-    @NotBlank
     @Size(max=1000)
-    @Column(length=1000, nullable=false)
+    @Column(length=1000)
     private String description;
 
     @Version
