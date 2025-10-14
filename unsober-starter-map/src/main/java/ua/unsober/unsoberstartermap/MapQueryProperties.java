@@ -1,10 +1,12 @@
 package ua.unsober.unsoberstartermap;
 
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties(prefix = "geoapify")
+@Builder
 public class MapQueryProperties {
-    private String apiKey = "";
+    private int width;
+    private int height;
+    private int zoom;
 }

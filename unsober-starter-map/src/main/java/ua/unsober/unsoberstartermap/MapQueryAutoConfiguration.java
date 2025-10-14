@@ -12,19 +12,29 @@ import org.springframework.web.client.RestTemplate;
 
 @AutoConfiguration
 @ConditionalOnClass(RestTemplate.class)
-@EnableConfigurationProperties(MapQueryProperties.class)
+@EnableConfigurationProperties(MapQueryApiKey.class)
 @RequiredArgsConstructor
 public class MapQueryAutoConfiguration {
-    private final MapQueryProperties properties;
+    private final MapQueryApiKey properties;
     private final RestTemplateBuilder restTemplateBuilder;
+
+    @Bean
+    @ConditionalOnMissingBean(MapQueryProperties.class)
+    public MapQueryProperties defaultMapQueryProperties() {
+        return MapQueryProperties.builder()
+                .width(600)
+                .height(400)
+                .zoom(16)
+                .build();
+    }
 
     @Bean
     @ConditionalOnProperty(name = "geoapify.api-key")
     @ConditionalOnMissingBean(MapService.class)
-    public MapService mapServiceWithKey() {
+    public MapService mapServiceWithKey(MapQueryProperties props) {
         String apiKey = properties.getApiKey();
         RestTemplate restTemplate = restTemplateBuilder.build();
-        return new MapServiceImpl(apiKey, restTemplate);
+        return new MapServiceImpl(apiKey, restTemplate,  props);
     }
 
     @Bean

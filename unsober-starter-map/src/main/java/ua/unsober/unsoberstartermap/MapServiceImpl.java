@@ -10,22 +10,24 @@ import java.util.Locale;
 public class MapServiceImpl implements MapService {
     private static final String formatUrl = "https://maps.geoapify.com/v1/staticmap?" +
             "style=osm-carto" +
-            "&width=600&height=400" +
+            "&width=%d&height=%d" +
             "&center=lonlat:%f,%f" +
-            "&zoom=16" +
+            "&zoom=%d" +
             "&marker=lonlat:%f,%f" +
             ";type:material;color:red;size:large" +
             "&apiKey=%s";
-
     private final String apiKey;
     private final RestTemplate restTemplate;
+    private final MapQueryProperties props;
 
     @Override
     public byte[] getMap(BigDecimal latitude, BigDecimal longitude) {
         if (latitude == null || longitude == null) return null;
         double lon = longitude.doubleValue();
         double lat = latitude.doubleValue();
-        String url = String.format(Locale.US, formatUrl, lon, lat, lon, lat, apiKey);
+        String url = String.format(Locale.US, formatUrl,
+                props.getWidth(), props.getHeight(), lon, lat,
+                props.getZoom(), lon, lat, apiKey);
         return restTemplate.getForObject(url, byte[].class);
     }
 }
