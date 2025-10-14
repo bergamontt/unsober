@@ -1,5 +1,5 @@
-import type { Page, PageableParams } from './models/Page';
-import type { Subject } from './models/Subject';
+import type { Page, PageableParams } from '../models/Page';
+import type { Subject } from '../models/Subject';
 import api from './api';
 
 export const getSubjects = async (
@@ -18,8 +18,7 @@ export const getSubjects = async (
 export const getSubject = async (
     id: string | undefined | null
 ): Promise<Subject | null> => {
-    if (!id)
-        return null;
+    if (!id) return null;
     const response = await api.get<Subject>(`/subject/${id}`);
     return response.data;
 };

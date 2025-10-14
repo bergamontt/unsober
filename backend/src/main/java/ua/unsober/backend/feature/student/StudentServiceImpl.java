@@ -70,4 +70,10 @@ public class StudentServiceImpl implements StudentService {
             throw notFound.get("error.student.notfound", id);
         }
     }
+
+    @Override
+    public StudentResponseDto getByEmail(String email) {
+        return responseMapper.toDto(studentRepository.findByEmail(email)
+                .orElseThrow(() -> notFound.get("error.student.notfound", email)));
+    }
 }

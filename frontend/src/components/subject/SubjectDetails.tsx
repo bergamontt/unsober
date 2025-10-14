@@ -1,4 +1,4 @@
-import { type Subject } from "../../services/models/Subject";
+import { type Subject } from "../../models/Subject";
 import { Blockquote, Stack, Table } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import infoCircle from '../../assets/infoCircle.svg'

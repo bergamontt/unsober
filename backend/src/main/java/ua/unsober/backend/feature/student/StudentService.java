@@ -9,4 +9,5 @@ public interface StudentService {
     StudentResponseDto getById(UUID id);
     StudentResponseDto update(UUID id, StudentRequestDto dto);
     void delete(UUID id);
+    StudentResponseDto getByEmail(String email);
 }

@@ -23,9 +23,14 @@ public class StudentController {
         return studentService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/uuid/{id}")
     public StudentResponseDto getById(@PathVariable UUID id) {
         return studentService.getById(id);
+    }
+
+    @GetMapping("/email/{email}")
+    public StudentResponseDto getByEmail(@PathVariable String email) {
+        return studentService.getByEmail(email);
     }
 
     @PatchMapping("/{id}")

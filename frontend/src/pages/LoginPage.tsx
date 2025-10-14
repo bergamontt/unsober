@@ -1,12 +1,62 @@
 import PrismaticBurst from "../components/background/PrismaticBurst";
 import {Center, Fieldset, TextInput, PasswordInput, Title, Button, Text} from "@mantine/core";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { notifications } from "@mantine/notifications";
+import { useAuthStore } from "../hooks/authStore";
+import { login } from "../services/AuthService";
+import loginIcon from '../assets/login.svg';
 import Icon from "../components/common/Icon";
 import '../styles/pages/LoginPage.css';
-import login from '../assets/login.svg';
-import { useTranslation } from "react-i18next";
 
 function LoginPage() {
     const { t } = useTranslation("auth");
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { setToken } = useAuthStore();
+
+    const validateInput = useCallback(() => {
+        if (email.length < 5) {
+            notifications.show({
+                title: 'Error',
+                message: 'Email must be at least 5 characters long',
+                color: 'red',
+            });
+            return false;
+        }
+        if (password.length < 7) {
+            notifications.show({
+                title: 'Error',
+                message: 'Password must be at least 7 characters long',
+                color: 'red',
+            });
+            return false;
+        }
+        return true;
+    }, [email, password]);
+
+    const handleLogin = useCallback(async () => {
+        if (!validateInput()) return;
+        try {
+            const response = await login({ email, password });
+            setToken(response.token);
+            notifications.show({
+                title: 'Success!',
+                message: 'You have successfully logged in.',
+                color: 'green',
+                onClose: () => navigate('/profile'),
+            });
+        } catch (err) {
+            notifications.show({
+                title: 'Error',
+                message: 'Login failed. Check your email or password.',
+                color: 'red',
+            });
+        }
+    }, [email, password]);
+
     return(
         <div
             style={{
@@ -32,31 +82,24 @@ function LoginPage() {
                     <TextInput
                         label={t("workEmail")}
                         placeholder={t("yourEmail")}
-                        size="md"
-                        mt="lg"
-                        radius="md"
-                        withAsterisk
-                        c="white"
+                        size="md" mt="lg" radius="md"
+                        withAsterisk c="white"
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <PasswordInput
                         label={t("password")}
                         placeholder={t("yourPassword")}
-                        mt="md"
-                        size="md"
-                        radius="md"
-                        withAsterisk
-                        c="white"
+                        mt="md" size="md" radius="md"
+                        withAsterisk c="white"
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button
                         variant="outline"
-                        size="md"
-                        radius="xl"
-                        mt="xl"
-                        c="white"
-                        bd="1px solid #6F6F71"
-                        rightSection={<Icon src={login} />}
-                        justify="space-between"
-                        fullWidth
+                        size="md" radius="xl" mt="xl"
+                        c="white" bd="1px solid #6F6F71"
+                        rightSection={<Icon src={loginIcon} />}
+                        justify="space-between" fullWidth
+                        onClick={(e) => {e.preventDefault(); handleLogin()}}
                     >
                         {t("logIn")}
                     </Button>
