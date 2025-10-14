@@ -1,5 +1,6 @@
 package ua.unsober.backend.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import java.util.Locale;
 
 @Configuration
+@ConditionalOnProperty(value="locale.enabled", havingValue = "true")
 public class LocaleConfig {
     @Bean
     public LocaleResolver localeResolver() {

@@ -1,5 +1,6 @@
 package ua.unsober.backend.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.context.MessageSource;
@@ -9,6 +10,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
+@ConditionalOnClass(LocaleConfig.class)
 public class ValidationConfig {
     @Bean
     @ConditionalOnResource(resources = "classpath:messages")
