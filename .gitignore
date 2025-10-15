@@ -3,5 +3,5 @@
 /backend/.idea
 frontend/node_modules
 /backend/build
-/backend/logs
 *.env
+*.log
