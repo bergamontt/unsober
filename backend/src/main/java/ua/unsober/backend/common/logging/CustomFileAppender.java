@@ -3,6 +3,7 @@ package ua.unsober.backend.common.logging;
 import ch.qos.logback.core.AppenderBase;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,9 @@ public class CustomFileAppender extends AppenderBase<ILoggingEvent> {
 
     @Override
     public void start() {
+        File folder = new File("logs");
+        if (!folder.exists()) folder.mkdir();
+
         String fileName = "logs/" + formatter.format(new Date(System.currentTimeMillis())) + ".log";
         try {
             writer = new PrintWriter(new FileWriter(fileName, true), true);
