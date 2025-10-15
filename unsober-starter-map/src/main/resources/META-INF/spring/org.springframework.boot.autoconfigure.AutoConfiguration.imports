@@ -1,1 +1,2 @@
-ua.unsober.unsoberstartermap.MapQueryAutoConfiguration
+ua.unsober.unsoberstartermap.MapQueryPrimaryConfiguration
+ua.unsober.unsoberstartermap.MapQueryFallbackConfiguration

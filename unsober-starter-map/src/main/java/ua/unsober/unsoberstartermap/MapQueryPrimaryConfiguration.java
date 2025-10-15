@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @ConditionalOnClass(RestTemplate.class)
 @EnableConfigurationProperties(MapQueryApiKey.class)
 @RequiredArgsConstructor
-public class MapQueryAutoConfiguration {
+public class MapQueryPrimaryConfiguration {
     private final MapQueryApiKey properties;
     private final RestTemplateBuilder restTemplateBuilder;
 
@@ -35,11 +35,5 @@ public class MapQueryAutoConfiguration {
         String apiKey = properties.getApiKey();
         RestTemplate restTemplate = restTemplateBuilder.build();
         return new MapServiceImpl(apiKey, restTemplate,  props);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(MapService.class)
-    public MapService defaultMapService() {
-        return new DefaultMapService();
     }
 }
