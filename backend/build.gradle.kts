@@ -42,6 +42,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.jsoup:jsoup:1.21.2")
     implementation("ua.unsober:unsober-starter-map:0.0.1-SNAPSHOT")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
 
 tasks.withType<Test> {

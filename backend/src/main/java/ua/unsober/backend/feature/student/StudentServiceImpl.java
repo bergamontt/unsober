@@ -1,6 +1,10 @@
 package ua.unsober.backend.feature.student;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -15,6 +19,9 @@ public class StudentServiceImpl implements StudentService {
     private final StudentResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private static final Marker STUDENT_ACTION = MarkerFactory.getMarker("STUDENT_ACTION");
+
     @Override
     public StudentResponseDto create(StudentRequestDto dto) {
         return responseMapper.toDto(
@@ -23,6 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentResponseDto> getAll() {
+        logger.info(STUDENT_ACTION, "getAll");
         return studentRepository.findAll()
                 .stream()
                 .map(responseMapper::toDto)
