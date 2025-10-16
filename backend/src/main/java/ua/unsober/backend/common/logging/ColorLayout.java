@@ -1,13 +1,9 @@
 package ua.unsober.backend.common.logging;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.LayoutBase;
 import lombok.Setter;
-import org.slf4j.Marker;
-
-import java.util.stream.Collectors;
 
 public class ColorLayout extends LayoutBase<ILoggingEvent> {
 
@@ -21,14 +17,13 @@ public class ColorLayout extends LayoutBase<ILoggingEvent> {
     @Setter
     private String pattern;
 
-    private PatternLayout patternLayout;
+    private final MarkerLayout markerLayout = new MarkerLayout();
 
     @Override
     public void start() {
-        patternLayout = new PatternLayout();
-        patternLayout.setContext(getContext());
-        patternLayout.setPattern(pattern);
-        patternLayout.start();
+        markerLayout.setContext(getContext());
+        markerLayout.setPattern(pattern);
+        markerLayout.start();
         super.start();
     }
 
@@ -43,15 +38,8 @@ public class ColorLayout extends LayoutBase<ILoggingEvent> {
             default -> RESET;
         };
 
-        String line = patternLayout.doLayout(event);
         String level = event.getLevel().toString();
         String colorized = color + level + RESET;
-        line = line.replace(level, colorized);
-
-        String markerPart = "[" + event.getMarkerList().stream()
-                .map(Marker::getName)
-                .collect(Collectors.joining(", ")) + "] ";
-
-        return line.replace(event.getFormattedMessage(), markerPart + event.getFormattedMessage());
+        return markerLayout.doLayout(event).replace(level, colorized);
     }
 }

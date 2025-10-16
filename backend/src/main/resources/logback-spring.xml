@@ -23,14 +23,14 @@
 
     <appender name="FILE" class="ua.unsober.backend.common.logging.CustomFileAppender">
         <filter class="ua.unsober.backend.common.filers.ExcludeRequestLogsFilter"/>
-        <layout class="ua.unsober.backend.common.logging.ColorLayout">
+        <layout class="ua.unsober.backend.common.logging.MarkerLayout">
             <pattern>${PATTERN}</pattern>
         </layout>
     </appender>
 
     <appender name="FILE_REQUEST" class="ua.unsober.backend.common.logging.CustomFileAppender">
         <filter class="ua.unsober.backend.common.filers.IncludeRequestLogsFilter"/>
-        <layout class="ua.unsober.backend.common.logging.ColorLayout">
+        <layout class="ua.unsober.backend.common.logging.MarkerLayout">
             <pattern>${PATTERN_REQUEST}</pattern>
         </layout>
     </appender>
