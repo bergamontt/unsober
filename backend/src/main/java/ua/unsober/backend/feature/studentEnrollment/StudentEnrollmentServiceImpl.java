@@ -1,6 +1,9 @@
 package ua.unsober.backend.feature.studentEnrollment;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedCourseFullExceptionFactory;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
@@ -13,6 +16,7 @@ import ua.unsober.backend.feature.course.CourseRepository;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
@@ -26,12 +30,16 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     private final LocalizedCourseFullExceptionFactory courseFull;
     private final LocalizedGroupFullExceptionFactory groupFull;
 
+    private static final Marker ENROLLMENT_ACTION = MarkerFactory.getMarker("ENROLLMENT_ACTION");
+
     private Course validateCourse(UUID courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> notFound.get("error.course.notfound", courseId));
 
-        if (course.getNumEnrolled() >= course.getMaxStudents())
+        if (course.getNumEnrolled() >= course.getMaxStudents()) {
+            log.warn(ENROLLMENT_ACTION, "Course with id={} is full", courseId);
             throw courseFull.get();
+        }
 
         return course;
     }
@@ -40,85 +48,97 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         CourseGroup courseGroup = courseGroupRepository.findById(groupId)
                 .orElseThrow(() -> notFound.get("error.course-group.notfound", groupId));
 
-        if (courseGroup.getNumEnrolled() >= courseGroup.getMaxStudents())
+        if (courseGroup.getNumEnrolled() >= courseGroup.getMaxStudents()) {
+            log.warn(ENROLLMENT_ACTION, "Course group with id={} is full", groupId);
             throw groupFull.get();
+        }
 
         return courseGroup;
     }
 
     @Override
     public StudentEnrollmentResponseDto create(StudentEnrollmentRequestDto dto) {
+        log.info(ENROLLMENT_ACTION, "Creating new student enrollment...");
         Course course = validateCourse(dto.getCourseId());
-        CourseGroup courseGroup = null;
-
-        if(dto.getGroupId() != null){
-            courseGroup = validateGroup(dto.getGroupId());
-        }
+        CourseGroup courseGroup = dto.getGroupId() != null ? validateGroup(dto.getGroupId()) : null;
 
         StudentEnrollment enrollment = requestMapper.toEntity(dto);
         enrollment.setCourse(course);
         enrollment.setGroup(courseGroup);
 
         course.setNumEnrolled(course.getNumEnrolled() + 1);
-        if (courseGroup != null)
-            courseGroup.setNumEnrolled(courseGroup.getNumEnrolled() + 1);
+        if (courseGroup != null) courseGroup.setNumEnrolled(courseGroup.getNumEnrolled() + 1);
 
-        return responseMapper.toDto(studentEnrollmentRepository.save(enrollment));
+        StudentEnrollment saved = studentEnrollmentRepository.save(enrollment);
+        log.info(ENROLLMENT_ACTION, "Enrollment created with id={}", saved.getId());
+        return responseMapper.toDto(saved);
     }
 
     @Override
     public List<StudentEnrollmentResponseDto> getAll() {
-        return studentEnrollmentRepository.findAll()
+        log.info(ENROLLMENT_ACTION, "Fetching all student enrollments...");
+        List<StudentEnrollmentResponseDto> result = studentEnrollmentRepository.findAll()
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();
+        log.info(ENROLLMENT_ACTION, "Fetched {} student enrollments", result.size());
+        return result;
     }
 
     @Override
     public StudentEnrollmentResponseDto getById(UUID id) {
-        return responseMapper.toDto(
-                studentEnrollmentRepository.findById(id).orElseThrow(
-                        () -> notFound.get("error.student-enrollment.notfound", id)
-                )
-        );
+        log.info(ENROLLMENT_ACTION, "Fetching student enrollment with id={}...", id);
+        StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn(ENROLLMENT_ACTION, "Attempt to fetch non-existing enrollment with id={}", id);
+                    return notFound.get("error.student-enrollment.notfound", id);
+                });
+        return responseMapper.toDto(enrollment);
     }
 
     @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
-        StudentEnrollment enrollment = studentEnrollmentRepository.findById(id).orElseThrow(() ->
-                notFound.get("error.student-enrollment.notfound", id));
+        log.info(ENROLLMENT_ACTION, "Updating student enrollment with id={}...", id);
+        StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn(ENROLLMENT_ACTION, "Attempt to update non-existing enrollment with id={}", id);
+                    return notFound.get("error.student-enrollment.notfound", id);
+                });
 
-        if (dto.getCourseId() != null){
+        if (dto.getCourseId() != null) {
             Course oldCourse = enrollment.getCourse();
             Course newCourse = validateCourse(dto.getCourseId());
             oldCourse.setNumEnrolled(oldCourse.getNumEnrolled() - 1);
             newCourse.setNumEnrolled(newCourse.getNumEnrolled() + 1);
             enrollment.setCourse(newCourse);
         }
-        if (dto.getGroupId() != null){
+
+        if (dto.getGroupId() != null) {
             CourseGroup oldGroup = enrollment.getGroup();
             CourseGroup newGroup = validateGroup(dto.getGroupId());
-            oldGroup.setNumEnrolled(oldGroup.getNumEnrolled() - 1);
+            if (oldGroup != null) oldGroup.setNumEnrolled(oldGroup.getNumEnrolled() - 1);
             newGroup.setNumEnrolled(newGroup.getNumEnrolled() + 1);
+            enrollment.setGroup(newGroup);
         }
 
         StudentEnrollment newEnrollment = requestMapper.toEntity(dto);
-
-        if (newEnrollment.getStudent() != null)
-            enrollment.setStudent(newEnrollment.getStudent());
-        if (newEnrollment.getStatus() != null)
-            enrollment.setStatus(newEnrollment.getStatus());
-        if (newEnrollment.getEnrollmentYear() != null)
-            enrollment.setEnrollmentYear(newEnrollment.getEnrollmentYear());
+        if (newEnrollment.getStudent() != null) enrollment.setStudent(newEnrollment.getStudent());
+        if (newEnrollment.getStatus() != null) enrollment.setStatus(newEnrollment.getStatus());
+        if (newEnrollment.getEnrollmentYear() != null) enrollment.setEnrollmentYear(newEnrollment.getEnrollmentYear());
 
         StudentEnrollment updated = studentEnrollmentRepository.save(enrollment);
+        log.info(ENROLLMENT_ACTION, "Successfully updated student enrollment with id={}", id);
         return responseMapper.toDto(updated);
     }
 
     @Override
     public void delete(UUID id) {
+        log.info(ENROLLMENT_ACTION, "Deleting student enrollment with id={}...", id);
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
+                .orElseThrow(() -> {
+                    log.warn(ENROLLMENT_ACTION, "Attempt to delete non-existing enrollment with id={}", id);
+                    return notFound.get("error.student-enrollment.notfound", id);
+                });
 
         Course course = enrollment.getCourse();
         course.setNumEnrolled(course.getNumEnrolled() - 1);
@@ -131,6 +151,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         }
 
         studentEnrollmentRepository.delete(enrollment);
+        log.info(ENROLLMENT_ACTION, "Enrollment with id={} deleted", id);
     }
-
 }
