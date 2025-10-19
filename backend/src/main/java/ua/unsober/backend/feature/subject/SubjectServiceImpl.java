@@ -36,7 +36,7 @@ public class SubjectServiceImpl implements SubjectService {
         log.info(SUBJECT_ACTION, "Fetching all subjects...");
         Page<SubjectResponseDto> result = subjectRepository.findAll(pageable)
                 .map(responseMapper::toDto);
-        log.info(SUBJECT_ACTION, "Fetched {} subjects", result.getTotalElements());
+        log.info(SUBJECT_ACTION, "Fetched {} subjects", result.getNumberOfElements());
         return result;
     }
 
