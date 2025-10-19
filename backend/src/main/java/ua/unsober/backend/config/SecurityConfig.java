@@ -30,6 +30,11 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.POST, "/auth/sign-in").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/student").permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET,
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
+                    ).permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

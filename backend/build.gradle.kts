@@ -1,7 +1,10 @@
+import java.util.*
+
 plugins {
     java
     id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 }
 
 group = "ua.unsober"
@@ -43,8 +46,32 @@ dependencies {
     implementation("org.jsoup:jsoup:1.21.2")
     implementation("ua.unsober:unsober-starter-map:0.0.1-SNAPSHOT")
     implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+fun loadEnv(): Map<String, String> {
+    val envFile = file(".env")
+    if (!envFile.exists()) return emptyMap()
+
+    return envFile.readLines()
+        .filter { it.isNotBlank() && !it.trim().startsWith("#") }.associate {
+            val (key, value) = it.split("=", limit = 2)
+            key.trim() to value.trim()
+        }
+}
+
+openApi {
+    apiDocsUrl.set("http://localhost:8080/api/v3/api-docs")
+    outputDir.set(layout.buildDirectory.dir("openapi"))
+    outputFileName.set("openapi.json")
+    waitTimeInSeconds.set(30)
+
+    customBootRun {
+        environment.putAll(loadEnv())
+    }
 }
