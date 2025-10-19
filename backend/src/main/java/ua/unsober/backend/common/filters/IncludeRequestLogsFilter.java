@@ -1,4 +1,4 @@
-package ua.unsober.backend.common.filers;
+package ua.unsober.backend.common.filters;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.filter.Filter;

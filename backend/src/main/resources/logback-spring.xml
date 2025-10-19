@@ -4,7 +4,7 @@
     <variable name="PATTERN_REQUEST" value="%d{HH:mm:ss} [%level] %thread %logger - %msg - req.id=%X{request.id} req.method=%X{request.method}%n" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ua.unsober.backend.common.filers.ExcludeRequestLogsFilter"/>
+        <filter class="ua.unsober.backend.common.filters.ExcludeRequestLogsFilter"/>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="ua.unsober.backend.common.logging.ColorLayout">
                 <pattern>${PATTERN}</pattern>
@@ -13,7 +13,7 @@
     </appender>
 
     <appender name="CONSOLE_REQUEST" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ua.unsober.backend.common.filers.IncludeRequestLogsFilter"/>
+        <filter class="ua.unsober.backend.common.filters.IncludeRequestLogsFilter"/>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="ua.unsober.backend.common.logging.ColorLayout">
                 <pattern>${PATTERN_REQUEST}</pattern>
@@ -22,14 +22,14 @@
     </appender>
 
     <appender name="FILE" class="ua.unsober.backend.common.logging.CustomFileAppender">
-        <filter class="ua.unsober.backend.common.filers.ExcludeRequestLogsFilter"/>
+        <filter class="ua.unsober.backend.common.filters.ExcludeRequestLogsFilter"/>
         <layout class="ua.unsober.backend.common.logging.MarkerLayout">
             <pattern>${PATTERN}</pattern>
         </layout>
     </appender>
 
     <appender name="FILE_REQUEST" class="ua.unsober.backend.common.logging.CustomFileAppender">
-        <filter class="ua.unsober.backend.common.filers.IncludeRequestLogsFilter"/>
+        <filter class="ua.unsober.backend.common.filters.IncludeRequestLogsFilter"/>
         <layout class="ua.unsober.backend.common.logging.MarkerLayout">
             <pattern>${PATTERN_REQUEST}</pattern>
         </layout>

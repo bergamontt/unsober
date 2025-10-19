@@ -1,4 +1,4 @@
-package ua.unsober.backend.common.filers;
+package ua.unsober.backend.common.filters;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
