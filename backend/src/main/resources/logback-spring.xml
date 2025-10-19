@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <variable name="PATTERN" value="%d{HH:mm:ss} [%level] %thread %logger - %msg%n" />
-    <variable name="PATTERN_REQUEST" value="%d{HH:mm:ss} [%level] %thread %logger - %msg - req.id=%X{request.id} req.method=%X{request.method}%n" />
+    <variable name="PATTERN" value="%d{HH:mm:ss} %-5level [%-25thread] %-60logger{40} - %msg%n" />
+    <variable name="PATTERN_REQUEST" value="%d{HH:mm:ss} %-5level [%-25thread] %-60logger{60} - %msg - req.id=%X{request.id} req.method=%X{request.method}%n" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ua.unsober.backend.common.filters.ExcludeRequestLogsFilter"/>
