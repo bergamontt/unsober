@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "9ee2d258-ff42-4143-9ab5-c048e89e4523",
+		"_postman_id": "f5142ebd-0a40-4da3-a907-c5ed4513177e",
 		"name": "Unsober API Collection",
 		"description": "A collection containing most commonly used requests to the unsober API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "49382810",
-		"_collection_link": "https://tymko13-ab5c5fe7-8061895.postman.co/workspace/tymko13-ab5c5fe7's-Workspace~2ed52717-b966-4a0a-874d-f05a88d7998e/collection/49382810-9ee2d258-ff42-4143-9ab5-c048e89e4523?action=share&source=collection_link&creator=49382810"
+		"_collection_link": "https://tymko13-ab5c5fe7-8061895.postman.co/workspace/tymko13-ab5c5fe7's-Workspace~2ed52717-b966-4a0a-874d-f05a88d7998e/collection/49382810-f5142ebd-0a40-4da3-a907-c5ed4513177e?action=share&source=collection_link&creator=49382810"
 	},
 	"item": [
 		{
@@ -74,7 +74,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"n.stepanenko@ukma.edu.ua\",\r\n    \"password\": \"yanazar\"\r\n}",
+					"raw": "{\r\n    \"email\": \"example@proton.me\",\r\n    \"password\": \"yanenazar\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -311,7 +311,15 @@
 							"});"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -440,6 +448,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -450,6 +459,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					"if (pm.info.requestName !== \"Unauthorised request\") {\r",
 					"    pm.test(\"Status code is 200\", function () {\r",
@@ -477,23 +487,19 @@
 		},
 		{
 			"key": "courseId",
-			"value": "49cc8666-d8ff-4b86-a884-e0500cd45daa",
-			"type": "string"
+			"value": "49cc8666-d8ff-4b86-a884-e0500cd45daa"
 		},
 		{
 			"key": "studentId",
-			"value": "22b98129-dba1-41b7-b4eb-2adaa2c82479",
-			"type": "string"
+			"value": "22b98129-dba1-41b7-b4eb-2adaa2c82479"
 		},
 		{
 			"key": "studentEmail",
-			"value": "n.stepanenko@ukma.edu.ua",
-			"type": "string"
+			"value": "example@proton.me"
 		},
 		{
 			"key": "subjectId",
-			"value": "fe295a2a-a3df-447c-b04b-04c3dcb22bbf",
-			"type": "string"
+			"value": "fe295a2a-a3df-447c-b04b-04c3dcb22bbf"
 		}
 	]
 }
