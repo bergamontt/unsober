@@ -5,7 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.stereotype.Service;
+import ua.unsober.backend.common.enums.Role;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
+import ua.unsober.backend.feature.user.User;
+import ua.unsober.backend.feature.user.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
     private final StudentRequestMapper requestMapper;
     private final StudentResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
@@ -24,8 +28,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponseDto create(StudentRequestDto dto) {
         log.info(STUDENT_ACTION, "Creating new student...");
-        return responseMapper.toDto(
-                studentRepository.save(requestMapper.toEntity(dto)));
+        Student student = requestMapper.toEntity(dto);
+        User user = userRepository.save(student.getUser());
+        student.setUser(user);
+        return responseMapper.toDto(studentRepository.save(student));
     }
 
     @Override
@@ -56,22 +62,29 @@ public class StudentServiceImpl implements StudentService {
         });
 
         Student newStudent = requestMapper.toEntity(dto);
-        if (newStudent.getFirstName() != null)
-            student.setFirstName(newStudent.getFirstName());
-        if (newStudent.getLastName() != null)
-            student.setLastName(newStudent.getLastName());
-        if (newStudent.getPatronymic() != null)
-            student.setPatronymic(newStudent.getPatronymic());
+        if(newStudent.getUser() != null) {
+            User newUser = newStudent.getUser();
+            if (newUser.getFirstName() != null)
+                student.getUser().setFirstName(newUser.getFirstName());
+            if (newUser.getLastName() != null)
+                student.getUser().setLastName(newUser.getLastName());
+            if (newUser.getPatronymic() != null)
+                student.getUser().setPatronymic(newUser.getPatronymic());
+            if (newUser.getRole() != null)
+                student.getUser().setRole(newUser.getRole());
+            if (newUser.getEmail() != null)
+                student.getUser().setEmail(newUser.getEmail());
+            if (newUser.getPasswordHash() != null)
+                student.getUser().setPasswordHash(newUser.getPasswordHash());
+        }
         if (newStudent.getRecordBookNumber() != null)
             student.setRecordBookNumber(newStudent.getRecordBookNumber());
-        if (newStudent.getEmail() != null)
-            student.setEmail(newStudent.getEmail());
-        if (newStudent.getPasswordHash() != null)
-            student.setPasswordHash(newStudent.getPasswordHash());
         if (newStudent.getSpeciality() != null)
             student.setSpeciality(newStudent.getSpeciality());
         if (newStudent.getStudyYear() != null)
             student.setStudyYear(newStudent.getStudyYear());
+        User updatedUser = userRepository.save(student.getUser());
+        student.setUser(updatedUser);
         Student updated = studentRepository.save(student);
         return responseMapper.toDto(updated);
     }
@@ -91,10 +104,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentResponseDto getByEmail(String email) {
         log.info(STUDENT_ACTION, "Fetching student by email...");
-        return responseMapper.toDto(studentRepository.findByEmail(email)
-                .orElseThrow(() -> {
-                    log.warn(STUDENT_ACTION, "Attempt to fetch a student by non-existing email");
-                    return notFound.get("error.student.notfound", email);
-                }));
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+            notFound.get("error.user.notfound", email)
+        );
+        if(user.getRole() == Role.STUDENT) {
+            return responseMapper.toDto(studentRepository.findByUserId(user.getId())
+                    .orElseThrow(() -> {
+                        log.warn(STUDENT_ACTION, "Attempt to fetch a student by non-existing email");
+                        return notFound.get("error.student.notfound", email);
+                    }));
+        } else {
+            throw notFound.get("error.student.notfound", email);
+        }
     }
 }

@@ -1,30 +1,24 @@
-package ua.unsober.backend.feature.admin;
+package ua.unsober.backend.feature.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ua.unsober.backend.common.enums.Role;
-import ua.unsober.backend.feature.user.User;
 
 @Component
 @RequiredArgsConstructor
-public class AdminRequestMapper {
+public class UserRequestMapper {
     private final PasswordEncoder passwordEncoder;
 
-    public Admin toEntity(AdminRequestDto dto) {
+    public User toEntity(UserRequestDto dto) {
         if (dto == null)
             return null;
-        User user = User.builder()
+        return User.builder()
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .patronymic(dto.getPatronymic())
-                .role(Role.ADMIN)
+                .role(dto.getRole())
                 .email(dto.getEmail())
                 .passwordHash(passwordEncoder.encode(dto.getPassword()))
-                .build();
-
-        return Admin.builder()
-                .user(user)
                 .build();
     }
 }

@@ -3,8 +3,10 @@ package ua.unsober.backend.feature.student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ua.unsober.backend.common.enums.Role;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.feature.speciality.SpecialityRepository;
+import ua.unsober.backend.feature.user.User;
 
 @Component
 @RequiredArgsConstructor
@@ -15,13 +17,17 @@ public class StudentRequestMapper {
 
     public Student toEntity(StudentRequestDto dto) {
         if (dto == null) return null;
-        Student entity = Student.builder()
+        User user = User.builder()
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
                 .patronymic(dto.getPatronymic())
-                .recordBookNumber(dto.getRecordBookNumber())
+                .role(Role.STUDENT)
                 .email(dto.getEmail())
                 .passwordHash(passwordEncoder.encode(dto.getPassword()))
+                .build();
+        Student entity = Student.builder()
+                .user(user)
+                .recordBookNumber(dto.getRecordBookNumber())
                 .studyYear(dto.getStudyYear())
                 .build();
 

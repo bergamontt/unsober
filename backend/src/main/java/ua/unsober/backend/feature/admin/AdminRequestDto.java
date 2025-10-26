@@ -11,6 +11,18 @@ import jakarta.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminRequestDto {
+    @NotBlank(message = "{student.firstName.required}")
+    @Size(max = 100, message = "{student.firstName.size}")
+    private String firstName;
+
+    @NotBlank(message = "{student.lastName.required}")
+    @Size(max = 100, message = "{student.lastName.size}")
+    private String lastName;
+
+    @NotBlank(message = "{student.patronymic.required}")
+    @Size(max = 100, message = "{student.patronymic.size}")
+    private String patronymic;
+
     @NotBlank(message = "{admin.email.required}")
     @Email(message = "{admin.email.invalid}")
     @Size(max = 200, message = "{admin.email.size}")

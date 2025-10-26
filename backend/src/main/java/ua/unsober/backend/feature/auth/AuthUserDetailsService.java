@@ -8,20 +8,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ua.unsober.backend.feature.student.StudentRepository;
+import ua.unsober.backend.feature.user.UserRepository;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthUserDetailsService implements UserDetailsService {
-    private final StudentRepository studentRepository;
+    private final UserRepository userRepository;
 
     private static final Marker SECURITY = MarkerFactory.getMarker("SECURITY");
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.info(SECURITY, "Loading user...");
-        UserDetails user = studentRepository.findByEmail(email)
+        UserDetails user = userRepository.findByEmail(email)
                 .map(AuthUserDetails::new)
                 .orElseThrow(() -> {
                     log.warn(SECURITY, "User was not found");

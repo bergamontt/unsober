@@ -1,14 +1,13 @@
 package ua.unsober.backend.feature.admin;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.feature.user.User;
 
 import java.util.UUID;
 
@@ -23,16 +22,10 @@ public class Admin {
     @UuidGenerator
     private UUID id;
 
-    @NotBlank
-    @Email
-    @Size(max=200)
-    @Column(length=200, unique=true, nullable=false)
-    private String email;
-
-    @NotBlank
-    @Size(min=60, max=60)
-    @Column(name="password_hash", length=60, nullable=false)
-    private String passwordHash;
+    @NotNull
+    @OneToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     @Version
     @Column(nullable=false)

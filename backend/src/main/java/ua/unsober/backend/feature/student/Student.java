@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import ua.unsober.backend.feature.course.Course;
 import ua.unsober.backend.feature.speciality.Speciality;
+import ua.unsober.backend.feature.user.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,36 +26,15 @@ public class Student {
     @UuidGenerator
     private UUID id;
 
-    @NotBlank
-    @Size(max=100)
-    @Column(name="first_name", length=100, nullable=false)
-    private String firstName;
-
-    @NotBlank
-    @Size(max=100)
-    @Column(name="last_name", length=100, nullable=false)
-    private String lastName;
-
-    @NotBlank
-    @Size(max=100)
-    @Column(name="patronymic", length=100, nullable=false)
-    private String patronymic;
+    @NotNull
+    @OneToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     @NotBlank
     @Size(max=50)
     @Column(name="record_book_number", length=50, nullable=false)
     private String recordBookNumber;
-
-    @NotBlank
-    @Email
-    @Size(max=200)
-    @Column(length=200, unique=true, nullable=false)
-    private String email;
-
-    @NotBlank
-    @Size(min=60, max=60)
-    @Column(name="password_hash", length=60, nullable=false)
-    private String passwordHash;
 
     @NotNull
     @ManyToOne

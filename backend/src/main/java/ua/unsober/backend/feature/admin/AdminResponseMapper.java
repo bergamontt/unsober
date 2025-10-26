@@ -1,8 +1,23 @@
 package ua.unsober.backend.feature.admin;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
+import ua.unsober.backend.feature.user.User;
 
-@Mapper(componentModel = "spring")
-public interface AdminResponseMapper {
-    AdminResponseDto toDto(Admin admin);
+@Component
+public class AdminResponseMapper {
+    public AdminResponseDto toDto(Admin admin) {
+        if (admin == null)
+            return null;
+        AdminResponseDto response = AdminResponseDto.builder()
+                .id(admin.getId())
+                .build();
+        if (admin.getUser() != null) {
+            User user = admin.getUser();
+            response.setFirstName(user.getFirstName());
+            response.setLastName(user.getLastName());
+            response.setPatronymic(user.getPatronymic());
+            response.setEmail(user.getEmail());
+        }
+        return response;
+    }
 }

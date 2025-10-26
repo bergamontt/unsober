@@ -1,4 +1,4 @@
-package ua.unsober.backend.feature.admin;
+package ua.unsober.backend.feature.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class AdminResponseDto {
+public class UserResponseDto {
     private UUID id;
     private String firstName;
     private String lastName;
