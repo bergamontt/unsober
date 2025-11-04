@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Student registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+
+        form {
+            max-width: 720px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: .5rem;
+            margin-top: .25rem;
+            box-sizing: border-box;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .errors {
+            color: #b00020;
+            font-size: .9rem;
+        }
+
+        .actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+        }
+
+        button {
+            display: inline-block;
+            padding: .5rem .8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            background: #1976d2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Student registration</h1>
+<form th:action="@{/register-student}" th:object="${requestDto}" method="post">
+    <div>
+        <label for="firstName">First name</label>
+        <input id="firstName" type="text" th:field="*{firstName}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+    </div>
+
+    <div>
+        <label for="lastName">Last name</label>
+        <input id="lastName" type="text" th:field="*{lastName}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+    </div>
+
+    <div>
+        <label for="patronymic">Patronymic</label>
+        <input id="patronymic" type="text" th:field="*{patronymic}"/>
+        <div class="errors" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"></div>
+    </div>
+
+    <div>
+        <label for="recordBookNumber">Record book number</label>
+        <input id="recordBookNumber" type="text" th:field="*{recordBookNumber}"/>
+        <div class="errors" th:if="${#fields.hasErrors('recordBookNumber')}" th:errors="*{recordBookNumber}"></div>
+    </div>
+
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" th:field="*{email}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" th:field="*{password}" required/>
+        <div class="errors" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+
+    <div class="full">
+        <label for="specialityId">Speciality</label>
+        <select id="specialityId" th:field="*{specialityId}" required>
+            <option th:each="s : ${specialities}" th:value="${s.id}" th:text="${s.name}">Speciality</option>
+        </select>
+        <div class="errors" th:if="${#fields.hasErrors('specialityId')}" th:errors="*{specialityId}"></div>
+    </div>
+
+    <div>
+        <label for="studyYear">Study year</label>
+        <select id="studyYear" th:field="*{studyYear}">
+            <option th:value="1">1</option>
+            <option th:value="2">2</option>
+            <option th:value="3">3</option>
+            <option th:value="4">4</option>
+        </select>
+        <div class="errors" th:if="${#fields.hasErrors('studyYear')}" th:errors="*{studyYear}"></div>
+    </div>
+
+    <div class="actions">
+        <button type="submit">Register</button>
+        <a th:href="@{/account}" class="small-link">Back to account</a>
+    </div>
+</form>
+</body>
+</html>

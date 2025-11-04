@@ -31,18 +31,19 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
+                    auth.requestMatchers("/api/auth/**").permitAll();
+                    auth.requestMatchers("/**").permitAll();
+                    auth.requestMatchers("/api/swagger-ui/**", "/api/v3/api-docs/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET,
-                            "/subject/**", "/course/**", "/subject-recommendation/**",
-                            "/enrollment-request/**", "/withdrawal-request/**",
-                            "/student-enrollment/**"
+                            "/api/subject/**", "/api/course/**", "/api/subject-recommendation/**",
+                            "/api/enrollment-request/**", "/api/withdrawal-request/**",
+                            "/api/student-enrollment/**"
                     ).hasRole(Role.STUDENT.name());
                     auth.requestMatchers(HttpMethod.POST,
-                            "/enrollment-request/**", "/withdrawal-request/**",
-                            "/student-enrollment/**"
+                            "/api/enrollment-request/**", "/api/withdrawal-request/**",
+                            "/api/student-enrollment/**"
                     ).hasRole(Role.STUDENT.name());
-                    auth.requestMatchers("/**").hasRole(Role.ADMIN.name());
+                    auth.requestMatchers("/api/**").hasRole(Role.ADMIN.name());
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

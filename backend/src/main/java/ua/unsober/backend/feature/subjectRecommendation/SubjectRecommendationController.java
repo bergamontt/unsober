@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/subject-recommendation")
+@RequestMapping("/api/subject-recommendation")
 @RequiredArgsConstructor
 public class SubjectRecommendationController {
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/building")
+@RequestMapping("/api/building")
 @RequiredArgsConstructor
 public class BuildingController {
 

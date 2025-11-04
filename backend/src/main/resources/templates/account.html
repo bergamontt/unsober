@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Account details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+
+        .card {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: .6rem;
+        }
+
+        .label {
+            width: 180px;
+            font-weight: 600;
+        }
+
+        .value {
+            flex: 1;
+        }
+
+        .actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: .5rem;
+        }
+
+        a.button, button {
+            display: inline-block;
+            padding: .5rem .8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            background: #1976d2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        a.button.secondary {
+            background: #666;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${accountType == 'STUDENT'} ? 'Student account' : 'Admin account'">Account</h1>
+
+<div class="card">
+    <div th:if="${accountType == 'STUDENT'}" th:object="${student}">
+        <div class="row">
+            <div class="label">First name</div>
+            <div class="value" th:text="*{firstName}">First</div>
+        </div>
+        <div class="row">
+            <div class="label">Last name</div>
+            <div class="value" th:text="*{lastName}">Last</div>
+        </div>
+        <div class="row">
+            <div class="label">Patronymic</div>
+            <div class="value" th:text="*{patronymic}">Patronymic</div>
+        </div>
+        <div class="row">
+            <div class="label">Record book #</div>
+            <div class="value" th:text="*{recordBookNumber}">RB123</div>
+        </div>
+        <div class="row">
+            <div class="label">Email</div>
+            <div class="value" th:text="*{email}">you@example.com</div>
+        </div>
+        <div class="row">
+            <div class="label">Speciality</div>
+            <div class="value" th:text="*{specialty != null} ? *{specialty.name} : '—'">Speciality</div>
+        </div>
+        <div class="row">
+            <div class="label">Study year</div>
+            <div class="value" th:text="*{studyYear}">3</div>
+        </div>
+
+        <div class="actions">
+            <a class="button" th:href="@{/login}">Logout</a>
+        </div>
+    </div>
+
+    <div th:if="${accountType == 'ADMIN'}" th:object="${admin}">
+        <div class="row">
+            <div class="label">First name</div>
+            <div class="value" th:text="*{firstName}">First</div>
+        </div>
+        <div class="row">
+            <div class="label">Last name</div>
+            <div class="value" th:text="*{lastName}">Last</div>
+        </div>
+        <div class="row">
+            <div class="label">Patronymic</div>
+            <div class="value" th:text="*{patronymic}">Patronymic</div>
+        </div>
+        <div class="row">
+            <div class="label">Email</div>
+            <div class="value" th:text="*{email}">admin@example.com</div>
+        </div>
+
+        <div class="actions">
+            <a class="button" th:href="@{/student-registration}">Student registration</a>
+            <a class="button secondary" th:href="@{/login}">Logout</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
