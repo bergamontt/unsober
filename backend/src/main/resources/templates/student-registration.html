@@ -60,7 +60,7 @@
 </head>
 <body>
 <h1>Student registration</h1>
-<form th:action="@{/register-student}" th:object="${requestDto}" method="post">
+<form th:action="@{/ui/register-student}" th:object="${requestDto}" method="post">
     <div>
         <label for="firstName">First name</label>
         <input id="firstName" type="text" th:field="*{firstName}" required/>
@@ -118,7 +118,7 @@
 
     <div class="actions">
         <button type="submit">Register</button>
-        <a th:href="@{/account}" class="small-link">Back to account</a>
+        <a th:href="@{/ui/account}" class="small-link">Back to account</a>
     </div>
 </form>
 </body>

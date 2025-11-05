@@ -16,13 +16,13 @@ import ua.unsober.backend.feature.auth.AuthService;
 public class TemplateLoginController {
     private final AuthService authService;
 
-    @GetMapping({"/login"})
+    @GetMapping({"/ui/login"})
     public String showLogin(Model model) {
         model.addAttribute("authRequest", new AuthRequest());
         return "login";
     }
 
-    @PostMapping("/auth")
+    @PostMapping("/ui/auth")
     public String authenticate(@ModelAttribute AuthRequest authRequest,
                                HttpServletResponse response) {
         String jwt = authService.authenticate(authRequest).getToken();
@@ -32,6 +32,6 @@ public class TemplateLoginController {
         jwtCookie.setPath("/");
         response.addCookie(jwtCookie);
 
-        return "redirect:/account";
+        return "redirect:/ui/account";
     }
 }

@@ -24,18 +24,18 @@ public class TemplateStudentRegistrationController {
     private final StudentService studentService;
     private final SpecialityService specialityService;
 
-    @GetMapping("/student-registration")
+    @GetMapping("/ui/student-registration")
     public String showRegistration(HttpServletRequest request, Model model) {
         model.addAttribute("requestDto", new StudentRequestDto());
         model.addAttribute("specialities", specialityService.getAll());
         Optional<String> token = CookieUtils.getJwtFromCookies(request);
         if (token.isEmpty())
-            return "redirect:/login";
+            return "redirect:/ui/login";
 
         List<Role> roles = jwtService.extractRoles(token.get());
 
         if (!roles.contains(Role.ADMIN))
-            return "redirect:/login";
+            return "redirect:/ui/login";
 
         return "student-registration";
     }
@@ -43,6 +43,6 @@ public class TemplateStudentRegistrationController {
     @PostMapping("/register-student")
     public String register(@ModelAttribute StudentRequestDto requestDo) {
         studentService.create(requestDo);
-        return "redirect:/account";
+        return "redirect:/ui/account";
     }
 }

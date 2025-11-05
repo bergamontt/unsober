@@ -23,11 +23,11 @@ public class TemplateAccountController {
     private final StudentService studentService;
     private final AdminService adminService;
 
-    @GetMapping("/account")
+    @GetMapping("/ui/account")
     public String accountPage(HttpServletRequest request, Model model) {
         Optional<String> token = CookieUtils.getJwtFromCookies(request);
         if (token.isEmpty())
-            return "redirect:/login";
+            return "redirect:/ui/login";
 
         List<Role> roles = jwtService.extractRoles(token.get());
         String email = jwtService.extractSubject(token.get());
@@ -43,7 +43,7 @@ public class TemplateAccountController {
             model.addAttribute("admin", admin);
             return "account";
         } else {
-            return "redirect:/login";
+            return "redirect:/ui/login";
         }
     }
 }
