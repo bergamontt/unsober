@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/withdrawal-request")
+@RequestMapping("/withdrawal-request")
 @RequiredArgsConstructor
 public class WithdrawalRequestController {
 

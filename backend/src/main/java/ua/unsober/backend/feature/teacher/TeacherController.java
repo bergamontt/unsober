@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/teacher")
+@RequestMapping("/teacher")
 @RequiredArgsConstructor
 public class TeacherController {
 

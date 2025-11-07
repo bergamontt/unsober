@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/enrollment-request")
+@RequestMapping("/enrollment-request")
 @RequiredArgsConstructor
 public class EnrollmentRequestController {
 
