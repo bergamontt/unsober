@@ -2,6 +2,7 @@ package ua.unsober.backend.feature.student;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class StudentRequestDto {
     @NotBlank(message = "{student.firstName.required}")
     @Size(max = 100, message = "{student.firstName.size}")
