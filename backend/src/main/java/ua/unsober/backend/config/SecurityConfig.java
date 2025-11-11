@@ -3,6 +3,7 @@ package ua.unsober.backend.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -13,37 +14,42 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import ua.unsober.backend.common.enums.Role;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationConverter converter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
-                    auth.requestMatchers(HttpMethod.GET,
-                            "/subject/**", "/course/**", "/subject-recommendation/**",
-                            "/enrollment-request/**", "/withdrawal-request/**",
-                            "/student-enrollment/**"
-                    ).hasRole(Role.STUDENT.name());
-                    auth.requestMatchers(HttpMethod.POST,
-                            "/enrollment-request/**", "/withdrawal-request/**",
-                            "/student-enrollment/**"
-                    ).hasRole(Role.STUDENT.name());
-                    auth.requestMatchers("/**").hasRole(Role.ADMIN.name());
-                    auth.anyRequest().authenticated();
-                })
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/subject/**", "/course/**", "/subject-recommendation/**",
+                                "/enrollment-request/**", "/withdrawal-request/**",
+                                "/student-enrollment/**"
+                        ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST,
+                                "/enrollment-request/**", "/withdrawal-request/**",
+                                "/student-enrollment/**"
+                        ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
+                        .anyRequest().hasRole(Role.ADMIN.name())
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
+                .oauth2ResourceServer(oauth2 ->
+                        oauth2.jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(converter)
+                        )
+                )
                 .build();
     }
 

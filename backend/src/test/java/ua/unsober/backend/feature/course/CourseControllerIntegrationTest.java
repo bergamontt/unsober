@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ua.unsober.backend.common.TestSecurityConfig;
+import ua.unsober.backend.common.SecurityTestConfig;
 
 import java.util.List;
 import java.util.UUID;
 
 @WebMvcTest(CourseController.class)
-@Import(TestSecurityConfig.class)
+@Import(SecurityTestConfig.class)
 public class CourseControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;

@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ua.unsober.backend.common.TestSecurityConfig;
+import ua.unsober.backend.common.SecurityTestConfig;
 import ua.unsober.backend.common.enums.Term;
 
 import java.math.BigDecimal;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SubjectController.class)
-@Import(TestSecurityConfig.class)
+@Import(SecurityTestConfig.class)
 public class SubjectControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
