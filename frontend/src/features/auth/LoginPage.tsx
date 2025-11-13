@@ -1,11 +1,11 @@
-import PrismaticBurst from "../../common/background/prismaticBurst/PrismaticBurst.tsx";
+import PrismaticBurst from "../../common/components/backgrounds/prismaticBurst/PrismaticBurst.tsx";
 import {Center, Fieldset, TextInput, PasswordInput, Title, Button, Text} from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { notifications } from "@mantine/notifications";
-import { useAuthStore } from "../../common/hooks/authStore.ts";
-import { login } from "./AuthService.ts";
+import { useAuthStore } from "../../hooks/authStore.ts";
+import { login } from "../../services/AuthService.ts";
 import loginIcon from '../../assets/login.svg';
 import Icon from "../../common/components/Icon.tsx";
 import './LoginPage.css';

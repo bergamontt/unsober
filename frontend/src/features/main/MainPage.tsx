@@ -1,5 +1,5 @@
 import { Center, Button, Stack, Group } from "@mantine/core";
-import DarkVeil from "../../common/background/darkVeil/DarkVeil.tsx";
+import DarkVeil from "../../common/components/backgrounds/darkVeil/DarkVeil.tsx";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import './MainPage.css';

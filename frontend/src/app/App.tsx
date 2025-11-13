@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
-import AppRoutes from "../features/routes/AppRoutes.tsx";
+import AppRoutes from "./AppRoutes.tsx";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';

@@ -1,4 +1,4 @@
-import type { Subject } from "./Subject.ts";
+import type { Subject } from "../../models/Subject.ts";
 import {Accordion} from "@mantine/core";
 import SubjectItem from "./SubjectItem.tsx";
 import SubjectPanel from "./SubjectPanel.tsx";

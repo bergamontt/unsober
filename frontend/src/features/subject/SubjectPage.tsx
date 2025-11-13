@@ -3,8 +3,8 @@ import PageWrapper from "../../common/components/PageWrapper.tsx";
 import SubjectDetails from "./SubjectDetails.tsx";
 import EnrolledStudents from "./EnrolledStudents.tsx";
 import { useParams } from "react-router";
-import { getSubject } from "./SubjectService.ts";
-import useFetch from "../../common/hooks/useFetch.ts";
+import { getSubject } from "../../services/SubjectService.ts";
+import useFetch from "../../hooks/useFetch.ts";
 
 function SubjectPage() {
     const { id } = useParams();

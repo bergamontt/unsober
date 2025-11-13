@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { Student } from "../../features/student/Student.ts";
-import { getStudentByEmail } from "../../features/student/StudentService.ts";
+import type { Student } from "../models/Student.ts";
+import { getStudentByEmail } from "../services/StudentService.ts";
 
 interface UserStore {
     user: Student | null;

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { getValidToken } from "../hooks/authStore.ts";
+import { getValidToken } from "../../hooks/authStore.ts";
 
 const api = axios.create({
     baseURL: 'http://localhost:8080/api',

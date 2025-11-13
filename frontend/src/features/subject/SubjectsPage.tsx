@@ -1,11 +1,11 @@
 import {Center, Pagination, Stack, Title} from "@mantine/core";
-import { getSubjects } from "./SubjectService.ts";
+import { getSubjects } from "../../services/SubjectService.ts";
 import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
 import Searchbar from "../../common/components/Searchbar.tsx";
 import SubjectPreview from "./SubjectPreview.tsx";
 import PageWrapper from "../../common/components/PageWrapper.tsx";
-import useFetch from "../../common/hooks/useFetch.ts";
+import useFetch from "../../hooks/useFetch.ts";
 
 function SubjectsPage() {
     const {t} = useTranslation("subjectSearch"); 

@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import Overlay from "./Overlay.tsx";
-import MainPage from "../main/MainPage.tsx";
-import LoginPage from "../auth/LoginPage.tsx";
-import ProfilePage from '../profile/ProfilePage.tsx';
-import SubjectsPage from '../subject/SubjectsPage.tsx';
-import SubjectPage from '../subject/SubjectPage.tsx';
-import SchedulePage from '../schedule/SchedulePage.tsx';
+import Overlay from "../common/components/Overlay.tsx";
+import MainPage from "../features/main/MainPage.tsx";
+import LoginPage from "../features/auth/LoginPage.tsx";
+import ProfilePage from '../features/profile/ProfilePage.tsx';
+import SubjectsPage from '../features/subject/SubjectsPage.tsx';
+import SubjectPage from '../features/subject/SubjectPage.tsx';
+import SchedulePage from '../features/schedule/SchedulePage.tsx';
 
 function AppRoutes() {
     return (

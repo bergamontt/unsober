@@ -1,6 +1,6 @@
 import {Flex} from "@mantine/core";
 import {Outlet} from "react-router-dom";
-import Header from "../../common/components/header/Header.tsx";
+import Header from "./header/Header.tsx";
 
 function Overlay() {
     return(

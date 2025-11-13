@@ -1,4 +1,4 @@
-import type { Subject } from "./Subject.ts";
+import type { Subject } from "../../models/Subject.ts";
 import { Stack, Button } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
