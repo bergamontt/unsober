@@ -1,4 +1,4 @@
-import PageWrapper from "../../common/components/PageWrapper.tsx";
+import PageWrapper from "../../common/PageWrapper.tsx";
 import Schedule from "./Schedule.tsx";
 
 function SchedulePage() {

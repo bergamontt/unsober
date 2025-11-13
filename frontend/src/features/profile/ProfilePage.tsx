@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import ProfilePanel from "./ProfilePanel.tsx";
 import SchedulePanel from "./SchedulePanel.tsx";
 import SettingsPanel from "./SettingsPanel.tsx";
-import Icon from "../../common/components/Icon.tsx";
+import Icon from "../../common/Icon.tsx";
 import user from '../../assets/user.svg'
 import settings from '../../assets/settings.svg'
 import schedule from '../../assets/schedule.svg'
-import PageWrapper from "../../common/components/PageWrapper.tsx";
+import PageWrapper from "../../common/PageWrapper.tsx";
 
 function ProfilePage() {
     const { t } = useTranslation("sections");

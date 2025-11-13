@@ -1,4 +1,4 @@
-import api from '../common/api/api.ts';
+import api from './api.ts';
 import type { Student } from '../models/Student.ts'
 
 export const getStudentByEmail = async (email: string): Promise<Student> => {

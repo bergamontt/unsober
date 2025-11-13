@@ -1,6 +1,6 @@
 import type { Page, PageableParams } from '../models/Page.ts';
 import type { Subject } from '../models/Subject.ts';
-import api from '../common/api/api.ts';
+import api from './api.ts';
 
 export const getSubjects = async (
     params: PageableParams = {}

@@ -1,4 +1,4 @@
-import PrismaticBurst from "../../common/components/backgrounds/prismaticBurst/PrismaticBurst.tsx";
+import PrismaticBurst from "../../common/backgrounds/prismaticBurst/PrismaticBurst.tsx";
 import {Center, Fieldset, TextInput, PasswordInput, Title, Button, Text} from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { useAuthStore } from "../../hooks/authStore.ts";
 import { login } from "../../services/AuthService.ts";
 import loginIcon from '../../assets/login.svg';
-import Icon from "../../common/components/Icon.tsx";
+import Icon from "../../common/Icon.tsx";
 import './LoginPage.css';
 
 function LoginPage() {

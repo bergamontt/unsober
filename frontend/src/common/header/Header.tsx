@@ -2,6 +2,7 @@ import { Tabs } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
 import './Header.css';
+import ProfileMenu from './ProfileMenu';
 
 function Header() {
     const navigate = useNavigate();
@@ -42,13 +43,7 @@ function Header() {
                 >
                     {t("schedule")}
                 </Tabs.Tab>
-                <Tabs.Tab
-                    value='profile'
-                    bg="black"
-                    onClick={() => navigate('/profile')}
-                >
-                    {t("profile")}
-                </Tabs.Tab>
+                <ProfileMenu />
             </Tabs.List>
         </Tabs>
     );
