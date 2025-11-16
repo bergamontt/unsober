@@ -46,7 +46,6 @@ export function createUserStore<TUser extends User>(
 
         clearUser: () => {
             set({ user: null, error: null });
-            useUserDetailsStore.getState().clear();
         },
     }));
 }

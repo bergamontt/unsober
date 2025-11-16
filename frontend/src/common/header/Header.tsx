@@ -31,21 +31,26 @@ function Header() {
                         UNSOBER
                     </span>
                 </Tabs.Tab>
-                <Tabs.Tab
-                    value="disciplines"
-                    bg="black"
-                    onClick={() => navigate(isAuthenticated ? '/subjects' : '/login')}
-                >
-                    {t("subjects")}
-                </Tabs.Tab>
-                <Tabs.Tab
-                    value='schedule'
-                    bg='black'
-                    onClick={() => navigate(isAuthenticated ? '/schedule' : '/login')}
-                >
-                    {t("schedule")}
-                </Tabs.Tab>
-                <ProfileMenu />
+                {
+                    isAuthenticated &&
+                    <>
+                        <Tabs.Tab
+                            value="disciplines"
+                            bg="black"
+                            onClick={() => navigate('/subjects')}
+                        >
+                            {t("subjects")}
+                        </Tabs.Tab>
+                        <Tabs.Tab
+                            value='schedule'
+                            bg='black'
+                            onClick={() => navigate('/schedule')}
+                        >
+                            {t("schedule")}
+                        </Tabs.Tab>
+                        <ProfileMenu />
+                    </>
+                }
             </Tabs.List>
         </Tabs>
     );

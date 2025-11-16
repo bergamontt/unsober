@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { useState, useEffect, useRef } from "react";
 import { useAdminStore } from "./adminStore.ts";
 import { useStudentStore } from "./studentStore.ts";
+import { useUserDetailsStore } from "./userDetailsStore.ts";
 
 const tokenKey = "unsoberJwt";
 
@@ -84,6 +85,7 @@ function deleteToken() {
 export function useAuthStore(): AuthStore {
     const { fetchByEmail: fetchAdminByEmail, clearUser: clearAdmin } = useAdminStore();
     const { fetchByEmail: fetchStudentByEmail, clearUser: clearStudent } = useStudentStore();
+    const { clear: clearUserInfo } = useUserDetailsStore();
 
     const [token, setTokenState] = useState<string | null>(null);
     const [loadingAuth, setLoadingAuth] = useState<boolean>(true);
@@ -100,20 +102,26 @@ export function useAuthStore(): AuthStore {
 
         const emailFromToken = getEmailFromToken(token);
         const rolesFromToken = getRolesFromToken(token);
+        const authenticated = token != null;
         setTokenState(token);
-        setIsAuthenticated(token != null);
+        setIsAuthenticated(authenticated);
         setCurrentEmail(emailFromToken);
         setCurrentRoles(rolesFromToken);
-        if (emailFromToken && rolesFromToken.includes("STUDENT")) {
-            fetchStudentByEmail(emailFromToken);
-        } else {
-            clearStudent();
-        }
 
-        if (emailFromToken && rolesFromToken.includes("ADMIN")) {
-            fetchAdminByEmail(emailFromToken);
+        if (emailFromToken) {
+            if (rolesFromToken.includes("STUDENT")) {
+                fetchStudentByEmail(emailFromToken);
+            } else {
+                clearStudent();
+            }
+
+            if (rolesFromToken.includes("ADMIN")) {
+                fetchAdminByEmail(emailFromToken);
+            } else {
+                clearAdmin();
+            }
         } else {
-            clearAdmin();
+            clearUserInfo();
         }
 
         const msToExpiration = getTimeToExpiration(token);

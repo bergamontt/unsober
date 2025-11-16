@@ -24,6 +24,12 @@ public class AdminController {
         return adminService.getById(id);
     }
 
+    @GetMapping("/email/{email}")
+    public AdminResponseDto getByEmail(@PathVariable String email) {
+        return adminService.getByEmail(email);
+    }
+
+
     @PatchMapping("/{id}")
     @Retryable
     public AdminResponseDto update(
