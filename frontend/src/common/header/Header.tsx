@@ -3,15 +3,17 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from "react-i18next";
 import './Header.css';
 import ProfileMenu from './ProfileMenu';
+import { useAuthStore } from '../../hooks/authStore';
 
 function Header() {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuthStore();
     const { t } = useTranslation("sections");
     const logoStyle = {
         fontWeight: "bold",
         fontSize: "1.2em"
     };
-    return(
+    return (
         <Tabs
             color="indigo"
             variant='unstyled'
@@ -32,14 +34,14 @@ function Header() {
                 <Tabs.Tab
                     value="disciplines"
                     bg="black"
-                    onClick={() => navigate('/subjects')}
+                    onClick={() => navigate(isAuthenticated ? '/subjects' : '/login')}
                 >
                     {t("subjects")}
                 </Tabs.Tab>
                 <Tabs.Tab
                     value='schedule'
                     bg='black'
-                    onClick={() => navigate('/schedule')}
+                    onClick={() => navigate(isAuthenticated ? '/schedule' : '/login')}
                 >
                     {t("schedule")}
                 </Tabs.Tab>

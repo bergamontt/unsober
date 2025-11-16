@@ -3,5 +3,7 @@
     "schedule": "Schedule",
     "profile": "Profile",
     "news": "News",
-    "settings": "Settings"
+    "settings": "Settings",
+    "aboutMe": "About me",
+    "adminPanel": "Admin panel"
 }

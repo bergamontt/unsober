@@ -16,8 +16,9 @@ interface UserStore<TUser extends User> {
     clearUser: () => void;
 }
 
-function useUserStore<TUser extends User>(getByEmail: (email: string) => Promise<TUser>) {
-    const { setFirstName, setLastName, setPatronymic, setEmail, clear } = useUserDetailsStore();
+export function createUserStore<TUser extends User>(
+    getByEmail: (email: string) => Promise<TUser>
+) {
     return create<UserStore<TUser>>((set) => ({
         user: null,
         loadingUser: false,
@@ -28,12 +29,16 @@ function useUserStore<TUser extends User>(getByEmail: (email: string) => Promise
             try {
                 const data = await getByEmail(email);
                 set({ user: data });
-                setFirstName(data?.firstName ?? null);
-                setLastName(data?.lastName ?? null);
-                setPatronymic(data?.patronymic ?? null);
-                setEmail(data?.email ?? null);
+
+                const details = useUserDetailsStore.getState();
+                details.setFirstName(data?.firstName ?? null);
+                details.setLastName(data?.lastName ?? null);
+                details.setPatronymic(data?.patronymic ?? null);
+                details.setEmail(data?.email ?? null);
             } catch (err) {
-                set({ error: err instanceof Error ? err.message : "Unknown error" });
+                set({
+                    error: err instanceof Error ? err.message : "Unknown error",
+                });
             } finally {
                 set({ loadingUser: false });
             }
@@ -41,9 +46,7 @@ function useUserStore<TUser extends User>(getByEmail: (email: string) => Promise
 
         clearUser: () => {
             set({ user: null, error: null });
-            clear();
-        }
+            useUserDetailsStore.getState().clear();
+        },
     }));
 }
-
-export default useUserStore;

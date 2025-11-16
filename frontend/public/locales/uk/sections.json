@@ -3,5 +3,7 @@
     "schedule": "Розклад",
     "profile": "Профіль",
     "news": "Новини",
-    "settings": "Налаштування"
+    "settings": "Налаштування",
+    "aboutMe": "Про мене",
+    "adminPanel": "Панель адміна"
 }

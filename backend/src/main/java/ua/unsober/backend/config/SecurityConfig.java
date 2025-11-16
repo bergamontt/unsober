@@ -3,7 +3,6 @@ package ua.unsober.backend.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -37,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/subject/**", "/course/**", "/subject-recommendation/**",
                                 "/enrollment-request/**", "/withdrawal-request/**",
-                                "/student-enrollment/**"
+                                "/student-enrollment/**", "/student/**"
                         ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
                                 "/enrollment-request/**", "/withdrawal-request/**",

@@ -1,49 +1,57 @@
-import { Menu, Tabs} from '@mantine/core';
+import { Menu, Tabs } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import userSvg from '../../assets/user.svg';
 import settings from '../../assets/settings.svg'
 import admin from '../../assets/admin.svg'
 import Icon from '../Icon';
 import { useTranslation } from 'react-i18next';
+import { useUserDetailsStore } from '../../hooks/userDetailsStore';
+import { useAdminStore } from '../../hooks/adminStore';
 
 function ProfileMenu() {
     const navigate = useNavigate();
     const { t } = useTranslation("sections");
-    return(
+    const { user: adminUser } = useAdminStore();
+    const { firstName, lastName } = useUserDetailsStore();
+    return (
         <Menu shadow="md">
             <Menu.Target>
                 <Tabs.Tab
                     value="profile"
                     bg="black"
-                    onClick={(e) => e.preventDefault()}
-                >
+                    onClick={(e) => e.preventDefault()}>
                     {t("profile")}
                 </Tabs.Tab>
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Label>
-                    Джамбо Мамбо
+                    {(firstName ?? "") + " " + (lastName ?? "")}
                 </Menu.Label>
-                <Menu.Divider/>
+                <Menu.Divider />
                 <Menu.Item
                     leftSection={<Icon src={userSvg} />}
-                    onClick={() => {navigate('/profile')}}
+                    onClick={() => { navigate('/profile') }}
                 >
-                    Про себе
+                    {t("aboutMe")}
                 </Menu.Item>
                 <Menu.Item
                     leftSection={<Icon src={settings} />}
-                    onClick={() => {navigate('/profile')}}
+                    onClick={() => { navigate('/profile') }}
                 >
-                    Налаштування
+                    {t("settings")}
                 </Menu.Item>
-                <Menu.Divider/>
-                <Menu.Item
-                    leftSection={<Icon src={admin} />}
-                    onClick={() => {navigate('/admin')}}
-                >
-                    Панель адміна
-                </Menu.Item>
+                {
+                    adminUser &&
+                    <>
+                        <Menu.Divider />
+                        <Menu.Item
+                            leftSection={<Icon src={admin} />}
+                            onClick={() => { navigate('/admin') }}
+                        >
+                            {t("adminPanel")}
+                        </Menu.Item>
+                    </>
+                }
             </Menu.Dropdown>
         </Menu>
     );
