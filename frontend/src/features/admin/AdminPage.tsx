@@ -4,8 +4,17 @@ import Searchbar from "../../common/Searchbar";
 import Icon from "../../common/Icon";
 import edit from '../../assets/edit.svg';
 import del from '../../assets/delete.svg';
+import plus from '../../assets/plus.svg'
+import { useDisclosure } from "@mantine/hooks";
+import AddModal from "./AddModal";
+import DeleteModal from "./DeleteModal.tsx";
+import EditModal from "./EditModal.tsx";
 
 function AdminPage() {
+    const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
+    const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
+    const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
+    
     const students = [
         { name: "Іваненко Іван Іванович", email: "ivanenko@example.com", year: 2, specialty: "Комп'ютерні науки" },
         { name: "Петренко Ольга Сергіївна", email: "petrenko@example.com", year: 3, specialty: "Робототехніка" },
@@ -24,16 +33,16 @@ function AdminPage() {
                         <ActionIcon
                             variant="light"
                             color="indigo"
-                            onClick={() => {}}
+                            onClick={openEdit}
                         >
                             <Icon src={edit}/>
                         </ActionIcon>
                     </Tooltip>
-                    <Tooltip label="Відрахувати">
+                    <Tooltip label="Видалити">
                         <ActionIcon
                             variant="light"
                             color="red"
-                            onClick={() => {}}
+                            onClick={openDelete}
                         >
                             <Icon src={del}/>
                         </ActionIcon>
@@ -45,11 +54,29 @@ function AdminPage() {
 
     return (
         <PageWrapper>
-            <Searchbar 
-                label="Пошук студентів"
-                description="Введіть електрону пошту студента"
-                placeholder="Електронна пошта"
-            />
+            <Group
+                grow
+                align="flex-end"
+            >
+                <Group grow>
+                    <Searchbar 
+                        label="Пошук студентів"
+                        description="Введіть електрону пошту студента"
+                        placeholder="Електронна пошта"
+                    />
+                </Group>
+                <Tooltip label="Додати">
+                    <ActionIcon
+                        onClick={openAdd}
+                        variant="filled"
+                        color="green"
+                        size="xl"
+                        maw="xl"
+                    >
+                        <Icon src={plus} size="1.5em"/>
+                    </ActionIcon>
+                </Tooltip>
+            </Group>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>
@@ -61,6 +88,18 @@ function AdminPage() {
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
+            <AddModal
+                opened={addOpened}
+                close={closeAdd}
+            />
+            <DeleteModal
+                opened={deleteOpened}
+                close={closeDelete}
+            />
+            <EditModal
+                opened={editOpened}
+                close={closeEdit}
+            />
         </PageWrapper>
     );
 }
