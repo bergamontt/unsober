@@ -1,12 +1,14 @@
 import { Menu, Tabs} from '@mantine/core';
 import { useNavigate } from 'react-router';
-import user from '../../assets/user.svg';
+import userSvg from '../../assets/user.svg';
 import settings from '../../assets/settings.svg'
 import admin from '../../assets/admin.svg'
 import Icon from '../Icon';
+import { useTranslation } from 'react-i18next';
 
 function ProfileMenu() {
     const navigate = useNavigate();
+    const { t } = useTranslation("sections");
     return(
         <Menu shadow="md">
             <Menu.Target>
@@ -15,7 +17,7 @@ function ProfileMenu() {
                     bg="black"
                     onClick={(e) => e.preventDefault()}
                 >
-                    Профіль
+                    {t("profile")}
                 </Tabs.Tab>
             </Menu.Target>
             <Menu.Dropdown>
@@ -24,7 +26,7 @@ function ProfileMenu() {
                 </Menu.Label>
                 <Menu.Divider/>
                 <Menu.Item
-                    leftSection={<Icon src={user} />}
+                    leftSection={<Icon src={userSvg} />}
                     onClick={() => {navigate('/profile')}}
                 >
                     Про себе
