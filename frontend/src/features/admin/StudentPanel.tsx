@@ -1,16 +1,15 @@
-import { ActionIcon, Group, Table, Tooltip } from "@mantine/core";
-import PageWrapper from "../../common/PageWrapper";
-import Searchbar from "../../common/Searchbar";
+import { ActionIcon, Group, Stack, Table, Tooltip } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import Icon from "../../common/Icon";
+import Searchbar from "../../common/Searchbar";
+import AddModal from "./AddModal";
+import DeleteModal from "./DeleteModal";
+import EditModal from "./EditModal";
 import edit from '../../assets/edit.svg';
 import del from '../../assets/delete.svg';
 import plus from '../../assets/plus.svg'
-import { useDisclosure } from "@mantine/hooks";
-import AddModal from "./AddModal";
-import DeleteModal from "./DeleteModal.tsx";
-import EditModal from "./EditModal.tsx";
 
-function AdminPage() {
+function StudentPanel() {
     const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
@@ -53,7 +52,7 @@ function AdminPage() {
     ));
 
     return (
-        <PageWrapper>
+        <Stack>
             <Group
                 grow
                 align="flex-end"
@@ -100,8 +99,8 @@ function AdminPage() {
                 opened={editOpened}
                 close={closeEdit}
             />
-        </PageWrapper>
+        </Stack>
     );
 }
 
-export default AdminPage
+export default StudentPanel;

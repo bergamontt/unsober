@@ -6,7 +6,8 @@ import ProfilePage from '../features/profile/ProfilePage.tsx';
 import SubjectsPage from '../features/subject/SubjectsPage.tsx';
 import SubjectPage from '../features/subject/SubjectPage.tsx';
 import SchedulePage from '../features/schedule/SchedulePage.tsx';
-import AdminPage from '../features/admin/AdminPage.tsx';
+import AdminLayout from '../features/admin/AdminLayout.tsx';
+import StudentPanel from '../features/admin/StudentPanel.tsx';
 
 function AppRoutes() {
     return (
@@ -18,7 +19,9 @@ function AppRoutes() {
                 <Route path="subjects" element={<SubjectsPage />}/>
                 <Route path="subject/:id" element={<SubjectPage />}/>
                 <Route path="schedule" element={<SchedulePage />}/>
-                <Route path="admin" element={<AdminPage />}/>
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route path="students" element={<StudentPanel />}/>
+                </Route>
             </Route>
         </Routes>
     );
