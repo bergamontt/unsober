@@ -1,4 +1,3 @@
-import java.util.*
 
 plugins {
     java
@@ -46,6 +45,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.21.2")
     implementation("ua.unsober:unsober-starter-map:0.0.1-SNAPSHOT")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
 }

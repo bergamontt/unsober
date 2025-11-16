@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.student;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.unsober.backend.common.aspects.retry.Retryable;
 
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +35,7 @@ public class StudentController {
     }
 
     @PatchMapping("/{id}")
+    @Retryable
     public StudentResponseDto update(
             @PathVariable UUID id,
             @RequestBody StudentRequestDto dto) {

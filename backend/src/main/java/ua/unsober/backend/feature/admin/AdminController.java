@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.admin;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.unsober.backend.common.aspects.retry.Retryable;
 
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
+    @Retryable
     public AdminResponseDto update(
             @PathVariable UUID id,
             @RequestBody AdminRequestDto dto) {
