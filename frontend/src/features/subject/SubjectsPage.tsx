@@ -18,7 +18,7 @@ function SubjectsPage() {
         if (!isAuthenticated && !loadingAuth) {
             navigate('/login');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, loadingAuth, navigate]);
 
     const params = useMemo(() => (
         { page: page - 1 }), [page]

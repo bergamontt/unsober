@@ -6,13 +6,14 @@ import { useEffect } from "react";
 import { useAuthStore } from "../../hooks/authStore";
 
 function AdminLayout() {
-    const { isAuthenticated, loadingAuth } = useAuthStore();
+    const {isAuthenticated, loadingAuth, currentRoles} = useAuthStore();
+    const isAdmin = currentRoles.includes("ADMIN");
     const navigate = useNavigate();
     useEffect(() => {
-        if (!isAuthenticated && !loadingAuth) {
+        if ((!isAuthenticated || !isAdmin) && !loadingAuth) {
             navigate('/login');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, loadingAuth, isAdmin, navigate]);
     return (
         <PageWrapper>
             <Flex align="flex-start">

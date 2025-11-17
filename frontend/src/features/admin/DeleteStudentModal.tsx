@@ -1,11 +1,13 @@
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 
 type DeleteModalProps = {
     opened: boolean;
     close: () => void;
 }
 
-function DeleteModal({opened, close} : DeleteModalProps) {
+function DeleteStudentModal({opened, close} : DeleteModalProps) {
+    const { t } = useTranslation("manageStudents");
     return(
         <Modal
             size="xs"
@@ -18,19 +20,18 @@ function DeleteModal({opened, close} : DeleteModalProps) {
                 mt="xs"
             >
                 <Text>
-                    Ви дійсно впевнені, що хочете виконати операцію видалення?
-                    Ця операція є незворотньою.
+                    {t("areYouSure")}
                 </Text>
                 <Group grow>
                     <Button
                         variant="default"
                     >
-                        Відмінити
+                        {t("cancel")}
                     </Button>
                     <Button
                         color="red"
                     >
-                        Видалити
+                        {t("delete")}
                     </Button>
                 </Group>
             </Stack>
@@ -38,4 +39,4 @@ function DeleteModal({opened, close} : DeleteModalProps) {
     );
 }
 
-export default DeleteModal
+export default DeleteStudentModal

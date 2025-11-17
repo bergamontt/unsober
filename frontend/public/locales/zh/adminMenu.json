@@ -1,0 +1,14 @@
+{
+    "students": "学生",
+    "requests": "请求",
+    "teachers": "教师",
+    "courses": "课程",
+    "subjects": "科目",
+    "specialities": "专业",
+    "faculties": "院系",
+    "departments": "系/部门",
+    "buildings": "教学楼",
+    "edit": "编辑",
+    "delete": "删除",
+    "add": "添加"
+}

@@ -16,7 +16,7 @@ function SubjectPage() {
         if (!isAuthenticated && !loadingAuth) {
             navigate('/login');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, loadingAuth, navigate]);
     const {data : subject} = useFetch(
         getSubject, [id],
     );

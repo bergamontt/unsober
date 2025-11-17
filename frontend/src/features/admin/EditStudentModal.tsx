@@ -1,73 +1,77 @@
 import { Button, Group, Modal, NativeSelect, PasswordInput, Stack, TextInput } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 
-type AddModalProps = {
+type EditModalProps = {
     opened: boolean;
     close: () => void;
 }
 
-function AddModal({opened, close} : AddModalProps) {
+function EditStudentModal({opened, close} : EditModalProps) {
+    const { t } = useTranslation("manageStudents");
     return (
         <Modal
             centered
-            title="Додати студента"
+            title={t("editStudent")}
             opened={opened}
             onClose={close}
         >
             <Stack m="xs">
                 <Group grow>
                     <TextInput
-                        label="Ім'я"
+                        label={t("name")}
                         withAsterisk
-                        placeholder="Ім'я студента"
+                        placeholder={t("studentName")}
                     />
                     <TextInput
-                        label="Прізвище"
+                        label={t("surname")}
                         withAsterisk
-                        placeholder="Прізвище студента"
+                        placeholder={t("studentSurname")}
                     />
                 </Group>
                 <TextInput
-                    label="По батькові"
+                    label={t("patronymic")}
                     withAsterisk
-                    placeholder="По батькові студента"
+                    placeholder={t("studentPatronymic")}
                 />
                 <Group grow>
                     <NativeSelect
-                        label="Рік навчання"
+                        label={t("studyYear")}
                         withAsterisk
-                        data={['1-ий рік', '2-ий рік', '3-ий рік', '4-ий рік']}
+                        data={[t("year1"), t("year2"), t("year3"), t("year4")]}
                     />
                     <NativeSelect
-                        label="Спеціальність"
+                        label={t("speciality")}
                         withAsterisk
-                        data={['Кібербезпека', 'Прикладна математика', 'Робототехніка']}
+                        data={[
+
+                        ]}
                     />
                 </Group>
                 <TextInput
-                    label="Номер залікової книжки"
+                    label={t("recordBookNum")}
                     withAsterisk
-                    placeholder="Номер залікової книжки студента"
+                    placeholder={t("studentRecordBookNum")}
                 />
                 <TextInput
-                    label="Пошта"
+                    label={t("studentEmail")}
                     withAsterisk
-                    placeholder="Пошта студента"
+                    placeholder={t("studentEmail")}
                 />
                 <PasswordInput
-                    label="Пароль"
+                    label={t("password")}
                     withAsterisk
-                    placeholder="Пароль студента"
+                    placeholder={t("studentPassword")}
                 />
                 <Button
                     variant="filled"
                     color="green"
                     mt="xs"
                 >
-                    Додати
+                    {t("saveChanges")}
                 </Button>
             </Stack>
         </Modal>
     );
 }
 
-export default AddModal
+export default EditStudentModal

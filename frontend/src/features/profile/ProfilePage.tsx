@@ -21,7 +21,7 @@ function ProfilePage() {
         if (!isAuthenticated && !loadingAuth) {
             navigate('/login');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, loadingAuth, navigate]);
     
     return (
         <PageWrapper>
