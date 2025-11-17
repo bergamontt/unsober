@@ -10,3 +10,14 @@ export interface Student {
     speciality: Speciality;
     studyYear: number;
 }
+
+export interface StudentDto {
+    firstName?: string;
+    lastName?: string;
+    patronymic?: string;
+    recordBookNumber?: string;
+    email?: string;
+    password?: string;
+    specialityId?: string;
+    studyYear?: number;
+}

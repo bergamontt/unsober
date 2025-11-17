@@ -11,6 +11,7 @@ import plus from '../../assets/plus.svg'
 import useFetch from "../../hooks/useFetch";
 import { getAllStudents } from "../../services/StudentService";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 function StudentPanel() {
     const { t } = useTranslation(["adminMenu", "manageStudents"]);
@@ -18,6 +19,7 @@ function StudentPanel() {
     const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
+    const [currentId, setCurrentId] = useState<string | null>(null);
 
     const { data } = useFetch(getAllStudents, []);
     const students = data ?? [];
@@ -34,7 +36,10 @@ function StudentPanel() {
                         <ActionIcon
                             variant="light"
                             color="indigo"
-                            onClick={openEdit}
+                            onClick={() => {
+                                setCurrentId(student.id);
+                                openEdit();
+                            }}
                         >
                             <Icon src={edit} />
                         </ActionIcon>
@@ -43,7 +48,10 @@ function StudentPanel() {
                         <ActionIcon
                             variant="light"
                             color="red"
-                            onClick={openDelete}
+                            onClick={() => {
+                                setCurrentId(student.id);
+                                openDelete();
+                            }}
                         >
                             <Icon src={del} />
                         </ActionIcon>
@@ -96,10 +104,12 @@ function StudentPanel() {
             <DeleteStudentModal
                 opened={deleteOpened}
                 close={closeDelete}
+                studentId={currentId}
             />
             <EditStudentModal
                 opened={editOpened}
                 close={closeEdit}
+                studentId={currentId}
             />
         </Stack>
     );

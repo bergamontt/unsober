@@ -23,7 +23,7 @@ public class StudentRequestMapper {
                 .patronymic(dto.getPatronymic())
                 .role(Role.STUDENT)
                 .email(dto.getEmail())
-                .passwordHash(passwordEncoder.encode(dto.getPassword()))
+                .passwordHash(dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword()) : null)
                 .build();
         Student entity = Student.builder()
                 .user(user)

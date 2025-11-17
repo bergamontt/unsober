@@ -25,5 +25,21 @@
     "saveChanges": "保存更改",
     "areYouSure": "您确定要执行删除操作吗?\n此操作不可逆。",
     "cancel": "取消",
-    "delete": "删除"
+    "delete": "删除",
+    "error": "错误",
+    "success": "成功",
+    "nameTooShort": "姓名长度必须至少为 {{min}} 个字符",
+    "surnameTooShort": "姓氏长度必须至少为 {{min}} 个字符",
+    "patronymicTooShort": "父名长度至少为 {{min}} 个字符",
+    "selectStudyYear": "请选择学习年份",
+    "selectSpeciality": "请选择专业",
+    "recordBookTooShort": "成绩册编号必须至少为 {{min}} 个字符",
+    "emailTooShort": "邮箱长度必须至少为 {{min}} 个字符",
+    "passwordTooShort": "密码长度必须至少为 {{min}} 个字符",
+    "studentAdded": "学生 {{fstName}} {{lstName}} 已添加",
+    "studentUpdated": "学生信息已成功更新",
+    "studentDeleted": "学生 {{fstName}} {{lstName}} 已被删除",
+    "unknownAddError": "无法添加学生",
+    "unknownUpdateError": "无法更新学生信息",
+    "unknownDeleteError": "无法删除该学生"
 }

@@ -58,8 +58,6 @@ function LoginPage() {
         }
     }, [email, password]);
 
-
-
     return(
         <div
             style={{
