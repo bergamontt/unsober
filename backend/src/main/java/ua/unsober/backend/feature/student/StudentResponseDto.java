@@ -19,6 +19,6 @@ public class StudentResponseDto {
     private String patronymic;
     private String recordBookNumber;
     private String email;
-    private SpecialityResponseDto specialty;
+    private SpecialityResponseDto speciality;
     private Integer studyYear;
 }

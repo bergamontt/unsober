@@ -1,3 +1,5 @@
+import type { Speciality } from "./Speciality";
+
 export interface Student {
     id: string;
     firstName: string;
@@ -5,5 +7,6 @@ export interface Student {
     patronymic: string;
     recordBookNumber: string;
     email: string;
+    speciality: Speciality;
     studyYear: number;
 }

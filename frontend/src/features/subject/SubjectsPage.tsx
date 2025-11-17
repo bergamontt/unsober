@@ -1,15 +1,25 @@
 import {Center, Pagination, Stack, Title} from "@mantine/core";
 import { getSubjects } from "../../services/SubjectService.ts";
 import { useTranslation } from "react-i18next";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Searchbar from "../../common/Searchbar.tsx";
 import SubjectPreview from "./SubjectPreview.tsx";
 import PageWrapper from "../../common/PageWrapper.tsx";
 import useFetch from "../../hooks/useFetch.ts";
+import { useNavigate } from "react-router";
+import { useAuthStore } from "../../hooks/authStore.ts";
 
 function SubjectsPage() {
     const {t} = useTranslation("subjectSearch"); 
     const [page, setPage] = useState<number>(1);
+    const { isAuthenticated, loadingAuth } = useAuthStore();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!isAuthenticated && !loadingAuth) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
+
     const params = useMemo(() => (
         { page: page - 1 }), [page]
     );

@@ -4,10 +4,12 @@ import { useTranslation } from "react-i18next";
 import './Header.css';
 import ProfileMenu from './ProfileMenu';
 import { useAuthStore } from '../../hooks/authStore';
+import { useStudentStore } from '../../hooks/studentStore';
 
 function Header() {
     const navigate = useNavigate();
     const { isAuthenticated } = useAuthStore();
+    const { user: student } = useStudentStore();
     const { t } = useTranslation("sections");
     const logoStyle = {
         fontWeight: "bold",
@@ -41,13 +43,16 @@ function Header() {
                         >
                             {t("subjects")}
                         </Tabs.Tab>
-                        <Tabs.Tab
-                            value='schedule'
-                            bg='black'
-                            onClick={() => navigate('/schedule')}
-                        >
-                            {t("schedule")}
-                        </Tabs.Tab>
+                        {
+                            student &&
+                            <Tabs.Tab
+                                value='schedule'
+                                bg='black'
+                                onClick={() => navigate('/schedule')}
+                            >
+                                {t("schedule")}
+                            </Tabs.Tab>
+                        }
                         <ProfileMenu />
                     </>
                 }

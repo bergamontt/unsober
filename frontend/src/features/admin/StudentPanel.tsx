@@ -8,8 +8,19 @@ import EditModal from "./EditModal";
 import edit from '../../assets/edit.svg';
 import del from '../../assets/delete.svg';
 import plus from '../../assets/plus.svg'
+import { useAuthStore } from "../../hooks/authStore";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 function StudentPanel() {
+    const { isAuthenticated, loadingAuth } = useAuthStore();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!isAuthenticated && !loadingAuth) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
+
     const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);

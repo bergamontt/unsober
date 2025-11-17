@@ -1,9 +1,18 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import PageWrapper from "../../common/PageWrapper";
 import AdminSidebar from "./AdminSidebar";
 import { Flex, Group } from "@mantine/core";
+import { useEffect } from "react";
+import { useAuthStore } from "../../hooks/authStore";
 
 function AdminLayout() {
+    const { isAuthenticated, loadingAuth } = useAuthStore();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!isAuthenticated && !loadingAuth) {
+            navigate('/login');
+        }
+    }, [isAuthenticated, navigate]);
     return (
         <PageWrapper>
             <Flex align="flex-start">

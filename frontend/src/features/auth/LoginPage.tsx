@@ -44,6 +44,7 @@ function LoginPage() {
             setToken(response.token);
             notifications.show({
                 title: 'Success!',
+                autoClose: 1000,
                 message: 'You have successfully logged in.',
                 color: 'green',
                 onClose: () => navigate('/profile'),

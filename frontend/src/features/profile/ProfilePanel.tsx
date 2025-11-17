@@ -1,17 +1,12 @@
 import { Stack, Title, Text } from "@mantine/core";
 import { useTranslation } from "react-i18next";
+import { useUserDetailsStore } from "../../hooks/userDetailsStore";
+import { useStudentStore } from "../../hooks/studentStore";
 
 function ProfilePanel() {
     const { t } = useTranslation(["sections", "profile"]);
-    const profile = {
-        firstName: "Мамбо",
-        lastName: "Джамбо",
-        patronymic: "Кілселот",
-        recordBookNumber: "І 001/22 бп",
-        email: "mumbojumbo@ukma.edu.ua",
-        speciality: "Інженерія програмного забезпечення",
-        studyYear: 4
-    };
+    const { firstName, lastName, patronymic, email } = useUserDetailsStore();
+    const { user: student } = useStudentStore();
     return (
         <Stack pl="6em" gap="4">
             <Title order={3} pb="0.4em">
@@ -21,26 +16,34 @@ function ProfilePanel() {
                 {t('profile:user')}
             </Title>
             <Text size="lg">
-                {profile.lastName} {profile.firstName} {profile.patronymic}
+                {lastName} {firstName} {patronymic}
             </Text>
             <Title order={5}>
                 {t('profile:speciality')}
             </Title>
-            <Text size="lg">
-                {profile.speciality}, {profile.studyYear}-тий рік навчання
-            </Text>
+            {
+                student &&
+                <Text size="lg">
+                    {student.speciality.name}, {student.studyYear} рік навчання
+                </Text>
+            }
             <Title order={5}>
                 {t('profile:email')}
             </Title>
             <Text size="lg">
-                {profile.email}
+                {email}
             </Text>
-            <Title order={5}>
-                {t('profile:recordBookNumber')}
-            </Title>
-            <Text size="lg">
-                {profile.recordBookNumber}
-            </Text>
+            {
+                student &&
+                <>
+                    <Title order={5}>
+                        {t('profile:recordBookNumber')}
+                    </Title>
+                    <Text size="lg">
+                        {student.recordBookNumber}
+                    </Text>
+                </>
+            }
         </Stack>
     );
 }
