@@ -1,17 +1,14 @@
-import { ActionIcon, Group, Stack, Table, Tooltip } from "@mantine/core";
+import { Stack, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllStudents } from "../../../services/StudentService.ts";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import Icon from "../../../common/icon/Icon.tsx";
-import Searchbar from "../../../common/searchbar/Searchbar.tsx";
 import AddStudentModal from "./AddStudentModal.tsx";
 import DeleteStudentModal from "./DeleteStudentModal.tsx";
 import EditStudentModal from "./EditStudentModal.tsx";
-import edit from '../../../assets/edit.svg';
-import del from '../../../assets/delete.svg';
-import plus from '../../../assets/plus.svg'
 import useFetch from "../../../hooks/useFetch.ts";
+import RowActions from "../RowActions.tsx";
+import SearchWithAdd from "../SearchWithAdd.tsx";
 
 function StudentPanel() {
     const { t } = useTranslation(["adminMenu", "manageStudents"]);
@@ -31,61 +28,30 @@ function StudentPanel() {
             <Table.Td>{student.studyYear}</Table.Td>
             <Table.Td>{student.speciality.name}</Table.Td>
             <Table.Td>
-                <Group gap="xs" justify="center">
-                    <Tooltip label={t("adminMenu:edit")}>
-                        <ActionIcon
-                            variant="light"
-                            color="indigo"
-                            onClick={() => {
-                                setCurrentId(student.id);
-                                openEdit();
-                            }}
-                        >
-                            <Icon src={edit} />
-                        </ActionIcon>
-                    </Tooltip>
-                    <Tooltip label={t("adminMenu:delete")}>
-                        <ActionIcon
-                            variant="light"
-                            color="red"
-                            onClick={() => {
-                                setCurrentId(student.id);
-                                openDelete();
-                            }}
-                        >
-                            <Icon src={del} />
-                        </ActionIcon>
-                    </Tooltip>
-                </Group>
+                <RowActions
+                    onEdit={() => {
+                        setCurrentId(student.id);
+                        openEdit();
+                    }}
+                    onDelete={() => {
+                        setCurrentId(student.id);
+                        openDelete();
+                    }}
+                    editLabel={t("adminMenu:edit")}
+                    deleteLabel={t("adminMenu:delete")}
+                />
             </Table.Td>
         </Table.Tr>
     ));
 
     return (
         <Stack>
-            <Group
-                grow
-                align="flex-end"
-            >
-                <Group grow>
-                    <Searchbar
-                        label={t("manageStudents:studentSearch")}
-                        description={t("manageStudents:enterEmail")}
-                        placeholder={t("manageStudents:email")}
-                    />
-                </Group>
-                <Tooltip label={t("adminMenu:add")}>
-                    <ActionIcon
-                        onClick={openAdd}
-                        variant="filled"
-                        color="green"
-                        size="xl"
-                        maw="xl"
-                    >
-                        <Icon src={plus} size="1.5em" />
-                    </ActionIcon>
-                </Tooltip>
-            </Group>
+            <SearchWithAdd
+                label={t("manageStudents:studentSearch")}
+                description={t("manageStudents:enterEmail")}
+                placeholder={t("manageStudents:email")}
+                onAdd={openAdd}
+            />
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

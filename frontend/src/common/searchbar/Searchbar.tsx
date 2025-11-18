@@ -4,8 +4,8 @@ import Icon from "../icon/Icon.tsx";
 
 type SearchbarProps = {
     label: string;
-    description: string;
-    placeholder: string;
+    description?: string;
+    placeholder?: string;
 }
 
 function Searchbar({label, description, placeholder}: SearchbarProps) {

@@ -158,7 +158,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             opened={opened}
             onClose={close}
         >
-            <Stack m="xs">
+            <Stack p="xs" pt="0">
                 <Group grow>
                     <TextInput
                         label={t("name")}
