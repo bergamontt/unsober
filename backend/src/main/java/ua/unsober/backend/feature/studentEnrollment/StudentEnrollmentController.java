@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.studentEnrollment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.unsober.backend.common.aspects.limit.Limited;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +15,7 @@ public class StudentEnrollmentController {
 
     private final StudentEnrollmentService studentEnrollmentService;
 
+    @Limited(perMinute = 30)
     @PostMapping
     public StudentEnrollmentResponseDto create(@Valid @RequestBody StudentEnrollmentRequestDto dto) {
         return studentEnrollmentService.create(dto);
@@ -29,6 +31,7 @@ public class StudentEnrollmentController {
         return studentEnrollmentService.getById(id);
     }
 
+    @Limited(perMinute = 30)
     @PatchMapping("/{id}")
     public StudentEnrollmentResponseDto update(
             @PathVariable UUID id,
