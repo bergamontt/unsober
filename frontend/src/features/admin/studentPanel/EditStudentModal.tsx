@@ -1,33 +1,47 @@
 import { Button, Group, Modal, NativeSelect, PasswordInput, Stack, TextInput } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFetch from "../../hooks/useFetch";
-import { getAllSpecialities } from "../../services/SpecialityService";
+import useFetch from "../../../hooks/useFetch.ts";
+import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { notifications } from "@mantine/notifications";
-import { addStudent } from "../../services/StudentService";
-import type { StudentDto } from "../../models/Student";
+import { getStudentById, updateStudent } from "../../../services/StudentService.ts";
+import type { StudentDto } from "../../../models/Student.ts";
 import axios from "axios";
 
-type AddModalProps = {
+type EditModalProps = {
     opened: boolean;
     close: () => void;
+    studentId: string | null;
 }
 
-function AddStudentModal({ opened, close }: AddModalProps) {
+function EditStudentModal({ opened, close, studentId }: EditModalProps) {
     const { t } = useTranslation("manageStudents");
     const { data } = useFetch(getAllSpecialities, []);
     const specialities = data ?? [];
+    const { data: student } = useFetch(getStudentById, [studentId]);
 
-    const [name, setName] = useState<string>("");
-    const [surname, setSurname] = useState<string>("");
-    const [patronymic, setPatronymic] = useState<string>("");
-    const [studyYear, setStudyYear] = useState<number | undefined>();
-    const [specialityId, setSpecialityId] = useState<string | undefined>();
-    const [recordBookNum, setRecordBookNum] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
+    const [name, setName] = useState<string>(student?.firstName ?? "");
+    const [surname, setSurname] = useState<string>(student?.lastName ?? "");
+    const [patronymic, setPatronymic] = useState<string>(student?.patronymic ?? "");
+    const [studyYear, setStudyYear] = useState<number | undefined>(student?.studyYear);
+    const [specialityId, setSpecialityId] = useState<string | undefined>(student?.speciality.id);
+    const [recordBookNum, setRecordBookNum] = useState<string>(student?.recordBookNumber ?? "");
+    const [email, setEmail] = useState<string>(student?.email ?? "");
     const [password, setPassword] = useState<string>("");
 
-    const [isAdding, setIsAdding] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+
+    useEffect(() => {
+        if (!student)
+            return;
+        setName(student.firstName ?? "");
+        setSurname(student.lastName ?? "");
+        setPatronymic(student.patronymic ?? "");
+        setStudyYear(student.studyYear ?? undefined);
+        setSpecialityId(student.speciality?.id);
+        setRecordBookNum(student.recordBookNumber ?? "");
+        setEmail(student.email ?? "");
+    }, [student]);
 
     const resetForm = () => {
         setName("");
@@ -97,7 +111,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             });
             return false;
         }
-        if (password.length < 7) {
+        if (password && password.length < 7) {
             notifications.show({
                 title: t("error"),
                 message: t("passwordTooShort", { min: 7 }),
@@ -108,7 +122,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
         return true;
     }, [name, surname, studyYear, specialityId, recordBookNum, email, password, t]);
 
-    const handleSubmit = useCallback(async () => {
+    const handleSave = useCallback(async () => {
         if (!validateInput())
             return;
 
@@ -118,45 +132,52 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             patronymic: patronymic,
             recordBookNumber: recordBookNum,
             email: email,
-            password: password,
+            password: password || undefined,
             specialityId: specialityId,
-            studyYear: studyYear
+            studyYear: studyYear,
         };
 
-        setIsAdding(true);
+        setIsSaving(true);
         try {
-            await addStudent(dto);
+            if (!studentId)
+                return;
+            await updateStudent(studentId, dto);
             notifications.show({
                 title: t("success"),
-                message: t("studentAdded", { fstName: name, lstName: surname }),
-                color: 'green',
+                message: t("studentUpdated"),
+                color: 'green'
             });
             close();
             resetForm();
         } catch (err: unknown) {
-            let errorMessage = t("unknownAddError");
+            let errorMessage = t("unknownUpdateError");
             if (axios.isAxiosError(err)) {
                 const data = err.response?.data;
-                if (typeof data == "string" && data.trim()) {
+                if (typeof data === "string" && data.trim())
                     errorMessage = data;
-                }
             }
             notifications.show({
                 title: t("error"),
                 message: errorMessage,
-                color: 'red',
+                color: 'red'
             });
         } finally {
-            setIsAdding(false);
+            setIsSaving(false);
         }
     }, [validateInput, t, close]);
+
+    if (!studentId)
+        return <></>;
 
     return (
         <Modal
             centered
-            title={t("addStudent")}
+            title={t("editStudent")}
             opened={opened}
-            onClose={close}
+            onClose={() => {
+                resetForm();
+                close();
+            }}
         >
             <Stack m="xs">
                 <Group grow>
@@ -215,7 +236,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
                     onChange={(e) => setRecordBookNum(e.currentTarget.value)}
                 />
                 <TextInput
-                    label={t("email")}
+                    label={t("studentEmail")}
                     withAsterisk
                     placeholder={t("studentEmail")}
                     value={email}
@@ -223,7 +244,6 @@ function AddStudentModal({ opened, close }: AddModalProps) {
                 />
                 <PasswordInput
                     label={t("password")}
-                    withAsterisk
                     placeholder={t("studentPassword")}
                     value={password}
                     onChange={(e) => setPassword(e.currentTarget.value)}
@@ -232,15 +252,15 @@ function AddStudentModal({ opened, close }: AddModalProps) {
                     variant="filled"
                     color="green"
                     mt="xs"
-                    onClick={handleSubmit}
-                    loading={isAdding}
-                    disabled={isAdding}
+                    onClick={handleSave}
+                    loading={isSaving}
+                    disabled={isSaving}
                 >
-                    {t("addStudent")}
+                    {t("saveChanges")}
                 </Button>
             </Stack>
         </Modal>
     );
 }
 
-export default AddStudentModal
+export default EditStudentModal;

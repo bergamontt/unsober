@@ -1,8 +1,8 @@
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFetch from "../../hooks/useFetch";
-import { getStudentById, deleteStudent } from "../../services/StudentService";
+import useFetch from "../../../hooks/useFetch.ts";
+import { getStudentById, deleteStudent } from "../../../services/StudentService.ts";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
 

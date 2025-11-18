@@ -1,17 +1,17 @@
 import { ActionIcon, Group, Stack, Table, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import Icon from "../../common/Icon";
-import Searchbar from "../../common/Searchbar";
-import AddStudentModal from "./AddStudentModal";
-import DeleteStudentModal from "./DeleteStudentModal";
-import EditStudentModal from "./EditStudentModal";
-import edit from '../../assets/edit.svg';
-import del from '../../assets/delete.svg';
-import plus from '../../assets/plus.svg'
-import useFetch from "../../hooks/useFetch";
-import { getAllStudents } from "../../services/StudentService";
+import { getAllStudents } from "../../../services/StudentService.ts";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import Icon from "../../../common/icon/Icon.tsx";
+import Searchbar from "../../../common/searchbar/Searchbar.tsx";
+import AddStudentModal from "./AddStudentModal.tsx";
+import DeleteStudentModal from "./DeleteStudentModal.tsx";
+import EditStudentModal from "./EditStudentModal.tsx";
+import edit from '../../../assets/edit.svg';
+import del from '../../../assets/delete.svg';
+import plus from '../../../assets/plus.svg'
+import useFetch from "../../../hooks/useFetch.ts";
 
 function StudentPanel() {
     const { t } = useTranslation(["adminMenu", "manageStudents"]);

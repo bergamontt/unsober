@@ -1,6 +1,6 @@
 import { Kbd, TextInput } from "@mantine/core";
-import search from '../assets/search.svg'
-import Icon from "./Icon.tsx";
+import search from '../../assets/search.svg'
+import Icon from "../icon/Icon.tsx";
 
 type SearchbarProps = {
     label: string;

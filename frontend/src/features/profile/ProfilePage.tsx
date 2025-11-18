@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import ProfilePanel from "./ProfilePanel.tsx";
 import SchedulePanel from "./SchedulePanel.tsx";
 import SettingsPanel from "./SettingsPanel.tsx";
-import Icon from "../../common/Icon.tsx";
+import Icon from "../../common/icon/Icon.tsx";
 import user from '../../assets/user.svg'
 import settings from '../../assets/settings.svg'
 import schedule from '../../assets/schedule.svg'
-import PageWrapper from "../../common/PageWrapper.tsx";
+import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "../../hooks/authStore.ts";
 import { useEffect } from "react";

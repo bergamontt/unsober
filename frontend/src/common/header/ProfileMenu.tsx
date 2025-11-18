@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import userSvg from '../../assets/user.svg';
 import settings from '../../assets/settings.svg'
 import admin from '../../assets/admin.svg'
-import Icon from '../Icon';
+import Icon from '../icon/Icon.tsx';
 import { useTranslation } from 'react-i18next';
 import { useUserDetailsStore } from '../../hooks/userDetailsStore';
 import { useAdminStore } from '../../hooks/adminStore';
@@ -46,7 +46,7 @@ function ProfileMenu() {
                         <Menu.Divider />
                         <Menu.Item
                             leftSection={<Icon src={admin} />}
-                            onClick={() => { navigate('/admin') }}
+                            onClick={() => { navigate('/admin/student') }}
                         >
                             {t("adminPanel")}
                         </Menu.Item>
