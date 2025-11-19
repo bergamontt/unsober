@@ -2,8 +2,6 @@ package ua.unsober.backend.feature.courseClass;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -20,33 +18,24 @@ public class CourseClassServiceImpl implements CourseClassService {
     private final CourseClassResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
-    private static final Marker COURSE_CLASS_ACTION = MarkerFactory.getMarker("COURSE_CLASS_ACTION");
-    private static final Marker COURSE_CLASS_ERROR = MarkerFactory.getMarker("COURSE_CLASS_ERROR");
-
     @Override
     public CourseClassResponseDto create(CourseClassRequestDto dto) {
-        log.info(COURSE_CLASS_ACTION, "Creating new course class...");
         CourseClass saved = courseClassRepository.save(requestMapper.toEntity(dto));
-        log.info(COURSE_CLASS_ACTION, "Course class created with id={}", saved.getId());
         return responseMapper.toDto(saved);
     }
 
     @Override
     public List<CourseClassResponseDto> getAll() {
-        log.info(COURSE_CLASS_ACTION, "Fetching all course classes...");
         List<CourseClassResponseDto> result = courseClassRepository.findAll().stream()
                 .map(responseMapper::toDto)
                 .toList();
-        log.info(COURSE_CLASS_ACTION, "Fetched {} course classes", result.size());
         return result;
     }
 
     @Override
     public CourseClassResponseDto getById(UUID id) {
-        log.info(COURSE_CLASS_ACTION, "Fetching course class with id={}...", id);
         return responseMapper.toDto(
                 courseClassRepository.findById(id).orElseThrow(() -> {
-                    log.warn(COURSE_CLASS_ERROR, "Attempt to fetch non-existing course class with id={}", id);
                     return notFound.get("error.course-class.notfound", id);
                 })
         );
@@ -54,9 +43,7 @@ public class CourseClassServiceImpl implements CourseClassService {
 
     @Override
     public CourseClassResponseDto update(UUID id, CourseClassRequestDto dto) {
-        log.info(COURSE_CLASS_ACTION, "Updating course class with id={}...", id);
         CourseClass courseClass = courseClassRepository.findById(id).orElseThrow(() -> {
-            log.warn(COURSE_CLASS_ERROR, "Attempt to update non-existing course class with id={}", id);
             return notFound.get("error.course-class.notfound", id);
         });
 
@@ -74,18 +61,14 @@ public class CourseClassServiceImpl implements CourseClassService {
         if (newCourseClass.getWeeksList() != null) courseClass.setWeeksList(newCourseClass.getWeeksList());
 
         CourseClass updated = courseClassRepository.save(courseClass);
-        log.info(COURSE_CLASS_ACTION, "Successfully updated course class with id={}", id);
         return responseMapper.toDto(updated);
     }
 
     @Override
     public void delete(UUID id) {
-        log.info(COURSE_CLASS_ACTION, "Deleting course class with id={}...", id);
         if (courseClassRepository.existsById(id)) {
             courseClassRepository.deleteById(id);
-            log.info(COURSE_CLASS_ACTION, "Course class with id={} deleted", id);
         } else {
-            log.warn(COURSE_CLASS_ERROR, "Attempt to delete non-existing course class with id={}", id);
             throw notFound.get("error.course-class.notfound", id);
         }
     }

@@ -58,7 +58,6 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
     @Override
     public StudentEnrollmentResponseDto create(StudentEnrollmentRequestDto dto) {
-        log.info(ENROLLMENT_ACTION, "Creating new student enrollment...");
         Course course = validateCourse(dto.getCourseId());
         CourseGroup courseGroup = dto.getGroupId() != null ? validateGroup(dto.getGroupId()) : null;
 
@@ -70,27 +69,21 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         if (courseGroup != null) courseGroup.setNumEnrolled(courseGroup.getNumEnrolled() + 1);
 
         StudentEnrollment saved = studentEnrollmentRepository.save(enrollment);
-        log.info(ENROLLMENT_ACTION, "Enrollment created with id={}", saved.getId());
         return responseMapper.toDto(saved);
     }
 
     @Override
     public List<StudentEnrollmentResponseDto> getAll() {
-        log.info(ENROLLMENT_ACTION, "Fetching all student enrollments...");
-        List<StudentEnrollmentResponseDto> result = studentEnrollmentRepository.findAll()
+        return studentEnrollmentRepository.findAll()
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();
-        log.info(ENROLLMENT_ACTION, "Fetched {} student enrollments", result.size());
-        return result;
     }
 
     @Override
     public StudentEnrollmentResponseDto getById(UUID id) {
-        log.info(ENROLLMENT_ACTION, "Fetching student enrollment with id={}...", id);
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> {
-                    log.warn(ENROLLMENT_ACTION, "Attempt to fetch non-existing enrollment with id={}", id);
                     return notFound.get("error.student-enrollment.notfound", id);
                 });
         return responseMapper.toDto(enrollment);
@@ -98,10 +91,8 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
     @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
-        log.info(ENROLLMENT_ACTION, "Updating student enrollment with id={}...", id);
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> {
-                    log.warn(ENROLLMENT_ACTION, "Attempt to update non-existing enrollment with id={}", id);
                     return notFound.get("error.student-enrollment.notfound", id);
                 });
 
@@ -127,16 +118,13 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         if (newEnrollment.getEnrollmentYear() != null) enrollment.setEnrollmentYear(newEnrollment.getEnrollmentYear());
 
         StudentEnrollment updated = studentEnrollmentRepository.save(enrollment);
-        log.info(ENROLLMENT_ACTION, "Successfully updated student enrollment with id={}", id);
         return responseMapper.toDto(updated);
     }
 
     @Override
     public void delete(UUID id) {
-        log.info(ENROLLMENT_ACTION, "Deleting student enrollment with id={}...", id);
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> {
-                    log.warn(ENROLLMENT_ACTION, "Attempt to delete non-existing enrollment with id={}", id);
                     return notFound.get("error.student-enrollment.notfound", id);
                 });
 
@@ -151,6 +139,5 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         }
 
         studentEnrollmentRepository.delete(enrollment);
-        log.info(ENROLLMENT_ACTION, "Enrollment with id={} deleted", id);
     }
 }
