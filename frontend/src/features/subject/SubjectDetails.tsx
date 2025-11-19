@@ -2,7 +2,7 @@ import { type Subject } from "../../models/Subject.ts";
 import { Blockquote, Stack, Table } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import infoCircle from '../../assets/infoCircle.svg'
-import Icon from "../../common/Icon.tsx";
+import Icon from "../../common/icon/Icon.tsx";
 
 interface SubjectDetailsProps {
     subject: Subject;

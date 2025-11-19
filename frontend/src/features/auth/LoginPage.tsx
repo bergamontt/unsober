@@ -7,7 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { useAuthStore } from "../../hooks/authStore.ts";
 import { login } from "../../services/AuthService.ts";
 import loginIcon from '../../assets/login.svg';
-import Icon from "../../common/Icon.tsx";
+import Icon from "../../common/icon/Icon.tsx";
 import './LoginPage.css';
 
 function LoginPage() {

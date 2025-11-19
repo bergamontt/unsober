@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
-import PageWrapper from "../../common/PageWrapper";
+import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import AdminSidebar from "./AdminSidebar";
 import { Flex, Group } from "@mantine/core";
 import { useEffect } from "react";

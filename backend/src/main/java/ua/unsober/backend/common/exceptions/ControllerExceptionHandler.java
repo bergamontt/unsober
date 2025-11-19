@@ -49,4 +49,10 @@ public class ControllerExceptionHandler {
     public String handleEntityNotFoundException(EntityNotFoundException ex) {
         return ex.getMessage();
     }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(TooManyAttemptsException.class)
+    public String handleTooManyAttemptsException(TooManyAttemptsException ex) {
+        return ex.getMessage();
+    }
 }

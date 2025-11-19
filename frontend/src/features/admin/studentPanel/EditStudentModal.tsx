@@ -1,11 +1,11 @@
 import { Button, Group, Modal, NativeSelect, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFetch from "../../hooks/useFetch";
-import { getAllSpecialities } from "../../services/SpecialityService";
+import useFetch from "../../../hooks/useFetch.ts";
+import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { notifications } from "@mantine/notifications";
-import { getStudentById, updateStudent } from "../../services/StudentService";
-import type { StudentDto } from "../../models/Student";
+import { getStudentById, updateStudent } from "../../../services/StudentService.ts";
+import type { StudentDto } from "../../../models/Student.ts";
 import axios from "axios";
 
 type EditModalProps = {

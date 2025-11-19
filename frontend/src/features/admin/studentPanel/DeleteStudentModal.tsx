@@ -1,10 +1,10 @@
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFetch from "../../hooks/useFetch";
-import { getStudentById, deleteStudent } from "../../services/StudentService";
+import useFetch from "../../../hooks/useFetch.ts";
+import { getStudentById, deleteStudent } from "../../../services/StudentService.ts";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
+import DeleteModal from "../DeleteModal.tsx";
 
 type DeleteModalProps = {
     opened: boolean;
@@ -49,36 +49,15 @@ function DeleteStudentModal({ opened, close, studentId }: DeleteModalProps) {
     };
 
     return (
-        <Modal
-            size="xs"
-            centered
+        <DeleteModal
             opened={opened}
-            onClose={close}
-            withCloseButton={false}
-        >
-            <Stack mt="xs">
-                <Text>
-                    {t("areYouSure")}
-                </Text>
-                <Group grow>
-                    <Button
-                        variant="default"
-                        onClick={() => close()}
-                        disabled={isDeleting}
-                    >
-                        {t("cancel")}
-                    </Button>
-                    <Button
-                        color="red"
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                        loading={isDeleting}
-                    >
-                        {t("delete")}
-                    </Button>
-                </Group>
-            </Stack>
-        </Modal>
+            close={close}
+            loading={isDeleting}
+            onConfirm={handleDelete}
+            message={t("areYouSure")}
+            denyLabel={t("cancel")}
+            confirmLabel={t("delete")}
+        />
     );
 }
 

@@ -1,11 +1,11 @@
 import { Button, Group, Modal, NativeSelect, PasswordInput, Stack, TextInput } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFetch from "../../hooks/useFetch";
-import { getAllSpecialities } from "../../services/SpecialityService";
+import useFetch from "../../../hooks/useFetch.ts";
+import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { notifications } from "@mantine/notifications";
-import { addStudent } from "../../services/StudentService";
-import type { StudentDto } from "../../models/Student";
+import { addStudent } from "../../../services/StudentService.ts";
+import type { StudentDto } from "../../../models/Student.ts";
 import axios from "axios";
 
 type AddModalProps = {
@@ -158,7 +158,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             opened={opened}
             onClose={close}
         >
-            <Stack m="xs">
+            <Stack p="xs" pt="0">
                 <Group grow>
                     <TextInput
                         label={t("name")}

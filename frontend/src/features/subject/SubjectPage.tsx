@@ -1,5 +1,5 @@
 import { Button, Title } from "@mantine/core";
-import PageWrapper from "../../common/PageWrapper.tsx";
+import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import SubjectDetails from "./SubjectDetails.tsx";
 import EnrolledStudents from "./EnrolledStudents.tsx";
 import { useNavigate, useParams } from "react-router";
