@@ -31,6 +31,11 @@ public class StudentEnrollmentController {
         return studentEnrollmentService.getById(id);
     }
 
+    @GetMapping("/student/{studentId}")
+    public List<StudentEnrollmentResponseDto> getAllByStudentId(@PathVariable UUID studentId){
+        return studentEnrollmentService.getAllByStudentId(studentId);
+    }
+
     @Limited(perMinute = 30)
     @PatchMapping("/{id}")
     public StudentEnrollmentResponseDto update(

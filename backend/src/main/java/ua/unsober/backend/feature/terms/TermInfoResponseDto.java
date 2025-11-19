@@ -1,4 +1,4 @@
-package ua.unsober.backend.feature.subject;
+package ua.unsober.backend.feature.terms;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,17 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.unsober.backend.common.enums.Term;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class SubjectResponseDto {
+public class TermInfoResponseDto {
     private UUID id;
-    private String name;
-    private String annotation;
-    private BigDecimal credits;
+    private Integer year;
     private Term term;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Integer lenWeeks;
 }

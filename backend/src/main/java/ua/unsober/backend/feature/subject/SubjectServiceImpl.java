@@ -33,24 +33,21 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public SubjectResponseDto getById(UUID id) {
-        Subject subject = subjectRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.subject.notfound", id);
-        });
+        Subject subject = subjectRepository.findById(id).orElseThrow(() ->
+                notFound.get("error.subject.notfound", id));
         return responseMapper.toDto(subject);
     }
 
     @Override
     public SubjectResponseDto update(UUID id, SubjectRequestDto dto) {
-        Subject subject = subjectRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.subject.notfound", id);
-        });
+        Subject subject = subjectRepository.findById(id).orElseThrow(() ->
+                notFound.get("error.subject.notfound", id));
 
         Subject newSubject = requestMapper.toEntity(dto);
 
         if (newSubject.getName() != null) subject.setName(newSubject.getName());
         if (newSubject.getAnnotation() != null) subject.setAnnotation(newSubject.getAnnotation());
         if (newSubject.getCredits() != null) subject.setCredits(newSubject.getCredits());
-        if (newSubject.getTerm() != null) subject.setTerm(newSubject.getTerm());
 
         Subject updated = subjectRepository.save(subject);
         return responseMapper.toDto(updated);

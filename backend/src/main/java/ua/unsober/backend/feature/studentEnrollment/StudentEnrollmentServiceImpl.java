@@ -83,18 +83,22 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     @Override
     public StudentEnrollmentResponseDto getById(UUID id) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> {
-                    return notFound.get("error.student-enrollment.notfound", id);
-                });
+                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
         return responseMapper.toDto(enrollment);
+    }
+
+    @Override
+    public List<StudentEnrollmentResponseDto> getAllByStudentId(UUID studentId) {
+        return studentEnrollmentRepository.findAllByStudentId(studentId)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
     }
 
     @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> {
-                    return notFound.get("error.student-enrollment.notfound", id);
-                });
+                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
 
         if (dto.getCourseId() != null) {
             Course oldCourse = enrollment.getCourse();
@@ -124,9 +128,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     @Override
     public void delete(UUID id) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> {
-                    return notFound.get("error.student-enrollment.notfound", id);
-                });
+                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
 
         Course course = enrollment.getCourse();
         course.setNumEnrolled(course.getNumEnrolled() - 1);

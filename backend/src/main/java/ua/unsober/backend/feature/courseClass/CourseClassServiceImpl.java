@@ -26,26 +26,29 @@ public class CourseClassServiceImpl implements CourseClassService {
 
     @Override
     public List<CourseClassResponseDto> getAll() {
-        List<CourseClassResponseDto> result = courseClassRepository.findAll().stream()
+        return courseClassRepository.findAll().stream()
                 .map(responseMapper::toDto)
                 .toList();
-        return result;
     }
 
     @Override
     public CourseClassResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                courseClassRepository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.course-class.notfound", id);
-                })
+                courseClassRepository.findById(id).orElseThrow(() -> notFound.get("error.course-class.notfound", id))
         );
     }
 
     @Override
+    public List<CourseClassResponseDto> getAllByCourseId(UUID courseId) {
+        return courseClassRepository.getAllByCourseId(courseId)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public CourseClassResponseDto update(UUID id, CourseClassRequestDto dto) {
-        CourseClass courseClass = courseClassRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.course-class.notfound", id);
-        });
+        CourseClass courseClass = courseClassRepository.findById(id).orElseThrow(() -> notFound.get("error.course-class.notfound", id));
 
         CourseClass newCourseClass = requestMapper.toEntity(dto);
 

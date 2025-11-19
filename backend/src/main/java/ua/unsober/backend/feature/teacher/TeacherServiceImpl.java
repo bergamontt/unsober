@@ -26,26 +26,23 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<TeacherResponseDto> getAll() {
-        List<TeacherResponseDto> result = teacherRepository.findAll()
+        return teacherRepository.findAll()
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();
-        return result;
     }
 
     @Override
     public TeacherResponseDto getById(UUID id) {
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.teacher.notfound", id);
-        });
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
+                notFound.get("error.teacher.notfound", id));
         return responseMapper.toDto(teacher);
     }
 
     @Override
     public TeacherResponseDto update(UUID id, TeacherRequestDto dto) {
-        Teacher teacher = teacherRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.teacher.notfound", id);
-        });
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
+                notFound.get("error.teacher.notfound", id));
 
         Teacher newTeacher = requestMapper.toEntity(dto);
         if (newTeacher.getFirstName() != null) teacher.setFirstName(newTeacher.getFirstName());

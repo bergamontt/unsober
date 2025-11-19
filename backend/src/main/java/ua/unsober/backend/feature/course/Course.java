@@ -8,11 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
-import ua.unsober.backend.feature.student.Student;
 import ua.unsober.backend.feature.subject.Subject;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -48,7 +45,4 @@ public class Course {
     @Version
     @Column(nullable=false)
     private Integer rowVersion;
-
-    @ManyToMany(mappedBy = "courses")
-    private Set<Student> students = new HashSet<>();
 }

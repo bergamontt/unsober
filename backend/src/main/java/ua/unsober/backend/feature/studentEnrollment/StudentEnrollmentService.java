@@ -7,6 +7,7 @@ public interface StudentEnrollmentService {
     StudentEnrollmentResponseDto create(StudentEnrollmentRequestDto dto);
     List<StudentEnrollmentResponseDto> getAll();
     StudentEnrollmentResponseDto getById(UUID id);
+    List<StudentEnrollmentResponseDto> getAllByStudentId(UUID studentId);
     StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto);
     void delete(UUID id);
 }

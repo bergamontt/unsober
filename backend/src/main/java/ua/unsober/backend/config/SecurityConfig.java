@@ -36,7 +36,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/subject/**", "/course/**", "/subject-recommendation/**",
                                 "/enrollment-request/**", "/withdrawal-request/**",
-                                "/student-enrollment/**", "/student/**", "/admin/**"
+                                "/student-enrollment/**", "/student/**",
+                                "/admin/**", "/term/**"
                         ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
                                 "/enrollment-request/**", "/withdrawal-request/**",

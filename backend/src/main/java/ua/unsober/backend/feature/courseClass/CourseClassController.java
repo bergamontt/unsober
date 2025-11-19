@@ -29,6 +29,11 @@ public class CourseClassController {
         return courseClassService.getById(id);
     }
 
+    @GetMapping("/course/{courseId}")
+    public List<CourseClassResponseDto> getAllByCourseId(@PathVariable UUID courseId) {
+        return courseClassService.getAllByCourseId(courseId);
+    }
+
     @PatchMapping("/{id}")
     public CourseClassResponseDto update(
             @PathVariable UUID id,

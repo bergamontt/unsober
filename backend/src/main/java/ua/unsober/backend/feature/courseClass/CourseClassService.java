@@ -7,6 +7,7 @@ public interface CourseClassService {
     CourseClassResponseDto create(CourseClassRequestDto dto);
     List<CourseClassResponseDto> getAll();
     CourseClassResponseDto getById(UUID id);
+    List<CourseClassResponseDto> getAllByCourseId(UUID courseId);
     CourseClassResponseDto update(UUID id, CourseClassRequestDto dto);
     void delete(UUID id);
 }
