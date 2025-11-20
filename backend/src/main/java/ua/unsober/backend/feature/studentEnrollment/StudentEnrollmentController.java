@@ -17,8 +17,6 @@ public class StudentEnrollmentController {
 
     private final StudentEnrollmentService studentEnrollmentService;
 
-    @Limited(perMinute = 30)
-    @AllowedAtStage(stages = {EnrollmentStage.CORRECTION, EnrollmentStage.COURSES})
     @PostMapping
     public StudentEnrollmentResponseDto create(@Valid @RequestBody StudentEnrollmentRequestDto dto) {
         return studentEnrollmentService.create(dto);
@@ -35,12 +33,10 @@ public class StudentEnrollmentController {
     }
 
     @GetMapping("/student/{studentId}")
-    public List<StudentEnrollmentResponseDto> getAllByStudentId(@PathVariable UUID studentId){
+    public List<StudentEnrollmentResponseDto> getAllByStudentId(@PathVariable UUID studentId) {
         return studentEnrollmentService.getAllByStudentId(studentId);
     }
 
-    @Limited(perMinute = 30)
-    @AllowedAtStage(stages = {EnrollmentStage.CORRECTION, EnrollmentStage.GROUPS})
     @PatchMapping("/{id}")
     public StudentEnrollmentResponseDto update(
             @PathVariable UUID id,
@@ -48,9 +44,24 @@ public class StudentEnrollmentController {
         return studentEnrollmentService.update(id, dto);
     }
 
-    @AllowedAtStage(stages = {EnrollmentStage.CORRECTION})
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
         studentEnrollmentService.delete(id);
+    }
+
+    @PostMapping("/enroll-self")
+    @Limited(perMinute = 30)
+    @AllowedAtStage(stages = {EnrollmentStage.CORRECTION, EnrollmentStage.COURSES})
+    public StudentEnrollmentResponseDto enrollSelf(@RequestParam UUID courseId) {
+        return studentEnrollmentService.enrollSelf(courseId);
+    }
+
+    @PatchMapping("/change-group")
+    @Limited(perMinute = 30)
+    @AllowedAtStage(stages = {EnrollmentStage.CORRECTION, EnrollmentStage.GROUPS})
+    public StudentEnrollmentResponseDto changeGroup(
+            @RequestParam UUID enrollmentId,
+            @RequestParam UUID groupId) {
+        return studentEnrollmentService.changeGroup(enrollmentId, groupId);
     }
 }

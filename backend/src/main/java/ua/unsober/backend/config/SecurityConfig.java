@@ -40,9 +40,14 @@ public class SecurityConfig {
                                 "/admin/**", "/term-info/**", "/course-class/**"
                         ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
-                                "/enrollment-request/**", "/withdrawal-request/**",
-                                "/student-enrollment/**"
-                        ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
+                                "/student-enrollment/enroll-self")
+                        .hasRole(Role.STUDENT.name())
+                        .requestMatchers(HttpMethod.PATCH,
+                                "/student-enrollment/change-group")
+                        .hasRole(Role.STUDENT.name())
+                        .requestMatchers(HttpMethod.POST,
+                                "/enrollment-request/**", "/withdrawal-request/**")
+                        .hasRole(Role.STUDENT.name())
                         .anyRequest().hasRole(Role.ADMIN.name())
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

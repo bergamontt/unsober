@@ -4,14 +4,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedCourseFullExceptionFactory;
+import ua.unsober.backend.common.exceptions.LocalizedEnrollmentActionNotAllowedExceptionFactory;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.common.exceptions.LocalizedGroupFullExceptionFactory;
+import ua.unsober.backend.feature.appState.AppStateService;
 import ua.unsober.backend.feature.course.Course;
 import ua.unsober.backend.feature.courseGroup.CourseGroup;
 import ua.unsober.backend.feature.courseGroup.CourseGroupRepository;
 import ua.unsober.backend.feature.course.CourseRepository;
+import ua.unsober.backend.feature.student.StudentResponseDto;
+import ua.unsober.backend.feature.student.StudentService;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,11 +30,14 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     private final StudentEnrollmentRepository studentEnrollmentRepository;
     private final CourseRepository courseRepository;
     private final CourseGroupRepository courseGroupRepository;
+    private final StudentService studentService;
+    private final AppStateService appStateService;
     private final StudentEnrollmentRequestMapper requestMapper;
     private final StudentEnrollmentResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
     private final LocalizedCourseFullExceptionFactory courseFull;
     private final LocalizedGroupFullExceptionFactory groupFull;
+    private final LocalizedEnrollmentActionNotAllowedExceptionFactory notAllowed;
 
     private static final Marker ENROLLMENT_ACTION = MarkerFactory.getMarker("ENROLLMENT_ACTION");
 
@@ -36,7 +45,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> notFound.get("error.course.notfound", courseId));
 
-        if (course.getNumEnrolled() >= course.getMaxStudents()) {
+        if (course.getMaxStudents() != null && course.getNumEnrolled() >= course.getMaxStudents()) {
             log.warn(ENROLLMENT_ACTION, "Course with id={} is full", courseId);
             throw courseFull.get();
         }
@@ -141,5 +150,36 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         }
 
         studentEnrollmentRepository.delete(enrollment);
+    }
+
+    @Override
+    public StudentEnrollmentResponseDto enrollSelf(UUID courseId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        StudentResponseDto student = studentService.getByEmail(email);
+        int currYear = appStateService.getAppState().getCurrentYear();
+        return create(
+                StudentEnrollmentRequestDto.builder()
+                        .studentId(student.getId())
+                        .courseId(courseId)
+                        .enrollmentYear(currYear)
+                        .build()
+        );
+    }
+
+    @Override
+    public StudentEnrollmentResponseDto changeGroup(UUID enrollmentId, UUID groupId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        StudentResponseDto student = studentService.getByEmail(email);
+        StudentEnrollmentResponseDto enrollment = getById(enrollmentId);
+        if(!enrollment.getStudent().getId().equals(student.getId())){
+            throw notAllowed.get();
+        }
+        return update(enrollmentId,
+                StudentEnrollmentRequestDto.builder()
+                        .groupId(groupId)
+                        .build()
+        );
     }
 }

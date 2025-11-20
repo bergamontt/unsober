@@ -10,4 +10,6 @@ public interface StudentEnrollmentService {
     List<StudentEnrollmentResponseDto> getAllByStudentId(UUID studentId);
     StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto);
     void delete(UUID id);
+    StudentEnrollmentResponseDto enrollSelf(UUID courseId);
+    StudentEnrollmentResponseDto changeGroup(UUID enrollmentId, UUID groupId);
 }
