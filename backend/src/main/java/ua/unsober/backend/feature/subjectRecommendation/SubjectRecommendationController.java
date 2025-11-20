@@ -29,6 +29,13 @@ public class SubjectRecommendationController {
         return subjectRecommendationService.getById(id);
     }
 
+    @GetMapping("/subject-and-speciality")
+    public SubjectRecommendationResponseDto getById(
+            @RequestParam UUID subjectId,
+            @RequestParam UUID specialityId) {
+        return subjectRecommendationService.getBySubjectAndSpecialityId(subjectId, specialityId);
+    }
+
     @PatchMapping("/{id}")
     public SubjectRecommendationResponseDto update(
             @PathVariable UUID id,

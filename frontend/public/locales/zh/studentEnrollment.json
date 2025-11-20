@@ -1,0 +1,14 @@
+{
+    "fullName": "姓名",
+    "course": "课程",
+    "speciality": "专业",
+    "type": "类型",
+    "status": "状态",
+    "group": "班级",
+    "ENROLLED": "已注册",
+    "FORCE_ENROLLED": "强制录取",
+    "WITHDRAWN": "已取消注册",
+    "MANDATORY": "必修",
+    "PROF_ORIENTED": "专业导向",
+    "FREE_CHOICE": "自由选择"
+}

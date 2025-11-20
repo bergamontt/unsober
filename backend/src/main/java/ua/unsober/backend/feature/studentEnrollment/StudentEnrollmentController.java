@@ -37,6 +37,11 @@ public class StudentEnrollmentController {
         return studentEnrollmentService.getAllByStudentId(studentId);
     }
 
+    @GetMapping("/course/{courseId}")
+    public List<StudentEnrollmentResponseDto> getAllByCourseId(@PathVariable UUID courseId) {
+        return studentEnrollmentService.getAllByCourseId(courseId);
+    }
+
     @PatchMapping("/{id}")
     public StudentEnrollmentResponseDto update(
             @PathVariable UUID id,

@@ -105,6 +105,14 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     }
 
     @Override
+    public List<StudentEnrollmentResponseDto> getAllByCourseId(UUID courseId) {
+        return studentEnrollmentRepository.findAllByCourseId(courseId)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));

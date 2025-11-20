@@ -26,28 +26,32 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
 
     @Override
     public List<SubjectRecommendationResponseDto> getAll() {
-        List<SubjectRecommendationResponseDto> result = subjectRecommendationRepository.findAll()
+        return subjectRecommendationRepository.findAll()
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();
-        return result;
     }
 
     @Override
     public SubjectRecommendationResponseDto getById(UUID id) {
         SubjectRecommendation recommendation = subjectRecommendationRepository.findById(id)
-                .orElseThrow(() -> {
-                    return notFound.get("error.subject-recommendation.notfound", id);
-                });
+                .orElseThrow(() -> notFound.get("error.subject-recommendation.notfound", id));
+        return responseMapper.toDto(recommendation);
+    }
+
+    @Override
+    public SubjectRecommendationResponseDto getBySubjectAndSpecialityId(UUID subjectId, UUID specialityId) {
+        SubjectRecommendation recommendation = subjectRecommendationRepository
+                .findBySubjectIdAndSpecialityId(subjectId, specialityId)
+                .orElseThrow(() -> notFound.get(
+                        "error.subject-recommendation-by-ids.notfound", subjectId, specialityId));
         return responseMapper.toDto(recommendation);
     }
 
     @Override
     public SubjectRecommendationResponseDto update(UUID id, SubjectRecommendationRequestDto dto) {
         SubjectRecommendation recommendation = subjectRecommendationRepository.findById(id)
-                .orElseThrow(() -> {
-                    return notFound.get("error.subject-recommendation.notfound", id);
-                });
+                .orElseThrow(() -> notFound.get("error.subject-recommendation.notfound", id));
 
         SubjectRecommendation newRecommendation = requestMapper.toEntity(dto);
         if (newRecommendation.getSubject() != null) recommendation.setSubject(newRecommendation.getSubject());

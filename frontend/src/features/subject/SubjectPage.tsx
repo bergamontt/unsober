@@ -29,7 +29,7 @@ function SubjectPage() {
             <Button variant="outline" color="green">
                 Записатися
             </Button>
-            <EnrolledStudents />
+            {/* <EnrolledStudents /> */}
         </PageWrapper>
     );
 }

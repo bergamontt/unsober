@@ -1,0 +1,14 @@
+{
+    "fullName": "Full name",
+    "course": "Course",
+    "speciality": "Speciality",
+    "type": "Type",
+    "status": "Status",
+    "group": "Group",
+    "ENROLLED": "Enrolled",
+    "FORCE_ENROLLED": "Force-enrolled",
+    "WITHDRAWN": "Withdrawn",
+    "MANDATORY": "Mandatory",
+    "PROF_ORIENTED": "Professionally-oriented",
+    "FREE_CHOICE": "Free choice"
+}

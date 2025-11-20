@@ -1,0 +1,14 @@
+{
+    "fullName": "ПІБ",
+    "course": "Курс",
+    "speciality": "Спеціальність",
+    "type": "Тип",
+    "status": "Статус",
+    "group": "Група",
+    "ENROLLED": "Записаний",
+    "FORCE_ENROLLED": "Примусово",
+    "WITHDRAWN": "Виписаний",
+    "MANDATORY": "Нормативна",
+    "PROF_ORIENTED": "Професійно-орієнтована",
+    "FREE_CHOICE": "Вільного вибору"
+}
