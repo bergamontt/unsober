@@ -1,4 +1,5 @@
 {
+    "genericCourseDetails": "Загальні деталі курсу",
     "annotation": "– Aнотація",
     "faculty": "Факультет",
     "department": "Кафедра",
@@ -10,11 +11,14 @@
     "weeklyHours": "Тижневі години",
     "limitations": "Обмеження",
     "maxNumOfStudents": "Максимальна кількість студентів",
-    "numOfStudentsPerGroup": "Кількість студентів у групі",
+    "unlimited": "Необмежено",
+    "hoursPerWeek": "год/тижд",
     "numOfEnrolledStudents": "Кількість записаних студентів",
     "numOfGroups": "Кількість груп",
     "details": "Детальніше",
     "AUTUMN": "Осінь",
     "SPRING": "Весна",
-    "SUMMER": "Літо"
+    "SUMMER": "Літо",
+    "BATCHELOR": "Бакалавр",
+    "MASTER": "Магістр"
 }

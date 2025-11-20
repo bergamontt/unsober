@@ -2,10 +2,11 @@ package ua.unsober.backend.feature.course;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -25,11 +26,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseResponseDto> getAll() {
-        return courseRepository.findAll()
-                .stream()
-                .map(responseMapper::toDto)
-                .toList();
+    public Page<CourseResponseDto> getAll(Pageable pageable) {
+        return courseRepository.findAll(pageable)
+                .map(responseMapper::toDto);
     }
 
     @Override

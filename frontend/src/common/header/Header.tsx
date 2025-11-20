@@ -39,9 +39,9 @@ function Header() {
                         <Tabs.Tab
                             value="disciplines"
                             bg="black"
-                            onClick={() => navigate('/subjects')}
+                            onClick={() => navigate('/courses')}
                         >
-                            {t("subjects")}
+                            {t("courses")}
                         </Tabs.Tab>
                         {
                             student &&

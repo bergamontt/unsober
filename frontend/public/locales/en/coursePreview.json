@@ -1,4 +1,5 @@
 {
+    "genericCourseDetails": "General course details",
     "annotation": "– Annotation",
     "faculty": "Faculty",
     "department": "Department",
@@ -10,11 +11,14 @@
     "weeklyHours": "Weekly hours",
     "limitations": "Limitations",
     "maxNumOfStudents": "Maximum number of students",
-    "numOfStudentsPerGroup": "Number of students per group",
+    "unlimited": "Unlimited",
+    "hoursPerWeek": "hrs/week",
     "numOfEnrolledStudents": "Number of enrolled students",
     "numOfGroups": "Number of groups",
     "details": "Details",
     "AUTUMN": "Autumn",
     "SPRING": "String",
-    "SUMMER": "Summer"
+    "SUMMER": "Summer",
+    "BATCHELOR": "Batchelor's",
+    "MASTER": "Master's"
 }

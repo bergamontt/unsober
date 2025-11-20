@@ -10,5 +10,7 @@
     "WITHDRAWN": "Withdrawn",
     "MANDATORY": "Mandatory",
     "PROF_ORIENTED": "Professionally-oriented",
-    "FREE_CHOICE": "Free choice"
+    "FREE_CHOICE": "Free choice",
+    "enroll": "Enroll",
+    "studentList": "List of students"
 }

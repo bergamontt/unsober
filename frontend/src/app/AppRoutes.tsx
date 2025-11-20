@@ -3,8 +3,8 @@ import Overlay from "../common/overlay/Overlay.tsx";
 import MainPage from "../features/main/MainPage.tsx";
 import LoginPage from "../features/auth/LoginPage.tsx";
 import ProfilePage from '../features/profile/ProfilePage.tsx';
-import SubjectsPage from '../features/subject/SubjectsPage.tsx';
-import SubjectPage from '../features/subject/SubjectPage.tsx';
+import CoursesPage from '../features/course/CoursesPage.tsx';
+import CoursePage from '../features/course/CoursePage.tsx';
 import SchedulePage from '../features/schedule/SchedulePage.tsx';
 import AdminLayout from '../features/admin/AdminLayout.tsx';
 import StudentPanel from '../features/admin/studentPanel/StudentPanel.tsx';
@@ -15,6 +15,7 @@ import SpecialityPanel from '../features/admin/specialityPanel/SpecialityPanel.t
 import FacultyPanel from '../features/admin/facultyPanel/FacultyPanel.tsx';
 import DepartmentPanel from '../features/admin/departmentPanel/DepartmentPanel.tsx';
 import BuildingPanel from '../features/admin/buildingPanel/BuildingPanel.tsx';
+import SubjectPanel from '../features/admin/subjectPanel/SubjectPanel.tsx';
 
 function AppRoutes() {
     return (
@@ -23,8 +24,8 @@ function AppRoutes() {
                 <Route index element={<MainPage />}/>
                 <Route path="login" element={<LoginPage />}/>
                 <Route path="profile" element={<ProfilePage />}/>
-                <Route path="subjects" element={<SubjectsPage />}/>
-                <Route path="subject/:id" element={<SubjectPage />}/>
+                <Route path="courses" element={<CoursesPage />}/>
+                <Route path="course/:id" element={<CoursePage />}/>
                 <Route path="schedule" element={<SchedulePage />}/>
                 
                 <Route path="/admin" element={<AdminLayout />}>
@@ -32,7 +33,7 @@ function AppRoutes() {
                     <Route path="request" element={<RequestPanel />}/>
                     <Route path="teacher" element={<TeacherPanel />}/>
                     <Route path="course" element={<CoursePanel />}/>
-                    <Route path="subject" element={<SubjectPage />}/>
+                    <Route path="subject" element={<SubjectPanel />}/>
                     <Route path="speciality" element={<SpecialityPanel />}/>
                     <Route path="faculty" element={<FacultyPanel />}/>
                     <Route path="department" element={<DepartmentPanel />}/>

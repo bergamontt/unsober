@@ -2,9 +2,10 @@ package ua.unsober.backend.feature.course;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,8 +20,8 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<CourseResponseDto> getAll() {
-        return courseService.getAll();
+    public Page<CourseResponseDto> getAll(Pageable pageable) {
+        return courseService.getAll(pageable);
     }
 
     @GetMapping("/{id}")

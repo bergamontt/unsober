@@ -10,5 +10,7 @@
     "WITHDRAWN": "已取消注册",
     "MANDATORY": "必修",
     "PROF_ORIENTED": "专业导向",
-    "FREE_CHOICE": "自由选择"
+    "FREE_CHOICE": "自由选择",
+    "enroll": "报名",
+    "studentList": "学生名单"
 }

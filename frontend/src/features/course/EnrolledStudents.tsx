@@ -9,12 +9,12 @@ interface EnrolledStudentsProps {
 }
 
 function EnrolledStudents({ courseId }: EnrolledStudentsProps) {
-    const { t } = useTranslation();
+    const { t } = useTranslation("studentEnrollment");
     const { data: enrollments } = useFetch(getAllEnrollmentsByCourseId, [courseId]);
     return (
         <Table highlightOnHover withTableBorder withColumnBorders captionSide="top">
             <Table.Caption>
-                Список студентів
+                {t("studentList")}
             </Table.Caption>
 
             <Table.Thead>

@@ -1,4 +1,5 @@
 {
+    "genericCourseDetails": "课程基本信息",
     "annotation": "– 注释",
     "faculty": "学院",
     "department": "系",
@@ -10,11 +11,14 @@
     "weeklyHours": "每周课时",
     "limitations": "限制条件",
     "maxNumOfStudents": "学生人数上限",
-    "numOfStudentsPerGroup": "每组学生人数",
+    "unlimited": "无限",
+    "hoursPerWeek": "小时/周",
     "numOfEnrolledStudents": "注册学生人数",
     "numOfGroups": "小组数量",
     "details": "详细信息",
     "AUTUMN": "秋天",
     "SPRING": "字符串",
-    "SUMMER": "夏天"
+    "SUMMER": "夏天",
+    "BATCHELOR": "学士",
+    "MASTER": "硕士"
 }
