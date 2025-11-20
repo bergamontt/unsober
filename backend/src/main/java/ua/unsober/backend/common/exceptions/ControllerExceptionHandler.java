@@ -50,6 +50,13 @@ public class ControllerExceptionHandler {
         return ex.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EnrollmentActionNotAllowedException.class)
+    public String handleEnrollmentActionNotAllowedException(
+            EnrollmentActionNotAllowedException ex) {
+        return ex.getMessage();
+    }
+
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(TooManyAttemptsException.class)
     public String handleTooManyAttemptsException(TooManyAttemptsException ex) {
