@@ -32,19 +32,23 @@ public class CourseGroupServiceImpl implements CourseGroupService {
     }
 
     @Override
+    public List<CourseGroupResponseDto> getAllByCourseId(UUID courseId) {
+        return courseGroupRepository.findByCourseId(courseId)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public CourseGroupResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                courseGroupRepository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.course-group.notfound", id);
-                })
+                courseGroupRepository.findById(id).orElseThrow(() -> notFound.get("error.course-group.notfound", id))
         );
     }
 
     @Override
     public CourseGroupResponseDto update(UUID id, CourseGroupRequestDto dto) {
-        CourseGroup courseGroup = courseGroupRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.course-group.notfound", id);
-        });
+        CourseGroup courseGroup = courseGroupRepository.findById(id).orElseThrow(() -> notFound.get("error.course-group.notfound", id));
 
         CourseGroup newCourseGroup = requestMapper.toEntity(dto);
 

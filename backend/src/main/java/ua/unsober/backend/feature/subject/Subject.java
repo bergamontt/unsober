@@ -1,15 +1,13 @@
 package ua.unsober.backend.feature.subject;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.common.enums.EducationLevel;
 import ua.unsober.backend.common.enums.Term;
 
 import java.math.BigDecimal;
@@ -35,10 +33,28 @@ public class Subject {
     @Column(length=5000)
     private String annotation;
 
+    @Size(max=500)
+    @Column(length=500)
+    private String facultyName;
+
+    @Size(max=500)
+    @Column(length=500)
+    private String departmentName;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EducationLevel educationLevel;
+
     @NotNull
     @Digits(integer=2, fraction=1)
     @Column(nullable=false, precision=3, scale=1)
     private BigDecimal credits;
+
+    @NotNull
+    @PositiveOrZero
+    @Column(nullable=false)
+    private Integer hoursPerWeek;
 
     @NotNull
     @Enumerated(EnumType.STRING)

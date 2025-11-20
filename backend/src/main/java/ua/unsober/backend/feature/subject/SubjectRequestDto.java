@@ -1,20 +1,18 @@
 package ua.unsober.backend.feature.subject;
 
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.common.enums.EducationLevel;
 import ua.unsober.backend.common.enums.Term;
 
 import java.math.BigDecimal;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class SubjectRequestDto {
     @NotBlank(message = "{subject.name.required}")
@@ -24,9 +22,22 @@ public class SubjectRequestDto {
     @Size(max = 5000, message = "{subject.annotation.size}")
     private String annotation;
 
+    @Size(max = 500, message = "{subject.facultyName.size}")
+    private String facultyName;
+
+    @Size(max = 500, message = "{subject.departmentName.size}")
+    private String departmentName;
+
+    @NotNull(message = "{subject.educationLevel.required}")
+    private EducationLevel educationLevel;
+
     @NotNull(message = "{subject.credits.required}")
     @Digits(integer = 2, fraction = 1, message = "{subject.credits.digits}")
     private BigDecimal credits;
+
+    @NotNull(message = "{subject.hoursPerWeek.required}")
+    @PositiveOrZero(message = "{subject.hoursPerWeek.positive}")
+    private Integer hoursPerWeek;
 
     @NotNull(message = "{subject.term.required}")
     private Term term;

@@ -24,6 +24,11 @@ public class CourseGroupController {
         return courseGroupService.getAll();
     }
 
+    @GetMapping("/course/{courseId}")
+    public List<CourseGroupResponseDto> getAllByCourseId(@PathVariable UUID courseId) {
+        return courseGroupService.getAllByCourseId(courseId);
+    }
+
     @GetMapping("/{id}")
     public CourseGroupResponseDto getById(@PathVariable UUID id) {
         return courseGroupService.getById(id);

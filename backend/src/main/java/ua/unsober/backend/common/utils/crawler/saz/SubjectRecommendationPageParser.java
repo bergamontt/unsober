@@ -21,11 +21,11 @@ public class SubjectRecommendationPageParser implements EntityPageParser<Map<Str
             Elements cells = row.select("td");
             if (cells.size() < 2)
                 continue;
-            String courseName = cells.get(0).text().trim().replaceAll("`", "'");
+            String specName = cells.get(0).text().trim().replaceAll("`", "'");
             String rawRecommendation = cells.get(1).text().trim();
             Recommendation rec = mapToEnum(rawRecommendation);
-            if (!courseName.isEmpty() && rec != null) {
-                recommendations.put(courseName, rec);
+            if (!specName.isEmpty() && rec != null) {
+                recommendations.put(specName, rec);
             }
         }
         return recommendations;
