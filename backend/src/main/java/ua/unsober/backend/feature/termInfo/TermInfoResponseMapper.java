@@ -1,4 +1,4 @@
-package ua.unsober.backend.feature.terms;
+package ua.unsober.backend.feature.termInfo;
 
 import org.mapstruct.Mapper;
 
