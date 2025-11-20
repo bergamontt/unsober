@@ -15,7 +15,6 @@ import { useEffect } from "react";
 function ProfilePage() {
     const { t } = useTranslation("sections");
     const { isAuthenticated, loadingAuth } = useAuthStore();
-    console.log(isAuthenticated);
     const navigate = useNavigate();
     useEffect(() => {
         if (!isAuthenticated && !loadingAuth) {

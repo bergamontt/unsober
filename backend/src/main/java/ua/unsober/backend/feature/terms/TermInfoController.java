@@ -29,7 +29,7 @@ public class TermInfoController {
         return termInfoService.getById(id);
     }
 
-    @GetMapping("/year-and-term/")
+    @GetMapping("/year-and-term")
     public TermInfoResponseDto getByYearAnTerm(@RequestParam Integer year, @RequestParam Term term) {
         return termInfoService.getByYearAndTerm(year, term);
     }

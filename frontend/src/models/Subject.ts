@@ -10,6 +10,6 @@ export interface Subject {
     id: string;
     name: string;
     annotation?: string;
-    credits: number;   
-    term: Term; 
+    credits: number;
+    term: Term;
 }
