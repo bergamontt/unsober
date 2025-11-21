@@ -16,6 +16,7 @@ import FacultyPanel from '../features/admin/facultyPanel/FacultyPanel.tsx';
 import DepartmentPanel from '../features/admin/departmentPanel/DepartmentPanel.tsx';
 import BuildingPanel from '../features/admin/buildingPanel/BuildingPanel.tsx';
 import SubjectPanel from '../features/admin/subjectPanel/SubjectPanel.tsx';
+import InfoPage from '../features/info/InfoPage.tsx';
 
 function AppRoutes() {
     return (
@@ -27,6 +28,7 @@ function AppRoutes() {
                 <Route path="courses" element={<CoursesPage />}/>
                 <Route path="course/:id" element={<CoursePage />}/>
                 <Route path="schedule" element={<SchedulePage />}/>
+                <Route path="info" element={<InfoPage />}/>
                 
                 <Route path="/admin" element={<AdminLayout />}>
                     <Route path="student" element={<StudentPanel />}/>

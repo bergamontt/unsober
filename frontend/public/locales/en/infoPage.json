@@ -1,0 +1,13 @@
+{
+    "enrollmentInfo": "Enrollment information",
+    "currentTerm": "Current term",
+    "currentYear": "Current year",
+    "enrollmentStage": "Current enrollment stage",
+    "COURSES": "Course enrollment",
+    "GROUPS": "Group enrollment",
+    "CORRECTION": "Study plan correction",
+    "CLOSED": "Enrollment closed",
+    "AUTUMN": "Autumn",
+    "SPRING": "Spring",
+    "SUMMER": "Summer"
+}

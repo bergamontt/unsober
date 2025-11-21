@@ -1,0 +1,13 @@
+{
+    "enrollmentInfo": "选课阶段信息",
+    "currentTerm": "当前学期",
+    "currentYear": "当前学年",
+    "enrollmentStage": "当前选课阶段",
+    "COURSES": "课程选择",
+    "GROUPS": "分组选择",
+    "CORRECTION": "学习计划更正",
+    "CLOSED": "选课已关闭",
+    "AUTUMN": "秋季",
+    "SPRING": "春季",
+    "SUMMER": "夏季"
+}

@@ -1,0 +1,6 @@
+{
+    "COURSES": "At this stage, students can choose and enroll in elective courses. If the number of available seats in a course is limited, enrollment is processed on a first-come, first-served basis. After this stage ends, the student can no longer select or change elective courses.",
+    "GROUPS": "At this stage, students can enroll in a selected group (if there is more than one) for courses in their individual study plan, as well as transfer from one group to another. If a group has no available seats, enrollment is not possible. After this stage ends, the student can no longer enroll in or transfer between groups.",
+    "CORRECTION": "At this stage, a student may withdraw from an elective course in case of a timetable conflict.",
+    "CLOSED": "At this stage, enrolling in courses or groups is not possible. If issues arise with the individual study plan, please contact the dean's office specialists."
+}
