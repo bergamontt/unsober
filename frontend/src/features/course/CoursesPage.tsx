@@ -6,7 +6,7 @@ import CoursePreview from "./CoursePreview.tsx";
 import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import useFetch from "../../hooks/useFetch.ts";
 import { useNavigate } from "react-router";
-import { useAuthStore } from "../../hooks/authStore.ts";
+import { useAuthStore } from "../../hooks/authStore";
 import { getAllCourses } from "../../services/CourseService.ts";
 
 function CoursesPage() {

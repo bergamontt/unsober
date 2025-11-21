@@ -5,15 +5,18 @@ import AppRoutes from "./AppRoutes.tsx";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
+import { AuthProvider } from '../hooks/authStore';
 
-function App(){
+function App() {
     return (
-        <MantineProvider>
-            <Notifications />
-            <BrowserRouter>
-                <AppRoutes/>
-            </BrowserRouter>
-        </MantineProvider>
+        <AuthProvider>
+            <MantineProvider>
+                <Notifications />
+                <BrowserRouter>
+                    <AppRoutes />
+                </BrowserRouter>
+            </MantineProvider>
+        </AuthProvider>
     );
 }
 

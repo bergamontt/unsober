@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { notifications } from "@mantine/notifications";
-import { useAuthStore } from "../../hooks/authStore.ts";
+import { useAuthStore } from "../../hooks/authStore";
 import { login } from "../../services/AuthService.ts";
 import loginIcon from '../../assets/login.svg';
 import Icon from "../../common/icon/Icon.tsx";
@@ -46,9 +46,9 @@ function LoginPage() {
                 title: 'Success!',
                 autoClose: 1000,
                 message: 'You have successfully logged in.',
-                color: 'green',
-                onClose: () => navigate('/profile'),
+                color: 'green'
             });
+            navigate('/profile');
         } catch (err) {
             notifications.show({
                 title: 'Error',

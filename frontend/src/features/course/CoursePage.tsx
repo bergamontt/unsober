@@ -5,7 +5,7 @@ import EnrolledStudents from "./EnrolledStudents.tsx";
 import { useNavigate, useParams } from "react-router";
 import useFetch from "../../hooks/useFetch.ts";
 import { useEffect } from "react";
-import { useAuthStore } from "../../hooks/authStore.ts";
+import { useAuthStore } from "../../hooks/authStore";
 import { getCourseById } from "../../services/CourseService.ts";
 import { useTranslation } from "react-i18next";
 
