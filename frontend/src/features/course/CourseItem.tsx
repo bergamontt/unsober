@@ -1,23 +1,42 @@
 import { Group, Pill, Text } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { Recommendation } from "../../models/SubjectRecommendation";
+import type { Course } from "../../models/Course";
+import { getRecommendationBySubjectAndSpeciality, recommendationExistsBySubjectAndSpeciality } from "../../services/SubjectRecommendationService";
+import { useStudentStore } from "../../hooks/studentStore";
+import useFetch from "../../hooks/useFetch";
+import { useEffect, useState } from "react";
 
 type CourseProps = {
-    name: string;
-    recommendation?: Recommendation;
+    course: Course
 }
 
-function CourseItem({ name, recommendation: r }: CourseProps) {
+function CourseItem({ course }: CourseProps) {
     const { t } = useTranslation("courseSearch");
-    const isMandatory = r && r == Recommendation.MANDATORY;
-    const isRecommended = r && r == Recommendation.PROF_ORIENTED;
+    const { user: student } = useStudentStore();
+    const subjId = course?.subject.id;
+    const specId = student?.speciality.id ?? null;
+    const { data: recommExists } = useFetch(
+        recommendationExistsBySubjectAndSpeciality, [subjId, specId]);
+    const [isMandatory, setIsMandatory] = useState(false);
+    const [isRecommended, setIsRecommended] = useState(false);
+    useEffect(() => {
+        const updateRecommendation = async () => {
+            const recomm = await getRecommendationBySubjectAndSpeciality(subjId, specId);
+            setIsMandatory(recomm?.recommendation == Recommendation.MANDATORY);
+            setIsRecommended(recomm?.recommendation == Recommendation.PROF_ORIENTED);
+        }
+        if(recommExists)
+            updateRecommendation();
+    }, [recommExists])
+
     return (
         <Group
             justify="space-between"
             className="course"
             pr="1em"
         >
-            <Text>{name}</Text>
+            <Text>{course.subject.name}</Text>
             <Group grow gap="xs">
                 {isRecommended &&
                     <Pill radius="xs" bg="indigo" c="white" fw="bold">

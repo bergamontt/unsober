@@ -30,10 +30,17 @@ public class SubjectRecommendationController {
     }
 
     @GetMapping("/subject-and-speciality")
-    public SubjectRecommendationResponseDto getById(
+    public SubjectRecommendationResponseDto getBySubjectAndSpecialityId(
             @RequestParam UUID subjectId,
             @RequestParam UUID specialityId) {
         return subjectRecommendationService.getBySubjectAndSpecialityId(subjectId, specialityId);
+    }
+
+    @GetMapping("/exists/subject-and-speciality")
+    public boolean existsBySubjectAndSpecialityId(
+            @RequestParam UUID subjectId,
+            @RequestParam UUID specialityId) {
+        return subjectRecommendationService.existsBySubjectAndSpecialityId(subjectId, specialityId);
     }
 
     @PatchMapping("/{id}")

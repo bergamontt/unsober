@@ -16,5 +16,6 @@
     "studentList": "Student List",
     "unknownEnrollmentError": "Failed to enroll in the course",
     "success": "Success",
+    "enrolledInCourse": "You have been enrolled in {{courseName}}",
     "error": "Error"
 }

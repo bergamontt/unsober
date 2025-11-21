@@ -2,7 +2,7 @@ import { Table } from "@mantine/core";
 import { getAllEnrollmentsByCourseId } from "../../services/StudentEnrollmentService";
 import useFetch from "../../hooks/useFetch";
 import { useTranslation } from "react-i18next";
-import { getRecommendationBySubjectAndSpeciality } from "../../services/SubjectRecommendationService";
+import { getRecommendationBySubjectAndSpeciality, recommendationExistsBySubjectAndSpeciality } from "../../services/SubjectRecommendationService";
 import { useEffect, useState } from "react";
 
 interface EnrolledStudentsProps {
@@ -21,8 +21,13 @@ function EnrolledStudents({ courseId }: EnrolledStudentsProps) {
                 enrollments.map(async (e) => {
                     const subjectId = e.course.subject.id;
                     const specialityId = e.student.speciality.id;
-                    const recomm = await getRecommendationBySubjectAndSpeciality(subjectId, specialityId);
-                    recMap[e.student.id] = recomm?.recommendation ?? "FREE_CHOICE";
+                    const recExists = await recommendationExistsBySubjectAndSpeciality(subjectId, specialityId);
+                    if(recExists){
+                        const recomm = await getRecommendationBySubjectAndSpeciality(subjectId, specialityId);
+                        recMap[e.student.id] = recomm?.recommendation ?? "FREE_CHOICE";
+                    } else {
+                        recMap[e.student.id] = "FREE_CHOICE";
+                    }
                 })
             );
             setRecommendations(recMap);

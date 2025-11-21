@@ -15,6 +15,7 @@
     "enrolled": "Записаний",
     "studentList": "Список студентів",
     "unknownEnrollmentError": "Не вдалося записатися на дисципліну",
-    "success": "Успіх",
+    "success": "Запис минув успішно",
+    "enrolledInCourse": "Ви були записані на {{courseName}}",
     "error": "Помилка"
 }

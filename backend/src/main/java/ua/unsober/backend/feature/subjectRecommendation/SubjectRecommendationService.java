@@ -8,6 +8,7 @@ public interface SubjectRecommendationService {
     List<SubjectRecommendationResponseDto> getAll();
     SubjectRecommendationResponseDto getById(UUID id);
     SubjectRecommendationResponseDto getBySubjectAndSpecialityId(UUID subjectId, UUID specialityId);
+    boolean existsBySubjectAndSpecialityId(UUID subjectId, UUID specialityId);
     SubjectRecommendationResponseDto update(UUID id, SubjectRecommendationRequestDto dto);
     void delete(UUID id);
 }

@@ -40,10 +40,10 @@ function CoursePage() {
             return;
         try {
             setIsLoading(true);
-            await enrollSelf(id);
+            const enrollment = await enrollSelf(id);
             notifications.show({
                 title: t("success"),
-                message: t("enrolled"),
+                message: t("enrolledInCourse", {courseName: enrollment.course.subject.name}),
                 color: 'green',
             });
             window.location.reload();
