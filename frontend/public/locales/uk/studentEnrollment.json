@@ -12,5 +12,9 @@
     "PROF_ORIENTED": "Професійно-орієнтована",
     "FREE_CHOICE": "Вільного вибору",
     "enroll": "Записатися",
-    "studentList": "Список студентів"
+    "enrolled": "Записаний",
+    "studentList": "Список студентів",
+    "unknownEnrollmentError": "Не вдалося записатися на дисципліну",
+    "success": "Успіх",
+    "error": "Помилка"
 }

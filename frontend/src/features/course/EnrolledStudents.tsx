@@ -3,6 +3,7 @@ import { getAllEnrollmentsByCourseId } from "../../services/StudentEnrollmentSer
 import useFetch from "../../hooks/useFetch";
 import { useTranslation } from "react-i18next";
 import { getRecommendationBySubjectAndSpeciality } from "../../services/SubjectRecommendationService";
+import { useEffect, useState } from "react";
 
 interface EnrolledStudentsProps {
     courseId: string;
@@ -11,6 +12,24 @@ interface EnrolledStudentsProps {
 function EnrolledStudents({ courseId }: EnrolledStudentsProps) {
     const { t } = useTranslation("studentEnrollment");
     const { data: enrollments } = useFetch(getAllEnrollmentsByCourseId, [courseId]);
+    const [recommendations, setRecommendations] = useState<Record<string, string>>({});
+    useEffect(() => {
+        if (!enrollments) return;
+        const fetchRecommendations = async () => {
+            const recMap: Record<string, string> = {};
+            await Promise.all(
+                enrollments.map(async (e) => {
+                    const subjectId = e.course.subject.id;
+                    const specialityId = e.student.speciality.id;
+                    const recomm = await getRecommendationBySubjectAndSpeciality(subjectId, specialityId);
+                    recMap[e.student.id] = recomm?.recommendation ?? "FREE_CHOICE";
+                })
+            );
+            setRecommendations(recMap);
+        };
+        fetchRecommendations();
+    }, [enrollments]);
+
     return (
         <Table highlightOnHover withTableBorder withColumnBorders captionSide="top">
             <Table.Caption>
@@ -30,29 +49,24 @@ function EnrolledStudents({ courseId }: EnrolledStudentsProps) {
             </Table.Thead>
 
             <Table.Tbody>
-                {
-                    enrollments?.map((e, index) => {
-                        const s = e.student;
-                        const name = s.lastName + " " + s.firstName + " " + s.patronymic;
-                        const groupNum = e.courseGroup ? e.courseGroup.groupNumber : '-';
-                        const subjectId = e.course.subject.id;
-                        const specialityId = s.speciality.id;
-                        const { data: recomm } = useFetch(getRecommendationBySubjectAndSpeciality,
-                            [subjectId, specialityId]);
-                        const recommendation = recomm?.recommendation ?? "FREE_CHOICE";
-                        return (
-                            <Table.Tr key={s.id}>
-                                <Table.Td>{index + 1}</Table.Td>
-                                <Table.Td>{name}</Table.Td>
-                                <Table.Td>{s.studyYear}</Table.Td>
-                                <Table.Td>{s.speciality.name}</Table.Td>
-                                <Table.Td>{t(recommendation)}</Table.Td>
-                                <Table.Td>{t(e.status)}</Table.Td>
-                                <Table.Td>{groupNum}</Table.Td>
-                            </Table.Tr>
-                        );
-                    })
-                }
+                {enrollments?.map((e, index) => {
+                    const s = e.student;
+                    const name = `${s.lastName} ${s.firstName} ${s.patronymic}`;
+                    const groupNum = e.courseGroup?.groupNumber ?? "-";
+                    const recommendation = recommendations[s.id] ?? "FREE_CHOICE";
+
+                    return (
+                        <Table.Tr key={s.id}>
+                            <Table.Td>{index + 1}</Table.Td>
+                            <Table.Td>{name}</Table.Td>
+                            <Table.Td>{s.studyYear}</Table.Td>
+                            <Table.Td>{s.speciality.name}</Table.Td>
+                            <Table.Td>{t(recommendation)}</Table.Td>
+                            <Table.Td>{t(e.status)}</Table.Td>
+                            <Table.Td>{groupNum}</Table.Td>
+                        </Table.Tr>
+                    );
+                })}
             </Table.Tbody>
         </Table>
     );

@@ -4,10 +4,16 @@ import CourseDetails from "./CourseDetails.tsx";
 import EnrolledStudents from "./EnrolledStudents.tsx";
 import { useNavigate, useParams } from "react-router";
 import useFetch from "../../hooks/useFetch.ts";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuthStore } from "../../hooks/authStore";
 import { getCourseById } from "../../services/CourseService.ts";
 import { useTranslation } from "react-i18next";
+import { getAppState } from "../../services/AppStateService.ts";
+import { EnrollmentStage } from "../../models/AppState.ts";
+import { enrollSelf, existsEnrollment } from "../../services/StudentEnrollmentService.ts";
+import { notifications } from "@mantine/notifications";
+import { useStudentStore } from "../../hooks/studentStore.ts";
+import axios from "axios";
 
 function CoursePage() {
     const { id } = useParams();
@@ -20,16 +26,64 @@ function CoursePage() {
         }
     }, [isAuthenticated, loadingAuth, navigate]);
     const { data: course } = useFetch(getCourseById, [id ?? null]);
+    const { data: state } = useFetch(getAppState, []);
+    const stage = state?.enrollmentStage;
+    const enrollmentAllowed = stage && (stage == EnrollmentStage.CORRECTION
+        || stage == EnrollmentStage.COURSES);
+    const { user: student } = useStudentStore();
+    const isStudent = !!student;
+    const { data: isEnrolled } = useFetch(existsEnrollment, [student?.id ?? null, id ?? null]);
+    const [loading, setIsLoading] = useState(false);
+
+    const handleEnroll = useCallback(async () => {
+        if (!id || !isStudent || isEnrolled)
+            return;
+        try {
+            setIsLoading(true);
+            await enrollSelf(id);
+            notifications.show({
+                title: t("success"),
+                message: t("enrolled"),
+                color: 'green',
+            });
+            window.location.reload();
+        } catch (err: unknown) {
+            let errorMessage = t("unknownEnrollmentError");
+            if (axios.isAxiosError(err)) {
+                const data = err.response?.data;
+                if (typeof data == "string" && data.trim()) {
+                    errorMessage = data;
+                }
+            }
+            notifications.show({
+                title: t("error"),
+                message: errorMessage,
+                color: 'red',
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    }, [t]);
+
     if (!course)
         return <></>;
     return (
         <PageWrapper>
             <Title>{course.subject.name}</Title>
             <CourseDetails course={course} />
-            <Button variant="outline" color="green">
-                {t("enroll")}
-            </Button>
-            <EnrolledStudents courseId={course.id}/>
+            {
+                enrollmentAllowed && isStudent &&
+                <Button
+                    variant="outline"
+                    color="green"
+                    disabled={isEnrolled ?? false}
+                    onClick={handleEnroll}
+                    loading={loading}
+                >
+                    {isEnrolled ? t("enrolled") : t("enroll")}
+                </Button>
+            }
+            <EnrolledStudents courseId={course.id} />
         </PageWrapper>
     );
 }

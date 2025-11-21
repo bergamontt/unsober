@@ -9,6 +9,7 @@ public interface StudentEnrollmentService {
     StudentEnrollmentResponseDto getById(UUID id);
     List<StudentEnrollmentResponseDto> getAllByStudentId(UUID studentId);
     List<StudentEnrollmentResponseDto> getAllByCourseId(UUID courseId);
+    boolean existsByStudentAndCourseId(UUID studentId, UUID courseId);
     StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto);
     void delete(UUID id);
     StudentEnrollmentResponseDto enrollSelf(UUID courseId);

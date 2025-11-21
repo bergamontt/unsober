@@ -113,6 +113,11 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     }
 
     @Override
+    public boolean existsByStudentAndCourseId(UUID studentId, UUID courseId) {
+        return  studentEnrollmentRepository.existsByStudentIdAndCourseId(studentId, courseId);
+    }
+
+    @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));

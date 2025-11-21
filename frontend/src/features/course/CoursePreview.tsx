@@ -5,7 +5,6 @@ import CourseItem from "./CourseItem.tsx";
 import { useStudentStore } from "../../hooks/studentStore.ts";
 import useFetch from "../../hooks/useFetch.ts";
 import { getRecommendationBySubjectAndSpeciality } from "../../services/SubjectRecommendationService.ts";
-import { Recommendation } from "../../models/SubjectRecommendation.ts";
 
 interface CoursePreviewProps {
     course: Course

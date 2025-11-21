@@ -29,6 +29,7 @@ function CourseItem({ name, recommendation: r }: CourseProps) {
                         {t('mandatory')}
                     </Pill>
                 }
+                <Pill radius="xs" bg="black" c="white" fw="bold">ФІ</Pill>
             </Group>
         </Group>
     );

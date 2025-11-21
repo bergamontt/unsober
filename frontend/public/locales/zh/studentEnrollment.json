@@ -12,5 +12,9 @@
     "PROF_ORIENTED": "专业导向",
     "FREE_CHOICE": "自由选择",
     "enroll": "报名",
-    "studentList": "学生名单"
+    "enrolled": "已报名",
+    "studentList": "学生列表",
+    "unknownEnrollmentError": "无法注册课程",
+    "success": "成功",
+    "error": "错误"
 }
