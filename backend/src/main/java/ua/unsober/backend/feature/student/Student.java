@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
+import ua.unsober.backend.common.enums.StudentStatus;
 import ua.unsober.backend.feature.speciality.Speciality;
 import ua.unsober.backend.feature.user.User;
 
@@ -42,6 +43,11 @@ public class Student {
     @Positive
     @Column(name="study_year", nullable=false)
     private Integer studyYear;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StudentStatus status;
 
     @Version
     @Column(nullable=false)

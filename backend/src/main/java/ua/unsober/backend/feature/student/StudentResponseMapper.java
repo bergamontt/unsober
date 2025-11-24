@@ -18,6 +18,7 @@ public class StudentResponseMapper {
                 .studyYear(student.getStudyYear())
                 .speciality(specialityResponseMapper.toDto(student.getSpeciality()))
                 .recordBookNumber(student.getRecordBookNumber())
+                .status(student.getStatus())
                 .build();
         if(student.getUser() != null){
             User user = student.getUser();

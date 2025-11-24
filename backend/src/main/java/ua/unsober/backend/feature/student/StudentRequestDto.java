@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.common.enums.StudentStatus;
 
 import java.util.UUID;
 
@@ -43,4 +44,7 @@ public class StudentRequestDto {
     @NotNull(message = "{student.studyYear.required}")
     @Positive(message = "{student.studyYear.positive}")
     private Integer studyYear;
+
+    @NotNull(message = "{student.status.required}")
+    private StudentStatus status;
 }
