@@ -12,5 +12,10 @@
     "PROF_ORIENTED": "Professionally-oriented",
     "FREE_CHOICE": "Free choice",
     "enroll": "Enroll",
-    "studentList": "List of students"
+    "enrolled": "Enrolled",
+    "studentList": "Student List",
+    "unknownEnrollmentError": "Failed to enroll in the course",
+    "success": "Success",
+    "enrolledInCourse": "You have been enrolled in {{courseName}}",
+    "error": "Error"
 }

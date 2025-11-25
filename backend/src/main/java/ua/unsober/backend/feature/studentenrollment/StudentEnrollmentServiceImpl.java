@@ -75,9 +75,13 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         enrollment.setGroup(courseGroup);
 
         course.setNumEnrolled(course.getNumEnrolled() + 1);
-        if (courseGroup != null) courseGroup.setNumEnrolled(courseGroup.getNumEnrolled() + 1);
+        if (courseGroup != null)
+            courseGroup.setNumEnrolled(courseGroup.getNumEnrolled() + 1);
 
         StudentEnrollment saved = studentEnrollmentRepository.save(enrollment);
+        courseRepository.save(course);
+        if(courseGroup != null)
+            courseGroupRepository.save(courseGroup);
         return responseMapper.toDto(saved);
     }
 
@@ -113,6 +117,11 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     }
 
     @Override
+    public boolean existsByStudentAndCourseId(UUID studentId, UUID courseId) {
+        return  studentEnrollmentRepository.existsByStudentIdAndCourseId(studentId, courseId);
+    }
+
+    @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
@@ -123,14 +132,20 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
             oldCourse.setNumEnrolled(oldCourse.getNumEnrolled() - 1);
             newCourse.setNumEnrolled(newCourse.getNumEnrolled() + 1);
             enrollment.setCourse(newCourse);
+            courseRepository.save(oldCourse);
+            courseRepository.save(newCourse);
         }
 
         if (dto.getGroupId() != null) {
             CourseGroup oldGroup = enrollment.getGroup();
             CourseGroup newGroup = validateGroup(dto.getGroupId());
-            if (oldGroup != null) oldGroup.setNumEnrolled(oldGroup.getNumEnrolled() - 1);
+            if (oldGroup != null)
+                oldGroup.setNumEnrolled(oldGroup.getNumEnrolled() - 1);
             newGroup.setNumEnrolled(newGroup.getNumEnrolled() + 1);
             enrollment.setGroup(newGroup);
+            if(oldGroup != null)
+                courseGroupRepository.save(oldGroup);
+            courseGroupRepository.save(newGroup);
         }
 
         StudentEnrollment newEnrollment = requestMapper.toEntity(dto);

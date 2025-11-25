@@ -37,7 +37,14 @@ function Header() {
                     isAuthenticated &&
                     <>
                         <Tabs.Tab
-                            value="disciplines"
+                            value="info"
+                            bg="black"
+                            onClick={() => navigate('/info')}
+                        >
+                            {t("info")}
+                        </Tabs.Tab>
+                        <Tabs.Tab
+                            value="courses"
                             bg="black"
                             onClick={() => navigate('/courses')}
                         >

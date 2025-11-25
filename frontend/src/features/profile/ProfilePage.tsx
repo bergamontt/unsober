@@ -9,7 +9,7 @@ import settings from '../../assets/settings.svg'
 import schedule from '../../assets/schedule.svg'
 import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import { useNavigate } from "react-router";
-import { useAuthStore } from "../../hooks/authStore.ts";
+import { useAuthStore } from "../../hooks/authStore";
 import { useEffect } from "react";
 
 function ProfilePage() {

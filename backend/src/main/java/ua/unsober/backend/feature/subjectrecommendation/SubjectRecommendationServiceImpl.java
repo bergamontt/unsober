@@ -49,6 +49,11 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
     }
 
     @Override
+    public boolean existsBySubjectAndSpecialityId(UUID subjectId, UUID specialityId) {
+        return subjectRecommendationRepository.existsBySubjectIdAndSpecialityId(subjectId, specialityId);
+    }
+
+    @Override
     public SubjectRecommendationResponseDto update(UUID id, SubjectRecommendationRequestDto dto) {
         SubjectRecommendation recommendation = subjectRecommendationRepository.findById(id)
                 .orElseThrow(() -> notFound.get("error.subject-recommendation.notfound", id));

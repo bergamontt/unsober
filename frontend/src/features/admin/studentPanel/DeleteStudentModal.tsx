@@ -30,6 +30,7 @@ function DeleteStudentModal({ opened, close, studentId }: DeleteModalProps) {
                 color: "green",
             });
             close();
+            window.location.reload();
         } catch (err: unknown) {
             let errorMessage = t("unknownDeleteError");
             if (axios.isAxiosError(err)) {

@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, createContext, useContext, type ReactNode } from "react";
 import { useAdminStore } from "./adminStore.ts";
 import { useStudentStore } from "./studentStore.ts";
 import { useUserDetailsStore } from "./userDetailsStore.ts";
@@ -47,7 +47,6 @@ export function getRolesFromToken(token: string | null): string[] {
         const payload = jwtDecode<{ roles?: string[]; }>(token);
         if (payload.roles && Array.isArray(payload.roles))
             return payload.roles;
-
         return [];
     } catch {
         return [];
@@ -76,13 +75,17 @@ export function getValidToken(): string | null {
 function storeToken(token: string) {
     if (isValid(token))
         localStorage.setItem(tokenKey, token);
+    else
+        localStorage.removeItem(tokenKey);
 }
 
 function deleteToken() {
     localStorage.removeItem(tokenKey);
 }
 
-export function useAuthStore(): AuthStore {
+const AuthContext = createContext<AuthStore | null>(null);
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { fetchByEmail: fetchAdminByEmail, clearUser: clearAdmin } = useAdminStore();
     const { fetchByEmail: fetchStudentByEmail, clearUser: clearStudent } = useStudentStore();
     const { clear: clearUserInfo } = useUserDetailsStore();
@@ -160,5 +163,18 @@ export function useAuthStore(): AuthStore {
         }
     }, []);
 
-    return { token, setToken, removeToken, loadingAuth, isAuthenticated, currentEmail, currentRoles };
+    const value: AuthStore = { token, setToken, removeToken, loadingAuth, isAuthenticated, currentEmail, currentRoles };
+
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export function useAuthStore(): AuthStore {
+    const ctx = useContext(AuthContext);
+    if (!ctx) 
+        throw new Error("useAuthStore must be used within AuthProvider");
+    return ctx;
 }

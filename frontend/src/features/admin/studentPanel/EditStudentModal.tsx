@@ -149,6 +149,7 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
             });
             close();
             resetForm();
+            window.location.reload();
         } catch (err: unknown) {
             let errorMessage = t("unknownUpdateError");
             if (axios.isAxiosError(err)) {

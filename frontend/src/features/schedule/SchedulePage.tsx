@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
-import { useAuthStore } from "../../hooks/authStore.ts";
+import { useAuthStore } from "../../hooks/authStore";
 import Schedule from "./Schedule.tsx";
 import { useEffect } from "react";
 

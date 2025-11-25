@@ -12,3 +12,15 @@ export const getRecommendationBySubjectAndSpeciality = async (
     });
     return response.data;
 };
+
+export const recommendationExistsBySubjectAndSpeciality = async (
+    subjectId: string | null, specialityId: string | null):
+    Promise<boolean> => {
+        if(subjectId == null || specialityId == null)
+            return false;
+    const response = await api.get<boolean>(
+        '/subject-recommendation/exists/subject-and-speciality', {
+        params: { subjectId, specialityId }
+    });
+    return response.data;
+};

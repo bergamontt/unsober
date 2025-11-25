@@ -9,9 +9,9 @@ i18n
         lng: "uk",
         fallbackLng: "en",
         debug: false,
-        ns: ["adminMenu", "auth", "common",
-            "manageStudents", "profile", "sections",
-            "studentEnrollment", "coursePreview", "courseSearch"],
+        ns: ["adminMenu", "auth", "common", "coursePreview",
+            "courseSearch", "infoPage", "manageStudents", "profile",
+            "sections", "stageDescription", "studentEnrollment",],
         defaultNS: "common",
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json",

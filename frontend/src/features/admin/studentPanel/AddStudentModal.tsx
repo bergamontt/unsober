@@ -133,6 +133,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             });
             close();
             resetForm();
+            window.location.reload();
         } catch (err: unknown) {
             let errorMessage = t("unknownAddError");
             if (axios.isAxiosError(err)) {

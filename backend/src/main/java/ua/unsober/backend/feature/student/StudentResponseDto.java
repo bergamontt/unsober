@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.unsober.backend.common.enums.StudentStatus;
 import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
 
 import java.util.UUID;
@@ -21,4 +22,5 @@ public class StudentResponseDto {
     private String email;
     private SpecialityResponseDto speciality;
     private Integer studyYear;
+    private StudentStatus status;
 }
