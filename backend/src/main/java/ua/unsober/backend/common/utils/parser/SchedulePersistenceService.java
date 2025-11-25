@@ -11,10 +11,10 @@ import ua.unsober.backend.common.utils.parser.models.DaySchedule;
 import ua.unsober.backend.common.utils.parser.models.Schedule;
 import ua.unsober.backend.feature.course.Course;
 import ua.unsober.backend.feature.course.CourseRepository;
-import ua.unsober.backend.feature.courseClass.CourseClass;
-import ua.unsober.backend.feature.courseClass.CourseClassRepository;
-import ua.unsober.backend.feature.courseGroup.CourseGroup;
-import ua.unsober.backend.feature.courseGroup.CourseGroupRepository;
+import ua.unsober.backend.feature.courseclass.CourseClass;
+import ua.unsober.backend.feature.courseclass.CourseClassRepository;
+import ua.unsober.backend.feature.coursegroup.CourseGroup;
+import ua.unsober.backend.feature.coursegroup.CourseGroupRepository;
 import ua.unsober.backend.feature.subject.Subject;
 import ua.unsober.backend.feature.subject.SubjectRepository;
 
@@ -145,7 +145,9 @@ public class SchedulePersistenceService {
             if (s.isEmpty()) continue;
             try {
                 out.add(Integer.parseInt(s));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+                // ignored
+            }
         }
         if (out.isEmpty()) {
             out.add(1);

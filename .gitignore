@@ -3,5 +3,8 @@
 /backend/.idea
 frontend/node_modules
 /backend/build
+/backend/buildSrc/.gradle
+/backend/buildSrc/.kotlin
+/backend/buildSrc/build
 *.env
 *.log

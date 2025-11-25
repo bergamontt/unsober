@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @WebMvcTest(CourseController.class)
 @Import(SecurityTestConfig.class)
-public class CourseControllerIntegrationTest {
+class CourseControllerIntegrationTest {
     @Autowired
     private MockMvc mvc;
 
