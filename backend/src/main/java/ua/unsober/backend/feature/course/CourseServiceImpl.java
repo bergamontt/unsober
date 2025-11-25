@@ -23,6 +23,8 @@ public class CourseServiceImpl implements CourseService {
     private final CourseResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String COURSE_NOT_FOUND = "error.course.notfound";
+
     @Override
     @CacheEvict(value = "coursesPage", allEntries = true)
     @CachePut(value = "courseById", key = "#result.id")
@@ -42,7 +44,8 @@ public class CourseServiceImpl implements CourseService {
     @Cacheable(value = "courseById", key = "#id")
     public CourseResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                courseRepository.findById(id).orElseThrow(() -> notFound.get("error.course.notfound", id))
+                courseRepository.findById(id).orElseThrow(() ->
+                        notFound.get(COURSE_NOT_FOUND, id))
         );
     }
 
@@ -50,7 +53,8 @@ public class CourseServiceImpl implements CourseService {
     @CacheEvict(value = "coursesPage", allEntries = true)
     @CachePut(value = "courseById", key = "#id")
     public CourseResponseDto update(UUID id, CourseRequestDto dto) {
-        Course course = courseRepository.findById(id).orElseThrow(() -> notFound.get("error.course.notfound", id));
+        Course course = courseRepository.findById(id).orElseThrow(() ->
+                notFound.get(COURSE_NOT_FOUND, id));
 
         Course newCourse = requestMapper.toEntity(dto);
 
@@ -71,7 +75,7 @@ public class CourseServiceImpl implements CourseService {
         if (courseRepository.existsById(id)) {
             courseRepository.deleteById(id);
         } else {
-            throw notFound.get("error.course.notfound", id);
+            throw notFound.get(COURSE_NOT_FOUND, id);
         }
     }
 }

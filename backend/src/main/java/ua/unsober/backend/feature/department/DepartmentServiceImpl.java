@@ -18,6 +18,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String DEPARTMENT_NOT_FOUND = "error.department.notfound";
+
     @Override
     public DepartmentResponseDto create(DepartmentRequestDto dto) {
         Department saved = departmentRepository.save(requestMapper.toEntity(dto));
@@ -34,17 +36,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                departmentRepository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.department.notfound", id);
-                })
+                departmentRepository.findById(id).orElseThrow(() ->
+                        notFound.get(DEPARTMENT_NOT_FOUND, id))
         );
     }
 
     @Override
     public DepartmentResponseDto update(UUID id, DepartmentRequestDto dto) {
-        Department department = departmentRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.department.notfound", id);
-        });
+        Department department = departmentRepository.findById(id).orElseThrow(() ->
+                notFound.get(DEPARTMENT_NOT_FOUND, id));
 
         Department newDepartment = requestMapper.toEntity(dto);
 
@@ -67,7 +67,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (departmentRepository.existsById(id)) {
             departmentRepository.deleteById(id);
         } else {
-            throw notFound.get("error.department.notfound", id);
+            throw notFound.get(DEPARTMENT_NOT_FOUND, id);
         }
     }
 }

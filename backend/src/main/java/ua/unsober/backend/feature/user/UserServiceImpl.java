@@ -16,20 +16,20 @@ public class UserServiceImpl implements UserService{
     private final UserResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String USER_NOT_FOUND = "error.user.notfound";
+
     @Override
     public UserResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                repository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.user.notfound", id);
-                }));
+                repository.findById(id).orElseThrow(() ->
+                        notFound.get(USER_NOT_FOUND, id)));
     }
 
     @Override
     public UserResponseDto getByEmail(String email) {
         return responseMapper.toDto(
-                repository.findByEmail(email).orElseThrow(() -> {
-                    return notFound.get("error.user.notfound", email);
-                }));
+                repository.findByEmail(email).orElseThrow(() ->
+                        notFound.get(USER_NOT_FOUND, email)));
     }
 
     @Override
@@ -40,9 +40,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDto update(UUID id, UserRequestDto dto) {
-        User user = repository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.user.notfound", id);
-        });
+        User user = repository.findById(id).orElseThrow(() ->
+                notFound.get(USER_NOT_FOUND, id));
 
         User newUser = requestMapper.toEntity(dto);
         if (newUser.getFirstName() != null)
@@ -66,7 +65,7 @@ public class UserServiceImpl implements UserService{
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {
-            throw notFound.get("error.user.notfound", id);
+            throw notFound.get(USER_NOT_FOUND, id);
         }
     }
 }

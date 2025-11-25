@@ -44,42 +44,61 @@ public class SchedulePersistenceService {
             for (ClassSchedule classDto : daySchedule.getClasses()) {
                 if (classDto == null)
                     continue;
-                String subjectName = classDto.getClassName();
-                List<Subject> subjects = subjectRepository.findByName(subjectName);
-                if(subjects.isEmpty())
-                    throw new EntityNotFoundException("Subject not found: " + subjectName);
-                Subject subject;
-                if(subjects.size() > 1){
-                    subject = subjectRepository.findByNameAndSpecialityName(subjectName, schedule.getSpecialityName())
-                            .orElseThrow(() -> new EntityNotFoundException("Subject not found: " + subjectName + " for " + schedule.getSpecialityName()));
-                } else {
-                    subject = subjects.getFirst();
-                }
-                Course course = courseRepository.findBySubjectIdAndCourseYear(subject.getId(), yearOfStudy)
-                        .orElseGet(() -> createCourseForSubject(subject, yearOfStudy));
-                String groupRaw = classDto.getGroup();
-                if (groupRaw == null)
-                    groupRaw = "";
-                if (groupRaw.trim().equalsIgnoreCase("лекція")) {
-                    List<CourseGroup> groups = courseGroupRepository.findByCourseId(course.getId());
-                    if (groups.isEmpty()) {
-                        CourseGroup g = createCourseGroup(course, 1);
-                        groups = Collections.singletonList(g);
-                    }
-                    for (CourseGroup g : groups) {
-                        CourseClass cc = buildCourseClassFromDto(classDto, course, g, ClassType.LECTURE);
-                        courseClassRepository.save(cc);
-                    }
-                } else {
-                    List<Integer> groupNumbers = parseGroupNumbers(groupRaw);
-                    for (Integer groupNumber : groupNumbers) {
-                        CourseGroup group = courseGroupRepository.findByCourseIdAndGroupNumber(course.getId(), groupNumber)
-                                .orElseGet(() -> createCourseGroup(course, groupNumber));
-                        CourseClass cc = buildCourseClassFromDto(classDto, course, group, ClassType.PRACTICE);
-                        courseClassRepository.save(cc);
-                    }
-                }
+                processClassDto(schedule, yearOfStudy, classDto);
             }
+        }
+    }
+
+    private void processClassDto(Schedule schedule, int yearOfStudy, ClassSchedule classDto) {
+        String subjectName = classDto.getClassName();
+        Subject subject = findSubjectOrThrow(subjectName, schedule.getSpecialityName());
+        Course course = findOrCreateCourse(subject, yearOfStudy);
+        String groupRaw = classDto.getGroup();
+        if (groupRaw == null)
+            groupRaw = "";
+        if (groupRaw.trim().equalsIgnoreCase("лекція")) {
+            handleLecture(classDto, course);
+        } else {
+            handlePractice(classDto, course, groupRaw);
+        }
+    }
+
+    private Subject findSubjectOrThrow(String subjectName, String specialityName) {
+        List<Subject> subjects = subjectRepository.findByName(subjectName);
+        if (subjects.isEmpty())
+            throw new EntityNotFoundException("Subject not found: " + subjectName);
+        if (subjects.size() > 1) {
+            return subjectRepository.findByNameAndSpecialityName(subjectName, specialityName)
+                    .orElseThrow(() -> new EntityNotFoundException("Subject not found: " + subjectName + " for " + specialityName));
+        } else {
+            return subjects.getFirst();
+        }
+    }
+
+    private Course findOrCreateCourse(Subject subject, int yearOfStudy) {
+        return courseRepository.findBySubjectIdAndCourseYear(subject.getId(), yearOfStudy)
+                .orElseGet(() -> createCourseForSubject(subject, yearOfStudy));
+    }
+
+    private void handleLecture(ClassSchedule classDto, Course course) {
+        List<CourseGroup> groups = courseGroupRepository.findByCourseId(course.getId());
+        if (groups.isEmpty()) {
+            CourseGroup g = createCourseGroup(course, 1);
+            groups = Collections.singletonList(g);
+        }
+        for (CourseGroup g : groups) {
+            CourseClass cc = buildCourseClassFromDto(classDto, course, g, ClassType.LECTURE);
+            courseClassRepository.save(cc);
+        }
+    }
+
+    private void handlePractice(ClassSchedule classDto, Course course, String groupRaw) {
+        List<Integer> groupNumbers = parseGroupNumbers(groupRaw);
+        for (Integer groupNumber : groupNumbers) {
+            CourseGroup group = courseGroupRepository.findByCourseIdAndGroupNumber(course.getId(), groupNumber)
+                    .orElseGet(() -> createCourseGroup(course, groupNumber));
+            CourseClass cc = buildCourseClassFromDto(classDto, course, group, ClassType.PRACTICE);
+            courseClassRepository.save(cc);
         }
     }
 
@@ -159,13 +178,13 @@ public class SchedulePersistenceService {
         if (startTime == null || endTime == null)
             return null;
         List<TimeSlot> slots = Arrays.asList(
-                new TimeSlot(1, LocalTime.of(8,30), LocalTime.of(9,50)),
-                new TimeSlot(2, LocalTime.of(10,0), LocalTime.of(11,20)),
-                new TimeSlot(3, LocalTime.of(11,40), LocalTime.of(13,0)),
-                new TimeSlot(4, LocalTime.of(13,30), LocalTime.of(14,50)),
-                new TimeSlot(5, LocalTime.of(15,0), LocalTime.of(16,20)),
-                new TimeSlot(6, LocalTime.of(16,30), LocalTime.of(17,50)),
-                new TimeSlot(7, LocalTime.of(18,0), LocalTime.of(19,20))
+                new TimeSlot(1, LocalTime.of(8, 30), LocalTime.of(9, 50)),
+                new TimeSlot(2, LocalTime.of(10, 0), LocalTime.of(11, 20)),
+                new TimeSlot(3, LocalTime.of(11, 40), LocalTime.of(13, 0)),
+                new TimeSlot(4, LocalTime.of(13, 30), LocalTime.of(14, 50)),
+                new TimeSlot(5, LocalTime.of(15, 0), LocalTime.of(16, 20)),
+                new TimeSlot(6, LocalTime.of(16, 30), LocalTime.of(17, 50)),
+                new TimeSlot(7, LocalTime.of(18, 0), LocalTime.of(19, 20))
         );
 
         for (TimeSlot ts : slots) {

@@ -18,6 +18,8 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
     private final WithdrawalRequestResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String REQUEST_NOT_FOUND = "error.withdrawal-request.notfound";
+
     @Override
     public WithdrawalRequestResponseDto create(WithdrawalRequestRequestDto dto) {
         WithdrawalRequest saved = withdrawalRequestRepository.save(requestMapper.toEntity(dto));
@@ -35,14 +37,14 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
     @Override
     public WithdrawalRequestResponseDto getById(UUID id) {
         WithdrawalRequest request = withdrawalRequestRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.withdrawal-request.notfound", id));
+                .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));
         return responseMapper.toDto(request);
     }
 
     @Override
     public WithdrawalRequestResponseDto update(UUID id, WithdrawalRequestRequestDto dto) {
         WithdrawalRequest existing = withdrawalRequestRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.withdrawal-request.notfound", id));
+                .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));
 
         WithdrawalRequest newEntity = requestMapper.toEntity(dto);
 
@@ -60,7 +62,7 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
         if (withdrawalRequestRepository.existsById(id)) {
             withdrawalRequestRepository.deleteById(id);
         } else {
-            throw notFound.get("error.withdrawal-request.notfound", id);
+            throw notFound.get(REQUEST_NOT_FOUND, id);
         }
     }
 }

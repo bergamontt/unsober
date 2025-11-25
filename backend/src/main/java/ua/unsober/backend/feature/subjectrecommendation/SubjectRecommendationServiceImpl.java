@@ -18,6 +18,9 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
     private final SubjectRecommendationResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String RECOMMENDATION_NOT_FOUND = "error.subject-recommendation.notfound";
+    private static final String RECOMMENDATION_BY_IDS_NOT_FOUND = "error.subject-recommendation-by-ids.notfound";
+
     @Override
     public SubjectRecommendationResponseDto create(SubjectRecommendationRequestDto dto) {
         SubjectRecommendation saved = subjectRecommendationRepository.save(requestMapper.toEntity(dto));
@@ -35,7 +38,7 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
     @Override
     public SubjectRecommendationResponseDto getById(UUID id) {
         SubjectRecommendation recommendation = subjectRecommendationRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.subject-recommendation.notfound", id));
+                .orElseThrow(() -> notFound.get(RECOMMENDATION_NOT_FOUND, id));
         return responseMapper.toDto(recommendation);
     }
 
@@ -44,7 +47,7 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
         SubjectRecommendation recommendation = subjectRecommendationRepository
                 .findBySubjectIdAndSpecialityId(subjectId, specialityId)
                 .orElseThrow(() -> notFound.get(
-                        "error.subject-recommendation-by-ids.notfound", subjectId, specialityId));
+                        RECOMMENDATION_BY_IDS_NOT_FOUND, subjectId, specialityId));
         return responseMapper.toDto(recommendation);
     }
 
@@ -56,7 +59,7 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
     @Override
     public SubjectRecommendationResponseDto update(UUID id, SubjectRecommendationRequestDto dto) {
         SubjectRecommendation recommendation = subjectRecommendationRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.subject-recommendation.notfound", id));
+                .orElseThrow(() -> notFound.get(RECOMMENDATION_NOT_FOUND, id));
 
         SubjectRecommendation newRecommendation = requestMapper.toEntity(dto);
         if (newRecommendation.getSubject() != null) recommendation.setSubject(newRecommendation.getSubject());
@@ -73,7 +76,7 @@ public class SubjectRecommendationServiceImpl implements SubjectRecommendationSe
         if (subjectRecommendationRepository.existsById(id)) {
             subjectRecommendationRepository.deleteById(id);
         } else {
-            throw notFound.get("error.subject-recommendation.notfound", id);
+            throw notFound.get(RECOMMENDATION_NOT_FOUND, id);
         }
     }
 }

@@ -39,11 +39,14 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     private final LocalizedGroupFullExceptionFactory groupFull;
     private final LocalizedEnrollmentActionNotAllowedExceptionFactory notAllowed;
 
+    private static final String ENROLLMENT_NOT_FOUND = "error.student-enrollment.notfound";
+    private static final String COURSE_NOT_FOUND = "error.course.notfound";
+    private static final String GROUP_NOT_FOUND = "error.course-group.notfound";
     private static final Marker ENROLLMENT_ACTION = MarkerFactory.getMarker("ENROLLMENT_ACTION");
 
     private Course validateCourse(UUID courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> notFound.get("error.course.notfound", courseId));
+                .orElseThrow(() -> notFound.get(COURSE_NOT_FOUND, courseId));
 
         if (course.getMaxStudents() != null && course.getNumEnrolled() >= course.getMaxStudents()) {
             log.warn(ENROLLMENT_ACTION, "Course with id={} is full", courseId);
@@ -55,7 +58,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
     private CourseGroup validateGroup(UUID groupId) {
         CourseGroup courseGroup = courseGroupRepository.findById(groupId)
-                .orElseThrow(() -> notFound.get("error.course-group.notfound", groupId));
+                .orElseThrow(() -> notFound.get(GROUP_NOT_FOUND, groupId));
 
         if (courseGroup.getNumEnrolled() >= courseGroup.getMaxStudents()) {
             log.warn(ENROLLMENT_ACTION, "Course group with id={} is full", groupId);
@@ -96,7 +99,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     @Override
     public StudentEnrollmentResponseDto getById(UUID id) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
+                .orElseThrow(() -> notFound.get(ENROLLMENT_NOT_FOUND, id));
         return responseMapper.toDto(enrollment);
     }
 
@@ -124,7 +127,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     @Override
     public StudentEnrollmentResponseDto update(UUID id, StudentEnrollmentRequestDto dto) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
+                .orElseThrow(() -> notFound.get(ENROLLMENT_NOT_FOUND, id));
 
         if (dto.getCourseId() != null) {
             Course oldCourse = enrollment.getCourse();
@@ -160,7 +163,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     @Override
     public void delete(UUID id) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.student-enrollment.notfound", id));
+                .orElseThrow(() -> notFound.get(ENROLLMENT_NOT_FOUND, id));
 
         Course course = enrollment.getCourse();
         course.setNumEnrolled(course.getNumEnrolled() - 1);

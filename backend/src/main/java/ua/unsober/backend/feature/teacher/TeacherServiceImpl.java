@@ -18,6 +18,8 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String TEACHER_NOT_FOUND = "error.teacher.notfound";
+
     @Override
     public TeacherResponseDto create(TeacherRequestDto dto) {
         Teacher saved = teacherRepository.save(requestMapper.toEntity(dto));
@@ -35,14 +37,14 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherResponseDto getById(UUID id) {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
-                notFound.get("error.teacher.notfound", id));
+                notFound.get(TEACHER_NOT_FOUND, id));
         return responseMapper.toDto(teacher);
     }
 
     @Override
     public TeacherResponseDto update(UUID id, TeacherRequestDto dto) {
         Teacher teacher = teacherRepository.findById(id).orElseThrow(() ->
-                notFound.get("error.teacher.notfound", id));
+                notFound.get(TEACHER_NOT_FOUND, id));
 
         Teacher newTeacher = requestMapper.toEntity(dto);
         if (newTeacher.getFirstName() != null) teacher.setFirstName(newTeacher.getFirstName());
@@ -59,7 +61,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (teacherRepository.existsById(id)) {
             teacherRepository.deleteById(id);
         } else {
-            throw notFound.get("error.teacher.notfound", id);
+            throw notFound.get(TEACHER_NOT_FOUND, id);
         }
     }
 }

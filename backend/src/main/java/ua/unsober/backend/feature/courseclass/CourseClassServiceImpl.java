@@ -18,6 +18,8 @@ public class CourseClassServiceImpl implements CourseClassService {
     private final CourseClassResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String CLASS_NOT_FOUND = "error.course-class.notfound";
+
     @Override
     public CourseClassResponseDto create(CourseClassRequestDto dto) {
         CourseClass saved = courseClassRepository.save(requestMapper.toEntity(dto));
@@ -34,7 +36,8 @@ public class CourseClassServiceImpl implements CourseClassService {
     @Override
     public CourseClassResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                courseClassRepository.findById(id).orElseThrow(() -> notFound.get("error.course-class.notfound", id))
+                courseClassRepository.findById(id).orElseThrow(() ->
+                        notFound.get(CLASS_NOT_FOUND, id))
         );
     }
 
@@ -48,7 +51,8 @@ public class CourseClassServiceImpl implements CourseClassService {
 
     @Override
     public CourseClassResponseDto update(UUID id, CourseClassRequestDto dto) {
-        CourseClass courseClass = courseClassRepository.findById(id).orElseThrow(() -> notFound.get("error.course-class.notfound", id));
+        CourseClass courseClass = courseClassRepository.findById(id).orElseThrow(() ->
+                notFound.get(CLASS_NOT_FOUND, id));
 
         CourseClass newCourseClass = requestMapper.toEntity(dto);
 
@@ -72,7 +76,7 @@ public class CourseClassServiceImpl implements CourseClassService {
         if (courseClassRepository.existsById(id)) {
             courseClassRepository.deleteById(id);
         } else {
-            throw notFound.get("error.course-class.notfound", id);
+            throw notFound.get(CLASS_NOT_FOUND, id);
         }
     }
 }

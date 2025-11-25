@@ -27,10 +27,7 @@ public class LimitAspect {
         if(authentication == null)
             return;
         String username = authentication.getName();
-        if(!attempts.containsKey(username)) {
-            attempts.put(username, new ArrayList<>(List.of(Instant.now())));
-            return;
-        }
+        attempts.putIfAbsent(username, new ArrayList<>(List.of(Instant.now())));
         List<Instant> attemptTimes = attempts.get(username);
         Instant now = Instant.now();
         attemptTimes.removeIf(time -> time.plusSeconds(60).isBefore(now));

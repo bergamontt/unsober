@@ -18,6 +18,8 @@ public class SpecialityServiceImpl implements SpecialityService {
     private final SpecialityResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String SPECIALITY_NOT_FOUND = "error.speciality.notfound";
+
     @Override
     public SpecialityResponseDto create(SpecialityRequestDto dto) {
         return responseMapper.toDto(
@@ -35,17 +37,15 @@ public class SpecialityServiceImpl implements SpecialityService {
     @Override
     public SpecialityResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                specialityRepository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.speciality.notfound", id);
-                })
+                specialityRepository.findById(id).orElseThrow(() ->
+                        notFound.get(SPECIALITY_NOT_FOUND, id))
         );
     }
 
     @Override
     public SpecialityResponseDto update(UUID id, SpecialityRequestDto dto) {
-        Speciality speciality = specialityRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.speciality.notfound", id);
-        });
+        Speciality speciality = specialityRepository.findById(id).orElseThrow(() ->
+                notFound.get(SPECIALITY_NOT_FOUND, id));
 
         Speciality newSpeciality = requestMapper.toEntity(dto);
 
@@ -65,7 +65,7 @@ public class SpecialityServiceImpl implements SpecialityService {
         if (specialityRepository.existsById(id)) {
             specialityRepository.deleteById(id);
         } else {
-            throw notFound.get("error.speciality.notfound", id);
+            throw notFound.get(SPECIALITY_NOT_FOUND, id);
         }
     }
 

@@ -19,6 +19,8 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String SUBJECT_NOT_FOUND = "error.subject.notfound";
+
     @Override
     public SubjectResponseDto create(SubjectRequestDto dto) {
         Subject saved = subjectRepository.save(requestMapper.toEntity(dto));
@@ -34,14 +36,14 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public SubjectResponseDto getById(UUID id) {
         Subject subject = subjectRepository.findById(id).orElseThrow(() ->
-                notFound.get("error.subject.notfound", id));
+                notFound.get(SUBJECT_NOT_FOUND, id));
         return responseMapper.toDto(subject);
     }
 
     @Override
     public SubjectResponseDto update(UUID id, SubjectRequestDto dto) {
         Subject subject = subjectRepository.findById(id).orElseThrow(() ->
-                notFound.get("error.subject.notfound", id));
+                notFound.get(SUBJECT_NOT_FOUND, id));
 
         Subject newSubject = requestMapper.toEntity(dto);
 
@@ -58,7 +60,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (subjectRepository.existsById(id)) {
             subjectRepository.deleteById(id);
         } else {
-            throw notFound.get("error.subject.notfound", id);
+            throw notFound.get(SUBJECT_NOT_FOUND, id);
         }
     }
 }

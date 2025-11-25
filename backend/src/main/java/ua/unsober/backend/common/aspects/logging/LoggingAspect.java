@@ -27,16 +27,16 @@ public class LoggingAspect {
         String methodName = joinPoint.getSignature().getName();
 
         String markerName = className.substring(className.lastIndexOf('.') + 1, className.length() - 10).toUpperCase();
-        Marker ACTION = MarkerFactory.getMarker( markerName + "_ACTION");
-        Marker ERROR = MarkerFactory.getMarker( markerName + "_ERROR");
+        Marker action = MarkerFactory.getMarker( markerName + "_ACTION");
+        Marker error = MarkerFactory.getMarker( markerName + "_ERROR");
 
-        log.info(ACTION, "Processing {}() request...", methodName);
+        log.info(action, "Processing {}() request...", methodName);
         try {
             Object result = joinPoint.proceed();
-            log.info(ACTION, getLog(methodName, joinPoint.getArgs(), result, markerName));
+            log.info(action, getLog(methodName, joinPoint.getArgs(), result, markerName));
             return result;
         } catch (Throwable ex) {
-            log.warn(ERROR, getBadLog(methodName, joinPoint.getArgs()));
+            log.warn(error, getBadLog(methodName, joinPoint.getArgs()));
             throw ex;
         }
     }

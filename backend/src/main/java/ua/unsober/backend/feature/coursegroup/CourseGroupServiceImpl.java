@@ -18,6 +18,8 @@ public class CourseGroupServiceImpl implements CourseGroupService {
     private final CourseGroupResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String GROUP_NOT_FOUND = "error.course-group.notfound";
+
     @Override
     public CourseGroupResponseDto create(CourseGroupRequestDto dto) {
         CourseGroup saved = courseGroupRepository.save(requestMapper.toEntity(dto));
@@ -42,13 +44,15 @@ public class CourseGroupServiceImpl implements CourseGroupService {
     @Override
     public CourseGroupResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                courseGroupRepository.findById(id).orElseThrow(() -> notFound.get("error.course-group.notfound", id))
+                courseGroupRepository.findById(id).orElseThrow(() ->
+                        notFound.get(GROUP_NOT_FOUND, id))
         );
     }
 
     @Override
     public CourseGroupResponseDto update(UUID id, CourseGroupRequestDto dto) {
-        CourseGroup courseGroup = courseGroupRepository.findById(id).orElseThrow(() -> notFound.get("error.course-group.notfound", id));
+        CourseGroup courseGroup = courseGroupRepository.findById(id).orElseThrow(() ->
+                notFound.get(GROUP_NOT_FOUND, id));
 
         CourseGroup newCourseGroup = requestMapper.toEntity(dto);
 
@@ -71,7 +75,7 @@ public class CourseGroupServiceImpl implements CourseGroupService {
         if (courseGroupRepository.existsById(id)) {
             courseGroupRepository.deleteById(id);
         } else {
-            throw notFound.get("error.course-group.notfound", id);
+            throw notFound.get(GROUP_NOT_FOUND, id);
         }
     }
 }

@@ -26,7 +26,7 @@ public class SubjectPageParser implements EntityPageParser<SubjectRequestDto> {
     }
 
     private String getName(Document doc) {
-        return Objects.requireNonNull(doc.selectFirst(".page-header h1")).ownText().trim().replaceAll("`", "'");
+        return Objects.requireNonNull(doc.selectFirst(".page-header h1")).ownText().trim().replace("`", "'");
     }
 
     private String getAnnotation(Document doc) {
@@ -57,10 +57,10 @@ public class SubjectPageParser implements EntityPageParser<SubjectRequestDto> {
         Element levelElement = doc.selectFirst("tr:has(th:matchesOwn(Освітній рівень)) td");
         if (levelElement != null) {
             String raw = levelElement.text().trim();
-            switch (raw) {
-                case "Бакалавр" -> level = EducationLevel.BATCHELOR;
-                case "Магістр"  -> level = EducationLevel.MASTER;
-            }
+            if(raw.equals("Бакалавр"))
+                level = EducationLevel.BATCHELOR;
+            else
+                level = EducationLevel.MASTER;
         }
         return level;
     }
@@ -93,7 +93,7 @@ public class SubjectPageParser implements EntityPageParser<SubjectRequestDto> {
             switch (raw) {
                 case "Осінь" -> term = Term.AUTUMN;
                 case "Весна" -> term = Term.SPRING;
-                case "Літо"  -> term = Term.SUMMER;
+                default  -> term = Term.SUMMER;
             }
         }
         return term;

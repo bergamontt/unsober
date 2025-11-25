@@ -18,6 +18,8 @@ public class EnrollmentRequestServiceImpl implements EnrollmentRequestService {
     private final EnrollmentRequestResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String REQUEST_NOT_FOUND = "error.enrollment-request.notfound";
+
     @Override
     public EnrollmentRequestResponseDto create(EnrollmentRequestRequestDto requestDto) {
         EnrollmentRequest saved = enrollmentRequestRepository.save(requestMapper.toEntity(requestDto));
@@ -35,14 +37,14 @@ public class EnrollmentRequestServiceImpl implements EnrollmentRequestService {
     @Override
     public EnrollmentRequestResponseDto getById(UUID id) {
         EnrollmentRequest enrollmentRequest = enrollmentRequestRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.enrollment-request.notfound", id));
+                .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));
         return responseMapper.toDto(enrollmentRequest);
     }
 
     @Override
     public EnrollmentRequestResponseDto update(UUID id, EnrollmentRequestRequestDto requestDto) {
         EnrollmentRequest enrollmentRequest = enrollmentRequestRepository.findById(id)
-                .orElseThrow(() -> notFound.get("error.enrollment-request.notfound", id));
+                .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));
 
         EnrollmentRequest newEnrollmentRequest = requestMapper.toEntity(requestDto);
 
@@ -62,7 +64,7 @@ public class EnrollmentRequestServiceImpl implements EnrollmentRequestService {
         if (enrollmentRequestRepository.existsById(id)) {
             enrollmentRequestRepository.deleteById(id);
         } else {
-            throw notFound.get("error.enrollment-request.notfound", id);
+            throw notFound.get(REQUEST_NOT_FOUND, id);
         }
     }
 }

@@ -22,6 +22,9 @@ public class AdminServiceImpl implements AdminService {
     private final AdminResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String ADMIN_NOT_FOUND = "error.admin.notfound";
+    private static final String USER_NOT_FOUND = "error.user.notfound";
+
     @Override
     public AdminResponseDto create(AdminRequestDto dto) {
         Admin admin = requestMapper.toEntity(dto);
@@ -42,16 +45,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                adminRepository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.admin.notfound", id);
-                })); 
+                adminRepository.findById(id).orElseThrow(() ->
+                        notFound.get(ADMIN_NOT_FOUND, id)));
     }
 
     @Override
     public AdminResponseDto update(UUID id, AdminRequestDto dto) {
-        Admin admin = adminRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.admin.notfound", id);
-        });
+        Admin admin = adminRepository.findById(id).orElseThrow(() ->
+                notFound.get(ADMIN_NOT_FOUND, id));
 
         Admin newAdmin = requestMapper.toEntity(dto);
         if (newAdmin.getUser() != null) {
@@ -81,22 +82,20 @@ public class AdminServiceImpl implements AdminService {
         if (adminRepository.existsById(id)) {
             adminRepository.deleteById(id);
         } else {
-            throw notFound.get("error.admin.notfound", id);
+            throw notFound.get(ADMIN_NOT_FOUND, id);
         }
     }
 
     @Override
     public AdminResponseDto getByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() ->
-                notFound.get("error.user.notfound", email)
+                notFound.get(USER_NOT_FOUND, email)
         );
         if (user.getRole() == Role.ADMIN) {
             return responseMapper.toDto(adminRepository.findByUserId(user.getId())
-                    .orElseThrow(() -> {
-                        return notFound.get("error.admin.notfound", email);
-                    }));
+                    .orElseThrow(() -> notFound.get(ADMIN_NOT_FOUND, email)));
         } else {
-            throw notFound.get("error.admin.notfound", email);
+            throw notFound.get(ADMIN_NOT_FOUND, email);
         }
     }
 }

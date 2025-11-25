@@ -20,6 +20,8 @@ public class BuildingServiceImpl implements BuildingService {
     private final LocalizedEntityNotFoundExceptionFactory notFound;
     private final MapService mapService;
 
+    private static final String BUILDING_NOT_FOUND = "error.building.notfound";
+
     @Override
     public BuildingResponseDto create(BuildingRequestDto dto) {
         Building saved = buildingRepository.save(requestMapper.toEntity(dto));
@@ -37,17 +39,15 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingResponseDto getById(UUID id) {
-        Building building = buildingRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.building.notfound", id);
-        });
+        Building building = buildingRepository.findById(id).orElseThrow(() ->
+                notFound.get(BUILDING_NOT_FOUND, id));
         return addMap(responseMapper.toDto(building));
     }
 
     @Override
     public BuildingResponseDto update(UUID id, BuildingRequestDto dto) {
-        Building building = buildingRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.building.notfound", id);
-        });
+        Building building = buildingRepository.findById(id).orElseThrow(() ->
+                notFound.get(BUILDING_NOT_FOUND, id));
 
         Building newBuilding = requestMapper.toEntity(dto);
 
@@ -65,7 +65,7 @@ public class BuildingServiceImpl implements BuildingService {
         if (buildingRepository.existsById(id)) {
             buildingRepository.deleteById(id);
         } else {
-            throw notFound.get("error.building.notfound", id);
+            throw notFound.get(BUILDING_NOT_FOUND, id);
         }
     }
 

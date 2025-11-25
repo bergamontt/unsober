@@ -18,7 +18,7 @@ public class CustomFileAppender extends AppenderBase<ILoggingEvent> {
     private Layout<ILoggingEvent> layout;
 
     private PrintWriter writer;
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     @Override
     public void start() {

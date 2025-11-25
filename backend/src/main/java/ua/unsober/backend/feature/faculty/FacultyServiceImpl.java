@@ -18,6 +18,8 @@ public class FacultyServiceImpl implements FacultyService {
     private final FacultyResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
 
+    private static final String FACULTY_NOT_FOUND = "error.faculty.notfound";
+
     @Override
     public FacultyResponseDto create(FacultyRequestDto dto) {
         return responseMapper.toDto(
@@ -35,17 +37,15 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public FacultyResponseDto getById(UUID id) {
         return responseMapper.toDto(
-                facultyRepository.findById(id).orElseThrow(() -> {
-                    return notFound.get("error.faculty.notfound", id);
-                })
+                facultyRepository.findById(id).orElseThrow(() ->
+                        notFound.get(FACULTY_NOT_FOUND, id))
         );
     }
 
     @Override
     public FacultyResponseDto update(UUID id, FacultyRequestDto dto) {
-        Faculty faculty = facultyRepository.findById(id).orElseThrow(() -> {
-            return notFound.get("error.faculty.notfound", id);
-        });
+        Faculty faculty = facultyRepository.findById(id).orElseThrow(() ->
+                notFound.get(FACULTY_NOT_FOUND, id));
 
         Faculty newFaculty = requestMapper.toEntity(dto);
 
@@ -65,7 +65,7 @@ public class FacultyServiceImpl implements FacultyService {
         if (facultyRepository.existsById(id)) {
             facultyRepository.deleteById(id);
         } else {
-            throw notFound.get("error.faculty.notfound", id);
+            throw notFound.get(FACULTY_NOT_FOUND, id);
         }
     }
 }

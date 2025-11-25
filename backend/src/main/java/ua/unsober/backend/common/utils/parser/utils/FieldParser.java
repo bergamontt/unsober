@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @NoArgsConstructor
@@ -106,7 +105,7 @@ public class FieldParser {
         int end = Integer.parseInt(range[1].trim());
         return IntStream.rangeClosed(start, end)
                 .boxed()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private boolean isCommaSeparatedWeeks(String weeks) {

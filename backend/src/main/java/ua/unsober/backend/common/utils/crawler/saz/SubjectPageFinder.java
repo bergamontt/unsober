@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class SubjectPageFinder implements EntityPageFinder {
     private final SazQueryEngine sazQueryEngine;
+    private static final String BASE_URI = "https://my.ukma.edu.ua";
 
     @Override
     public List<Document> findPages(Map<String, String> params) {
@@ -30,22 +31,22 @@ public class SubjectPageFinder implements EntityPageFinder {
             }
             for(Integer subjectId : subjectIds) {
                 String path = String.format("/course/%d", subjectId);
-                result.add(sazQueryEngine.query(path, null));
+                result.add(sazQueryEngine.query(BASE_URI, path, null));
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            //Could not get access to the web page
+        }
         return result;
     }
 
     private List<Document> findSubjectListPages(Map<String, String> params) throws IOException {
-        String path = "/course/catalog";
-
         List<Document> result = new ArrayList<>();
-        Document mainListPage = sazQueryEngine.query(path, params);
+        Document mainListPage = sazQueryEngine.query(BASE_URI, "/course/catalog", params);
         int lastPage = getNumPagesFromPagination(mainListPage);
         for (int i = 1; i <= lastPage; i++) {
             Map<String, String> pageParams = new HashMap<>(params);
             pageParams.put("page", String.valueOf(i));
-            result.add(sazQueryEngine.query(path, pageParams));
+            result.add(sazQueryEngine.query(BASE_URI, "/course/catalog", pageParams));
         }
         return result;
     }
@@ -53,7 +54,7 @@ public class SubjectPageFinder implements EntityPageFinder {
     private int getNumPagesFromPagination(Document page){
         Element lastPageLink = page.selectFirst("li.last a");
         if (lastPageLink == null) {
-            throw new RuntimeException("Page not found");
+            throw new IllegalArgumentException("Page not found");
         }
         String href = lastPageLink.attr("href");
         String pageParam = href.replaceAll(".*page=(\\d+).*", "$1");
