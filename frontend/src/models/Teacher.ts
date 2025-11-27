@@ -5,3 +5,10 @@ export interface Teacher {
     patronymic: string;
     email: string;
 }
+
+export interface TeacherDto {
+    firstName?: string;
+    lastName?: string;
+    patronymic?: string;
+    email?: string;
+}

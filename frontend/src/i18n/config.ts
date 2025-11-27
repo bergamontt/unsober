@@ -10,8 +10,8 @@ i18n
         fallbackLng: "en",
         debug: false,
         ns: ["adminMenu", "auth", "common", "coursePreview",
-            "courseSearch", "infoPage", "manageStudents", "profile",
-            "sections", "stageDescription", "studentEnrollment",],
+            "courseSearch", "infoPage", "manageStudents", "manageTeachers", 
+            "profile", "sections", "stageDescription", "studentEnrollment",],
         defaultNS: "common",
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json",

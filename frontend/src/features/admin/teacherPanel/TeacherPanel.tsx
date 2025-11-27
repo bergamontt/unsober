@@ -1,58 +1,66 @@
-import { Stack, Table, } from "@mantine/core";
+import { Stack, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import RowActions from "../RowActions";
-import SearchWithAdd from "../SearchWithAdd";
-import AddTeacherModal from "./AddTeacherModal";
-import DeleteTeacherModal from "./DeleteTeacherModal";
-import EditTeacherModal from "./EditTeacherModal";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import useFetch from "../../../hooks/useFetch.ts";
+import { getAllTeachers } from "../../../services/TeacherService.ts";
+import RowActions from "../RowActions.tsx";
+import SearchWithAdd from "../SearchWithAdd.tsx";
+import AddTeacherModal from "./AddTeacherModal.tsx";
+import DeleteTeacherModal from "./DeleteTeacherModal.tsx";
+import EditTeacherModal from "./EditTeacherModal.tsx";
 
 function TeacherPanel() {
+    const { t } = useTranslation(["adminMenu", "manageTeachers"]);
 
     const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
+    const [currentId, setCurrentId] = useState<string | null>(null);
 
-    const teachers = [
-        { name: "Іваненко Іван Іванович", email: "ivanenko@example.com"},
-        { name: "Петренко Ольга Сергіївна", email: "petrenko@example.com"},
-        { name: "Шевченко Андрій Миколайович", email: "shevchenko@example.com"}
-    ];
+    const { data } = useFetch(getAllTeachers, []);
+    const teachers = data ?? [];
 
     const rows = teachers.map((teacher, index) => (
-        <Table.Tr key={index}>
-            <Table.Td>{`${teacher.name}`}</Table.Td>
+        <Table.Tr key={teacher.id ?? index}>
+            <Table.Td>{`${teacher.lastName} ${teacher.firstName} ${teacher.patronymic}`}</Table.Td>
             <Table.Td>{teacher.email}</Table.Td>
             <Table.Td>
                 <RowActions
                     onEdit={() => {
+                        setCurrentId(teacher.id);
                         openEdit();
                     }}
                     onDelete={() => {
+                        setCurrentId(teacher.id);
                         openDelete();
                     }}
+                    editLabel={t("adminMenu:edit")}
+                    deleteLabel={t("adminMenu:delete")}
                 />
             </Table.Td>
         </Table.Tr>
     ));
 
-    return(
+    return (
         <Stack>
             <SearchWithAdd
-                label="Пошук викладачів"
-                description="Введіть електронну пошту викладача"
-                placeholder="Електронна пошта"
+                label={t("manageTeachers:teacherSearch")}
+                description={t("manageTeachers:enterEmail")}
+                placeholder={t("manageTeachers:email")}
                 onAdd={openAdd}
             />
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>
-                        <Table.Th>ПІБ</Table.Th>
-                        <Table.Th>Електронна пошта</Table.Th>
+                        <Table.Th>{t("manageTeachers:fullName")}</Table.Th>
+                        <Table.Th>{t("manageTeachers:email")}</Table.Th>
                         <Table.Th></Table.Th>
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
+
             <AddTeacherModal
                 opened={addOpened}
                 close={closeAdd}
@@ -60,13 +68,15 @@ function TeacherPanel() {
             <DeleteTeacherModal
                 opened={deleteOpened}
                 close={closeDelete}
+                teacherId={currentId}
             />
             <EditTeacherModal
                 opened={editOpened}
                 close={closeEdit}
+                teacherId={currentId}
             />
         </Stack>
     );
 }
 
-export default TeacherPanel
+export default TeacherPanel;
