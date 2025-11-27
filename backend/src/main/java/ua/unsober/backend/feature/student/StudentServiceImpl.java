@@ -7,10 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.unsober.backend.common.enums.Role;
 import ua.unsober.backend.common.enums.StudentStatus;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
-import ua.unsober.backend.feature.user.User;
-import ua.unsober.backend.feature.user.UserRepository;
-import ua.unsober.backend.feature.user.UserRequestDto;
-import ua.unsober.backend.feature.user.UserService;
+import ua.unsober.backend.feature.user.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -71,15 +68,17 @@ public class StudentServiceImpl implements StudentService {
                 notFound.get(STUDENT_NOT_FOUND, id));
 
         Student newStudent = requestMapper.toEntity(dto);
-        userService.update(student.getUser().getId(),
+        UserResponseDto newUser = userService.update(student.getUser().getId(),
                 UserRequestDto.builder()
                         .firstName(dto.getFirstName())
                         .lastName(dto.getLastName())
                         .patronymic(dto.getPatronymic())
                         .email(dto.getEmail())
                         .password(dto.getPassword())
+                        .role(Role.STUDENT)
                         .build()
         );
+        User user = userRepository.findById(newUser.getId()).orElseThrow();
         if (newStudent.getRecordBookNumber() != null)
             student.setRecordBookNumber(newStudent.getRecordBookNumber());
         if (newStudent.getSpeciality() != null)
@@ -88,8 +87,7 @@ public class StudentServiceImpl implements StudentService {
             student.setStudyYear(newStudent.getStudyYear());
         if (newStudent.getStatus() != null)
             student.setStatus(newStudent.getStatus());
-        User updatedUser = userRepository.save(student.getUser());
-        student.setUser(updatedUser);
+        student.setUser(user);
         Student updated = studentRepository.save(student);
         return responseMapper.toDto(updated);
     }

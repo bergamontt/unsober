@@ -5,7 +5,7 @@ import useFetch from "../../../hooks/useFetch.ts";
 import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { notifications } from "@mantine/notifications";
 import { getStudentById, updateStudent } from "../../../services/StudentService.ts";
-import type { StudentDto } from "../../../models/Student.ts";
+import { StudentStatus, type StudentDto } from "../../../models/Student.ts";
 import axios from "axios";
 
 type EditModalProps = {
@@ -28,6 +28,7 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
     const [recordBookNum, setRecordBookNum] = useState<string>(student?.recordBookNumber ?? "");
     const [email, setEmail] = useState<string>(student?.email ?? "");
     const [password, setPassword] = useState<string>("");
+    const [status, setStatus] = useState<StudentStatus | undefined>();
 
     const [isSaving, setIsSaving] = useState(false);
 
@@ -37,10 +38,11 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
         setName(student.firstName ?? "");
         setSurname(student.lastName ?? "");
         setPatronymic(student.patronymic ?? "");
-        setStudyYear(student.studyYear ?? undefined);
+        setStudyYear(student.studyYear);
         setSpecialityId(student.speciality?.id);
         setRecordBookNum(student.recordBookNumber ?? "");
         setEmail(student.email ?? "");
+        setStatus(student.status);
     }, [student]);
 
     const resetForm = () => {
@@ -52,6 +54,7 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
         setRecordBookNum("");
         setEmail("");
         setPassword("");
+        setStatus(undefined);
     };
 
     const validateInput = useCallback((): boolean => {
@@ -119,8 +122,16 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
             });
             return false;
         }
+        if (!status) {
+            notifications.show({
+                title: t("error"),
+                message: t("selectStatus"),
+                color: "red",
+            });
+            return false;
+        }
         return true;
-    }, [name, surname, studyYear, specialityId, recordBookNum, email, password, t]);
+    }, [name, surname, studyYear, specialityId, recordBookNum, email, password, status, t]);
 
     const handleSave = useCallback(async () => {
         if (!validateInput())
@@ -135,6 +146,7 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
             password: password || undefined,
             specialityId: specialityId,
             studyYear: studyYear,
+            status: status
         };
 
         setIsSaving(true);
@@ -229,13 +241,30 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
                         onChange={(e) => setSpecialityId(e.currentTarget.value)}
                     />
                 </Group>
-                <TextInput
-                    label={t("recordBookNum")}
-                    withAsterisk
-                    placeholder={t("studentRecordBookNum")}
-                    value={recordBookNum}
-                    onChange={(e) => setRecordBookNum(e.currentTarget.value)}
-                />
+                <Group grow>
+                    <TextInput
+                        label={t("recordBookNum")}
+                        withAsterisk
+                        placeholder={t("studentRecordBookNum")}
+                        value={recordBookNum}
+                        onChange={(e) => setRecordBookNum(e.currentTarget.value)}
+                    />
+                    <NativeSelect
+                        label={t("status")}
+                        withAsterisk
+                        data={[
+                            { value: '', label: t("studentStatus") },
+                            { value: StudentStatus.STUDYING, label: t(StudentStatus.STUDYING) },
+                            { value: StudentStatus.EXPELLED, label: t(StudentStatus.EXPELLED) },
+                            { value: StudentStatus.GRADUATED, label: t(StudentStatus.GRADUATED) },
+                        ]}
+                        value={status?.toString() ?? undefined}
+                        onChange={(e) => {
+                            const v = e.currentTarget.value;
+                            setStatus(v === '' ? undefined : (v as StudentStatus));
+                        }}
+                    />
+                </Group>
                 <TextInput
                     label={t("studentEmail")}
                     withAsterisk

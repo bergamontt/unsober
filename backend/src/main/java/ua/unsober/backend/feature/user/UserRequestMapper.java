@@ -18,7 +18,7 @@ public class UserRequestMapper {
                 .patronymic(dto.getPatronymic())
                 .role(dto.getRole())
                 .email(dto.getEmail())
-                .passwordHash(passwordEncoder.encode(dto.getPassword()))
+                .passwordHash(dto.getPassword() != null ? passwordEncoder.encode(dto.getPassword()) : null)
                 .build();
     }
 }

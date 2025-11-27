@@ -48,6 +48,8 @@ public class SubjectServiceImpl implements SubjectService {
         if (newSubject.getName() != null) subject.setName(newSubject.getName());
         if (newSubject.getAnnotation() != null) subject.setAnnotation(newSubject.getAnnotation());
         if (newSubject.getCredits() != null) subject.setCredits(newSubject.getCredits());
+        if (newSubject.getFacultyName() != null) subject.setFacultyName(newSubject.getFacultyName());
+        if (newSubject.getDepartmentName() != null) subject.setDepartmentName(newSubject.getDepartmentName());
 
         Subject updated = subjectRepository.save(subject);
         return responseMapper.toDto(updated);

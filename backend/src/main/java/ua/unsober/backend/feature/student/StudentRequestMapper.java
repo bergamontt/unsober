@@ -29,6 +29,7 @@ public class StudentRequestMapper {
                 .user(user)
                 .recordBookNumber(dto.getRecordBookNumber())
                 .studyYear(dto.getStudyYear())
+                .status(dto.getStatus())
                 .build();
 
         java.util.UUID specialityId = dto.getSpecialityId();

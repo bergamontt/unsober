@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService{
             user.setEmail(newUser.getEmail());
         if (newUser.getPasswordHash() != null)
             user.setPasswordHash(newUser.getPasswordHash());
-        User updated = repository.save(newUser);
+        User updated = repository.save(user);
         return responseMapper.toDto(updated);
     }
 

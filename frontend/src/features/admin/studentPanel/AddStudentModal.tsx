@@ -5,7 +5,7 @@ import useFetch from "../../../hooks/useFetch.ts";
 import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { notifications } from "@mantine/notifications";
 import { addStudent } from "../../../services/StudentService.ts";
-import type { StudentDto } from "../../../models/Student.ts";
+import { StudentStatus, type StudentDto } from "../../../models/Student.ts";
 import axios from "axios";
 
 type AddModalProps = {
@@ -26,6 +26,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
     const [recordBookNum, setRecordBookNum] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [status, setStatus] = useState<StudentStatus | undefined>();
 
     const [isAdding, setIsAdding] = useState(false);
 
@@ -38,6 +39,7 @@ function AddStudentModal({ opened, close }: AddModalProps) {
         setRecordBookNum("");
         setEmail("");
         setPassword("");
+        setStatus(undefined)
     };
 
     const validateInput = useCallback((): boolean => {
@@ -105,8 +107,16 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             });
             return false;
         }
+        if (!status) {
+            notifications.show({
+                title: t("error"),
+                message: t("selectStatus"),
+                color: "red",
+            });
+            return false;
+        }
         return true;
-    }, [name, surname, studyYear, specialityId, recordBookNum, email, password, t]);
+    }, [name, surname, studyYear, specialityId, recordBookNum, email, password, status, t]);
 
     const handleSubmit = useCallback(async () => {
         if (!validateInput())
@@ -120,7 +130,8 @@ function AddStudentModal({ opened, close }: AddModalProps) {
             email: email,
             password: password,
             specialityId: specialityId,
-            studyYear: studyYear
+            studyYear: studyYear,
+            status: status
         };
 
         setIsAdding(true);
@@ -208,13 +219,30 @@ function AddStudentModal({ opened, close }: AddModalProps) {
                         onChange={(e) => setSpecialityId(e.currentTarget.value)}
                     />
                 </Group>
-                <TextInput
-                    label={t("recordBookNum")}
-                    withAsterisk
-                    placeholder={t("studentRecordBookNum")}
-                    value={recordBookNum}
-                    onChange={(e) => setRecordBookNum(e.currentTarget.value)}
-                />
+                <Group grow>
+                    <TextInput
+                        label={t("recordBookNum")}
+                        withAsterisk
+                        placeholder={t("studentRecordBookNum")}
+                        value={recordBookNum}
+                        onChange={(e) => setRecordBookNum(e.currentTarget.value)}
+                    />
+                    <NativeSelect
+                        label={t("status")}
+                        withAsterisk
+                        data={[
+                            { value: '', label: t("studentStatus") },
+                            { value: StudentStatus.STUDYING, label: t(StudentStatus.STUDYING) },
+                            { value: StudentStatus.EXPELLED, label: t(StudentStatus.EXPELLED) },
+                            { value: StudentStatus.GRADUATED, label: t(StudentStatus.GRADUATED) },
+                        ]}
+                        value={status?.toString() ?? undefined}
+                        onChange={(e) => {
+                            const v = e.currentTarget.value;
+                            setStatus(v === '' ? undefined : (v as StudentStatus));
+                        }}
+                    />
+                </Group>
                 <TextInput
                     label={t("email")}
                     withAsterisk

@@ -22,6 +22,8 @@
     "studentEmail": "Student's email",
     "password": "Password",
     "studentPassword": "Student's password",
+    "status": "Status",
+    "studentStatus": "Student's status",
     "saveChanges": "Save changes",
     "areYouSure": "Are you sure you want to perform the delete operation?\nThis operation is irreversible.",
     "cancel": "Cancel",
@@ -36,10 +38,14 @@
     "recordBookTooShort": "Record book number must be at least {{min}} characters",
     "emailTooShort": "Email must be at least {{min}} characters long",
     "passwordTooShort": "Password must be at least {{min}} characters long",
+    "selectStatus": "Select student status",
     "studentAdded": "Student {{fstName}} {{lstName}} added",
     "studentUpdated": "Student information successfully updated",
     "studentDeleted": "Student {{fstName}} {{lstName}} was deleted",
     "unknownAddError": "Could not add the student",
     "unknownUpdateError": "Could not update the student",
-    "unknownDeleteError": "Could not delete the student"
+    "unknownDeleteError": "Could not delete the student",
+    "STUDYING": "Studying",
+    "EXPELLED": "Expelled",
+    "GRADUATED": "Graduated"
 }
