@@ -6,3 +6,9 @@ export interface Department {
     name: string;
     description: string;
 }
+
+export interface DepartmentDto {
+    facultyId?: string;
+    name?: string;
+    description?: string;
+}

@@ -3,3 +3,8 @@ export interface Faculty {
     name: string;
     description: string;
 }
+
+export interface FacultyDto {
+    name: string;
+    description: string;
+}
