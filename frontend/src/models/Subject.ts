@@ -24,3 +24,14 @@ export interface Subject {
     hoursPerWeek: number;
     term: Term;
 }
+
+export interface SubjectDto {
+    name?: string;
+    annotation?: string;
+    facultyName?: string;
+    departmentName?: string;
+    educationLevel?: EducationLevel;
+    credits?: number;
+    hoursPerWeek?: number;
+    term?: Term;
+}

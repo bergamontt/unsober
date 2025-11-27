@@ -9,8 +9,8 @@ i18n
         lng: "uk",
         fallbackLng: "en",
         debug: false,
-        ns: ["adminMenu", "auth", "common", "coursePreview",
-            "courseSearch", "infoPage", "manageStudents", "manageTeachers", 
+        ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch",
+            "infoPage", "manageStudents", "manageSubjects", "manageTeachers",
             "profile", "sections", "stageDescription", "studentEnrollment",],
         defaultNS: "common",
         backend: {

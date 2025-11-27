@@ -29,5 +29,5 @@ export const updateStudent = async (id: string, dto: StudentDto): Promise<Studen
 }
 
 export const deleteStudent = async (id: string): Promise<void> => {
-    await api.delete<Student>(`/student/${id}`);
+    await api.delete<void>(`/student/${id}`);
 }
