@@ -6,3 +6,9 @@ export interface Speciality {
     name: string;
     description: string;
 }
+
+export interface SpecialityDto {
+    departmentId?: string;
+    name?: string;
+    description?: string;
+}

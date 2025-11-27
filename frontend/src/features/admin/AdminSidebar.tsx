@@ -22,7 +22,7 @@ function AdminSidebar() {
         { to: "/admin/teacher", label: t("teachers"), icon: teacher },
         { to: "/admin/course", label: t("courses"), icon: course },
         { to: "/admin/subject", label: t("subjects"), icon: subject },
-        { to: "/admin/specialities", label: t("specialities"), icon: speciality },
+        { to: "/admin/speciality", label: t("specialities"), icon: speciality },
         { to: "/admin/faculty", label: t("faculties"), icon: faculty },
         { to: "/admin/department", label: t("departments"), icon: department },
         { to: "/admin/building", label: t("buildings"), icon: building },
