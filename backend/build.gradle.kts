@@ -28,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
 
     implementation("org.mapstruct:mapstruct:${Versions.mapstruct}")
     implementation("org.apache.poi:poi:${Versions.poi}")
