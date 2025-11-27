@@ -1,11 +1,9 @@
-import { Button, Modal, NativeSelect, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Modal, Stack, Textarea, TextInput } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFetch from "../../../hooks/useFetch.ts";
-import { getAllDepartments } from "../../../services/DepartmentService.ts";
 import { notifications } from "@mantine/notifications";
-import { addSpeciality } from "../../../services/SpecialityService.ts";
-import type { SpecialityDto } from "../../../models/Speciality.ts";
+import { addFaculty } from "../../../services/FacultyService.ts";
+import type { FacultyDto } from "../../../models/Faculty.ts";
 import axios from "axios";
 
 type AddModalProps = {
@@ -13,21 +11,17 @@ type AddModalProps = {
     close: () => void;
 }
 
-function AddSpecialityModal({ opened, close }: AddModalProps) {
-    const { t } = useTranslation("manageSpecialities");
-    const { data } = useFetch(getAllDepartments, []);
-    const departments = data ?? [];
+function AddFacultyModal({ opened, close }: AddModalProps) {
+    const { t } = useTranslation("manageFaculties");
 
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [departmentId, setDepartmentId] = useState<string | undefined>();
 
     const [isAdding, setIsAdding] = useState(false);
 
     const resetForm = () => {
         setName("");
         setDescription("");
-        setDepartmentId(undefined);
     };
 
     const validateInput = useCallback((): boolean => {
@@ -39,41 +33,24 @@ function AddSpecialityModal({ opened, close }: AddModalProps) {
             });
             return false;
         }
-        if (description.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("descriptionTooShort", { min: 3 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!departmentId) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectDepartment"),
-                color: "red",
-            });
-            return false;
-        }
         return true;
-    }, [name, description, departmentId, t]);
+    }, [name, description, t]);
 
     const handleSubmit = useCallback(async () => {
-        if (!validateInput())
+        if (!validateInput()) 
             return;
 
-        const dto: SpecialityDto = {
-            name: name,
-            description: description,
-            departmentId: departmentId,
+        const dto: FacultyDto = {
+            name,
+            description,
         };
 
         setIsAdding(true);
         try {
-            await addSpeciality(dto);
+            await addFaculty(dto);
             notifications.show({
                 title: t("success"),
-                message: t("specialityAdded", { name }),
+                message: t("facultyAdded", { name }),
                 color: "green",
             });
             close();
@@ -95,40 +72,25 @@ function AddSpecialityModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [validateInput, t, close, name, description, departmentId]);
+    }, [validateInput, t, close, name, description]);
 
     return (
-        <Modal
-            centered
-            title={t("addSpeciality")}
-            opened={opened}
-            onClose={close}
-        >
+        <Modal centered title={t("addFaculty")} opened={opened} onClose={close}>
             <Stack p="xs" pt="0">
                 <TextInput
                     label={t("name")}
                     withAsterisk
-                    placeholder={t("specialityName")}
+                    placeholder={t("facultyName")}
                     value={name}
                     onChange={(e) => setName(e.currentTarget.value)}
                 />
                 <Textarea
                     label={t("description")}
                     withAsterisk
-                    placeholder={t("specialityDescription")}
+                    placeholder={t("facultyDescription")}
                     minRows={3}
                     value={description}
                     onChange={(e) => setDescription(e.currentTarget.value)}
-                />
-                <NativeSelect
-                    label={t("department")}
-                    withAsterisk
-                    data={[
-                        { value: "", label: t("department") },
-                        ...departments.map((d: any) => ({ value: d.id, label: d.name })),
-                    ]}
-                    value={departmentId ?? undefined}
-                    onChange={(e) => setDepartmentId(e.currentTarget.value)}
                 />
                 <Button
                     variant="filled"
@@ -137,11 +99,11 @@ function AddSpecialityModal({ opened, close }: AddModalProps) {
                     loading={isAdding}
                     disabled={isAdding}
                 >
-                    {t("addSpeciality")}
+                    {t("addFaculty")}
                 </Button>
             </Stack>
         </Modal>
     );
 }
 
-export default AddSpecialityModal;
+export default AddFacultyModal;

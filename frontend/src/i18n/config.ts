@@ -10,7 +10,7 @@ i18n
         fallbackLng: "en",
         debug: false,
         ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch",
-            "infoPage", "manageSpecialities", 
+            "infoPage", "manageDepartments", "manageFaculties", "manageSpecialities", 
             "manageStudents", "manageSubjects", "manageTeachers",
             "profile", "sections", "stageDescription", "studentEnrollment",],
         defaultNS: "common",

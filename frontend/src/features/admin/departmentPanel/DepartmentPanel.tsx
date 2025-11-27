@@ -24,7 +24,7 @@ function DepartmentPanel() {
     const rows = departments.map((d, index) => (
         <Table.Tr key={index}>
             <Table.Td>{d.name}</Table.Td>
-            <Table.Td>{d.faculty?.name ?? ""}</Table.Td>
+            <Table.Td>{d.faculty?.name ?? "-"}</Table.Td>
             <Table.Td>
                 <RowActions
                     onEdit={() => {
@@ -55,6 +55,7 @@ function DepartmentPanel() {
                     <Table.Tr>
                         <Table.Th>{t("manageDepartments:name")}</Table.Th>
                         <Table.Th>{t("manageDepartments:faculty")}</Table.Th>
+                        <Table.Th></Table.Th>
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>

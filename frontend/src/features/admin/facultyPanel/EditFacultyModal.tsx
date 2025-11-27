@@ -1,41 +1,37 @@
-import { Button, Modal, NativeSelect, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Modal, Stack, Textarea, TextInput } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFetch from "../../../hooks/useFetch.ts";
-import { getAllDepartments } from "../../../services/DepartmentService.ts";
 import { notifications } from "@mantine/notifications";
-import { getSpecialityById, updateSpeciality } from "../../../services/SpecialityService.ts";
-import type { SpecialityDto } from "../../../models/Speciality.ts";
+import { getFacultyById, updateFaculty } from "../../../services/FacultyService.ts";
+import type { FacultyDto } from "../../../models/Faculty.ts";
 import axios from "axios";
 
 type EditModalProps = {
     opened: boolean;
     close: () => void;
-    specialityId: string | null;
+    facultyId: string | null;
 }
 
-function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
-    const { t } = useTranslation("manageSpecialities");
-    const { data: departments } = useFetch(getAllDepartments, []);
-    const { data: speciality } = useFetch(getSpecialityById, [specialityId]);
+function EditFacultyModal({ opened, close, facultyId }: EditModalProps) {
+    const { t } = useTranslation("manageFaculties");
+    const { data: faculty } = useFetch(getFacultyById, [facultyId]);
 
-    const [name, setName] = useState<string>(speciality?.name ?? "");
-    const [description, setDescription] = useState<string>(speciality?.description ?? "");
-    const [departmentId, setDepartmentId] = useState<string | undefined>(speciality?.department?.id);
+    const [name, setName] = useState<string>(faculty?.name ?? "");
+    const [description, setDescription] = useState<string>(faculty?.description ?? "");
 
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        if (!speciality) return;
-        setName(speciality.name ?? "");
-        setDescription(speciality.description ?? "");
-        setDepartmentId(speciality.department?.id);
-    }, [speciality]);
+        if (!faculty) 
+            return;
+        setName(faculty.name ?? "");
+        setDescription(faculty.description ?? "");
+    }, [faculty]);
 
     const resetForm = () => {
         setName("");
         setDescription("");
-        setDepartmentId(undefined);
     };
 
     const validateInput = useCallback((): boolean => {
@@ -47,43 +43,24 @@ function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
             });
             return false;
         }
-        if (description.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("descriptionTooShort", { min: 3 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!departmentId) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectDepartment"),
-                color: "red",
-            });
-            return false;
-        }
         return true;
-    }, [name, description, departmentId, t]);
+    }, [name, description, t]);
 
     const handleSave = useCallback(async () => {
-        if (!validateInput())
-            return;
+        if (!validateInput()) return;
 
-        const dto: SpecialityDto = {
+        const dto: FacultyDto = {
             name,
             description,
-            departmentId,
         };
 
         setIsSaving(true);
         try {
-            if (!specialityId)
-                return;
-            await updateSpeciality(specialityId, dto);
+            if (!facultyId) return;
+            await updateFaculty(facultyId, dto);
             notifications.show({
                 title: t("success"),
-                message: t("specialityUpdated"),
+                message: t("facultyUpdated"),
                 color: "green",
             });
             close();
@@ -103,15 +80,15 @@ function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
         } finally {
             setIsSaving(false);
         }
-    }, [validateInput, t, close, specialityId, name, description, departmentId]);
+    }, [validateInput, t, close, facultyId, name, description]);
 
-    if (!specialityId)
+    if (!facultyId) 
         return <></>;
 
     return (
         <Modal
             centered
-            title={t("editSpeciality")}
+            title={t("editFaculty")}
             opened={opened}
             onClose={() => {
                 resetForm();
@@ -122,27 +99,17 @@ function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
                 <TextInput
                     label={t("name")}
                     withAsterisk
-                    placeholder={t("specialityName")}
+                    placeholder={t("facultyName")}
                     value={name}
                     onChange={(e) => setName(e.currentTarget.value)}
                 />
                 <Textarea
                     label={t("description")}
                     withAsterisk
-                    placeholder={t("specialityDescription")}
+                    placeholder={t("facultyDescription")}
                     minRows={3}
                     value={description}
                     onChange={(e) => setDescription(e.currentTarget.value)}
-                />
-                <NativeSelect
-                    label={t("department")}
-                    withAsterisk
-                    data={[
-                        { value: "", label: t("department") },
-                        ...(departments ?? []).map((d: any) => ({ value: d.id, label: d.name })),
-                    ]}
-                    value={departmentId ?? undefined}
-                    onChange={(e) => setDepartmentId(e.currentTarget.value)}
                 />
                 <Button
                     variant="filled"
@@ -158,4 +125,4 @@ function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
     );
 }
 
-export default EditSpecialityModal;
+export default EditFacultyModal;

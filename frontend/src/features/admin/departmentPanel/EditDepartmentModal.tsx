@@ -1,4 +1,4 @@
-import { Button, Group, Modal, NativeSelect, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Modal, NativeSelect, Stack, Textarea, TextInput } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFetch from "../../../hooks/useFetch.ts";
@@ -26,7 +26,7 @@ function EditDepartmentModal({ opened, close, departmentId }: EditModalProps) {
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        if (!department) 
+        if (!department)
             return;
         setName(department.name ?? "");
         setDescription(department.description ?? "");
@@ -48,14 +48,6 @@ function EditDepartmentModal({ opened, close, departmentId }: EditModalProps) {
             });
             return false;
         }
-        if (description.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("descriptionTooShort", { min: 3 }),
-                color: "red",
-            });
-            return false;
-        }
         if (!facultyId) {
             notifications.show({
                 title: t("error"),
@@ -68,7 +60,7 @@ function EditDepartmentModal({ opened, close, departmentId }: EditModalProps) {
     }, [name, description, facultyId, t]);
 
     const handleSave = useCallback(async () => {
-        if (!validateInput()) 
+        if (!validateInput())
             return;
 
         const dto: DepartmentDto = {
@@ -105,7 +97,7 @@ function EditDepartmentModal({ opened, close, departmentId }: EditModalProps) {
         }
     }, [validateInput, t, close, departmentId, name, description, facultyId]);
 
-    if (!departmentId) 
+    if (!departmentId)
         return <></>;
 
     return (
@@ -144,17 +136,15 @@ function EditDepartmentModal({ opened, close, departmentId }: EditModalProps) {
                     value={facultyId ?? undefined}
                     onChange={(e) => setFacultyId(e.currentTarget.value)}
                 />
-                <Group grow>
-                    <Button
-                        variant="filled"
-                        color="green"
-                        onClick={handleSave}
-                        loading={isSaving}
-                        disabled={isSaving}
-                    >
-                        {t("saveChanges")}
-                    </Button>
-                </Group>
+                <Button
+                    variant="filled"
+                    color="green"
+                    onClick={handleSave}
+                    loading={isSaving}
+                    disabled={isSaving}
+                >
+                    {t("saveChanges")}
+                </Button>
             </Stack>
         </Modal>
     );

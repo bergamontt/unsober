@@ -19,7 +19,7 @@ function RowActions({
     return (
         <Group
             gap="xs"
-            justify="center"
+            justify="right"
         >
             <Tooltip label={editLabel}>
                 <ActionIcon

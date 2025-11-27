@@ -1,4 +1,4 @@
-import { Button, Group, Modal, NativeSelect, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Modal, NativeSelect, Stack, Textarea, TextInput } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useFetch from "../../../hooks/useFetch.ts";
@@ -35,14 +35,6 @@ function AddDepartmentModal({ opened, close }: AddModalProps) {
             notifications.show({
                 title: t("error"),
                 message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (description.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("descriptionTooShort", { min: 3 }),
                 color: "red",
             });
             return false;
@@ -130,17 +122,15 @@ function AddDepartmentModal({ opened, close }: AddModalProps) {
                     value={facultyId ?? undefined}
                     onChange={(e) => setFacultyId(e.currentTarget.value)}
                 />
-                <Group grow>
-                    <Button
-                        variant="filled"
-                        color="green"
-                        onClick={handleSubmit}
-                        loading={isAdding}
-                        disabled={isAdding}
-                    >
-                        {t("addDepartment")}
-                    </Button>
-                </Group>
+                <Button
+                    variant="filled"
+                    color="green"
+                    onClick={handleSubmit}
+                    loading={isAdding}
+                    disabled={isAdding}
+                >
+                    {t("addDepartment")}
+                </Button>
             </Stack>
         </Modal>
     );
