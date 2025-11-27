@@ -1,7 +1,6 @@
 package ua.unsober.backend.feature.course;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,7 +12,6 @@ import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFact
 
 import java.util.UUID;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {

@@ -1,7 +1,6 @@
 package ua.unsober.backend.feature.admin;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.enums.Role;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
@@ -11,7 +10,6 @@ import ua.unsober.backend.feature.user.UserRepository;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
