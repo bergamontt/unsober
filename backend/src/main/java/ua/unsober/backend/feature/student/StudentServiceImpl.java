@@ -2,8 +2,11 @@ package ua.unsober.backend.feature.student;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.unsober.backend.common.enums.Role;
+import ua.unsober.backend.common.enums.StudentStatus;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.backend.feature.user.User;
 import ua.unsober.backend.feature.user.UserRepository;
@@ -26,6 +29,20 @@ public class StudentServiceImpl implements StudentService {
 
     private static final String STUDENT_NOT_FOUND = "error.student.notfound";
     private static final String USER_NOT_FOUND = "error.user.notfound";
+
+    @Scheduled(cron = "0 0 0 1 7 *")
+    @Transactional
+    public void updateStudentYears() {
+        List<Student> students = studentRepository.findAllByStatus(StudentStatus.STUDYING);
+
+        for (Student student : students) {
+            if (student.getStudyYear() < 4) {
+                student.setStudyYear(student.getStudyYear() + 1);
+            } else {
+                student.setStatus(StudentStatus.GRADUATED);
+            }
+        }
+    }
 
     @Override
     public StudentResponseDto create(StudentRequestDto dto) {
@@ -71,7 +88,7 @@ public class StudentServiceImpl implements StudentService {
             student.setSpeciality(newStudent.getSpeciality());
         if (newStudent.getStudyYear() != null)
             student.setStudyYear(newStudent.getStudyYear());
-        if(newStudent.getStatus() != null)
+        if (newStudent.getStatus() != null)
             student.setStatus(newStudent.getStatus());
         User updatedUser = userRepository.save(student.getUser());
         student.setUser(updatedUser);
