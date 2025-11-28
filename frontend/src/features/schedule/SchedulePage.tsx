@@ -5,10 +5,10 @@ import Schedule from "./Schedule.tsx";
 import { useEffect } from "react";
 
 function SchedulePage() {
-    const { isAuthenticated, loadingAuth } = useAuthStore();
+    const { isAuthenticated, loadingAuth, currentRoles } = useAuthStore();
     const navigate = useNavigate();
     useEffect(() => {
-        if (!isAuthenticated && !loadingAuth) {
+        if ((!isAuthenticated || !currentRoles.includes("STUDENT")) && !loadingAuth) {
             navigate('/login');
         }
     }, [isAuthenticated, loadingAuth, navigate]);

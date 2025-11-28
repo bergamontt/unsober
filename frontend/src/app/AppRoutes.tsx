@@ -17,29 +17,31 @@ import DepartmentPanel from '../features/admin/departmentPanel/DepartmentPanel.t
 import BuildingPanel from '../features/admin/buildingPanel/BuildingPanel.tsx';
 import SubjectPanel from '../features/admin/subjectPanel/SubjectPanel.tsx';
 import InfoPage from '../features/info/InfoPage.tsx';
+import EnrollmentsPage from '../features/enrollments/EnrollmentsPage.tsx';
 
 function AppRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Overlay />}>
-                <Route index element={<MainPage />}/>
-                <Route path="login" element={<LoginPage />}/>
-                <Route path="profile" element={<ProfilePage />}/>
-                <Route path="courses" element={<CoursesPage />}/>
-                <Route path="course/:id" element={<CoursePage />}/>
-                <Route path="schedule" element={<SchedulePage />}/>
-                <Route path="info" element={<InfoPage />}/>
-                
+                <Route index element={<MainPage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="courses" element={<CoursesPage />} />
+                <Route path="course/:id" element={<CoursePage />} />
+                <Route path="schedule" element={<SchedulePage />} />
+                <Route path="info" element={<InfoPage />} />
+                <Route path="enrollments" element={<EnrollmentsPage />} />
+
                 <Route path="/admin" element={<AdminLayout />}>
-                    <Route path="student" element={<StudentPanel />}/>
-                    <Route path="request" element={<RequestPanel />}/>
-                    <Route path="teacher" element={<TeacherPanel />}/>
-                    <Route path="course" element={<CoursePanel />}/>
-                    <Route path="subject" element={<SubjectPanel />}/>
-                    <Route path="speciality" element={<SpecialityPanel />}/>
-                    <Route path="faculty" element={<FacultyPanel />}/>
-                    <Route path="department" element={<DepartmentPanel />}/>
-                    <Route path="building" element={<BuildingPanel />}/>
+                    <Route path="student" element={<StudentPanel />} />
+                    <Route path="request" element={<RequestPanel />} />
+                    <Route path="teacher" element={<TeacherPanel />} />
+                    <Route path="course" element={<CoursePanel />} />
+                    <Route path="subject" element={<SubjectPanel />} />
+                    <Route path="speciality" element={<SpecialityPanel />} />
+                    <Route path="faculty" element={<FacultyPanel />} />
+                    <Route path="department" element={<DepartmentPanel />} />
+                    <Route path="building" element={<BuildingPanel />} />
                 </Route>
             </Route>
         </Routes>

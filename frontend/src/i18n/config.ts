@@ -9,7 +9,7 @@ i18n
         lng: "uk",
         fallbackLng: "en",
         debug: false,
-        ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch",
+        ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch", "enrollments",
             "infoPage", "manageDepartments", "manageFaculties", "manageSpecialities", 
             "manageStudents", "manageSubjects", "manageTeachers",
             "profile", "sections", "stageDescription", "studentEnrollment",],

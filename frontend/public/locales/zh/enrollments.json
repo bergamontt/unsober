@@ -1,0 +1,19 @@
+{
+    "courseName": "课程名称",
+    "type": "课程类型",
+    "credits": "学分数",
+    "hoursPerWeek": "每周学时",
+    "total": "总计",
+    "individualPlan": "个人学习计划",
+    "studyYear": "学年",
+    "summary": "汇总",
+    "creditsPerYear": "每年学分",
+    "hoursWeek": " 小时/周",
+    "autumn": "秋季",
+    "spring": "春季",
+    "summer": "夏季",
+    "FREE_CHOICE": "自由选择",
+    "MANDATORY": "必修",
+    "PROF_ORIENTED": "专业导向",
+    "noEnrollments": "无记录"
+}

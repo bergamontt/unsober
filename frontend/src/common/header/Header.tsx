@@ -52,13 +52,22 @@ function Header() {
                         </Tabs.Tab>
                         {
                             student &&
-                            <Tabs.Tab
-                                value='schedule'
-                                bg='black'
-                                onClick={() => navigate('/schedule')}
-                            >
-                                {t("schedule")}
-                            </Tabs.Tab>
+                            <>
+                                <Tabs.Tab
+                                    value='enrollments'
+                                    bg='black'
+                                    onClick={() => navigate('/enrollments')}
+                                >
+                                    {t("enrollments")}
+                                </Tabs.Tab>
+                                <Tabs.Tab
+                                    value='schedule'
+                                    bg='black'
+                                    onClick={() => navigate('/schedule')}
+                                >
+                                    {t("schedule")}
+                                </Tabs.Tab>
+                            </>
                         }
                         <ProfileMenu />
                     </>

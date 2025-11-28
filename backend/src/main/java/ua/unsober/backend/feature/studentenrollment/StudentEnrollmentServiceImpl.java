@@ -112,11 +112,24 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     }
 
     @Override
+    public List<StudentEnrollmentResponseDto> getAllByStudentIdAndYear(UUID studentId, Integer year) {
+        return studentEnrollmentRepository.findAllByStudentIdAndEnrollmentYear(studentId, year)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public List<StudentEnrollmentResponseDto> getAllByCourseId(UUID courseId) {
         return studentEnrollmentRepository.findAllByCourseId(courseId)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public List<Integer> getAllYearsByStudentId(UUID studentId) {
+        return studentEnrollmentRepository.findEnrollmentYearsByStudentId(studentId);
     }
 
     @Override

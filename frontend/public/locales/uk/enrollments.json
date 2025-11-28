@@ -1,0 +1,19 @@
+{
+    "courseName": "Назва дисципліни",
+    "type": "Тип дисципліни",
+    "credits": "К-ть кредитів",
+    "hoursPerWeek": "Тижневе навантаження",
+    "total": "Загалом",
+    "individualPlan": "Індивідуальний навчальний план",
+    "studyYear": "Навчальний рік",
+    "summary": "Підсумок",
+    "creditsPerYear": "Кредитів на рік",
+    "hoursWeek": " год/тижд.",
+    "autumn": "Осінь",
+    "spring": "Весна",
+    "summer": "Літо",
+    "FREE_CHOICE": "Вільного вибору",
+    "MANDATORY": "Нормативна",
+    "PROF_ORIENTED": "Професійно-орієнтована",
+    "noEnrollments": "Немає записів"
+}

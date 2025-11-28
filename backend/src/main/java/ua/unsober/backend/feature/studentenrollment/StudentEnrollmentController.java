@@ -37,6 +37,18 @@ public class StudentEnrollmentController {
         return studentEnrollmentService.getAllByStudentId(studentId);
     }
 
+    @GetMapping("/student-and-year")
+    public List<StudentEnrollmentResponseDto> getAllByStudentIdAndYear(
+            @RequestParam UUID studentId,
+            @RequestParam Integer year) {
+        return studentEnrollmentService.getAllByStudentIdAndYear(studentId, year);
+    }
+
+    @GetMapping("/years/{studentId}")
+    public List<Integer> getAllYearsByStudentId(@PathVariable UUID studentId) {
+        return studentEnrollmentService.getAllYearsByStudentId(studentId);
+    }
+
     @GetMapping("/exists")
     boolean existsByStudentAndCourseId(
             @RequestParam UUID studentId,
