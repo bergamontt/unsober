@@ -2,6 +2,7 @@ package ua.unsober.backend.feature.request.withdrawal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.unsober.backend.common.enums.RequestStatus;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
     @Override
     public List<WithdrawalRequestResponseDto> getAll() {
         return withdrawalRequestRepository.findAll()
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<WithdrawalRequestResponseDto> getAllWithStatus(RequestStatus status) {
+        return withdrawalRequestRepository.getAllByStatus(status)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();

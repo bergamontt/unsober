@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.request.withdrawal;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.unsober.backend.common.enums.RequestStatus;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +23,11 @@ public class WithdrawalRequestController {
     @GetMapping
     public List<WithdrawalRequestResponseDto> getAll() {
         return withdrawalRequestService.getAll();
+    }
+
+    @GetMapping("/status/{status}")
+    public List<WithdrawalRequestResponseDto> getAllWithStatus(@PathVariable RequestStatus status) {
+        return withdrawalRequestService.getAllWithStatus(status);
     }
 
     @GetMapping("/{id}")

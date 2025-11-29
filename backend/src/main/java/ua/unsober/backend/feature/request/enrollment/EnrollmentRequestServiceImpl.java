@@ -2,6 +2,7 @@ package ua.unsober.backend.feature.request.enrollment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ua.unsober.backend.common.enums.RequestStatus;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class EnrollmentRequestServiceImpl implements EnrollmentRequestService {
     @Override
     public List<EnrollmentRequestResponseDto> getAll() {
         return enrollmentRequestRepository.findAll()
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<EnrollmentRequestResponseDto> getAllWithStatus(RequestStatus status) {
+        return enrollmentRequestRepository.getAllByStatus(status)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();

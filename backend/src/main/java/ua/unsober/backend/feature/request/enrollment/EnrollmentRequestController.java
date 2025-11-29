@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.request.enrollment;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ua.unsober.backend.common.enums.RequestStatus;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +23,11 @@ public class EnrollmentRequestController {
     @GetMapping
     public List<EnrollmentRequestResponseDto> getAll() {
         return enrollmentRequestService.getAll();
+    }
+
+    @GetMapping("/status/{status}")
+    public List<EnrollmentRequestResponseDto> getAllWithStatus(@PathVariable RequestStatus status) {
+        return enrollmentRequestService.getAllWithStatus(status);
     }
 
     @GetMapping("/{id}")
