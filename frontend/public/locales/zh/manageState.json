@@ -1,0 +1,22 @@
+{
+  "success": "成功",
+  "currentYearUpdated": "已更新当前报名年份",
+  "currentTermUpdated": "已更新当前报名学期",
+  "enrollmentStageUpdated": "已更新当前报名阶段",
+  "unknownUpdateError": "无法更新报名状态",
+  "error": "错误",
+  "enrollmentStateManagement": "报名状态管理",
+  "selectYear": "当前学年：",
+  "selectTerm": "当前学期：",
+  "selectStage": "当前报名阶段：",
+  "saveChanges": "保存更改",
+  "AUTUMN": "秋季",
+  "SPRING": "春季",
+  "SUMMER": "夏季",
+  "CLOSED": "报名已关闭",
+  "COURSES": "课程报名",
+  "GROUPS": "分组报名",
+  "CORRECTION": "更正",
+  "thisYearUsed": "报名适用于本学年",
+  "thisTermUsed": "报名适用于本学期"
+}

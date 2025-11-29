@@ -11,6 +11,7 @@ import speciality from '../../assets/speciality.svg'
 import building from '../../assets/building.svg'
 import faculty from '../../assets/faculty.svg'
 import department from '../../assets/department.svg'
+import state from '../../assets/server.svg'
 
 function AdminSidebar() {
     const { t } = useTranslation("adminMenu");
@@ -26,6 +27,7 @@ function AdminSidebar() {
         { to: "/admin/faculty", label: t("faculties"), icon: faculty },
         { to: "/admin/department", label: t("departments"), icon: department },
         { to: "/admin/building", label: t("buildings"), icon: building },
+        { to: "/admin/state", label: t("state"), icon: state }
     ];
 
     const navLinks = links.map(({ to, label, icon }) => (

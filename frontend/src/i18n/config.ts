@@ -11,7 +11,7 @@ i18n
         debug: false,
         ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch", "enrollments",
             "groups", "infoPage", "manageDepartments", "manageFaculties", "manageSpecialities", 
-            "manageStudents", "manageSubjects", "manageTeachers",
+            "manageState", "manageStudents", "manageSubjects", "manageTeachers",
             "profile", "sections", "stageDescription", "studentEnrollment",],
         defaultNS: "common",
         backend: {

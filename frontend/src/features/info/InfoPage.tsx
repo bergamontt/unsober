@@ -32,7 +32,7 @@ function InfoPage() {
                     {t("infoPage:currentYear")}
                 </Title>
                 <Text size="lg">
-                    {appState.currentYear}
+                    {appState.currentYear + "-" + (appState.currentYear + 1)}
                 </Text>
                 <Title order={5}>
                     {t("infoPage:currentTerm")}

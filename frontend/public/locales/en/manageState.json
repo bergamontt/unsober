@@ -1,0 +1,22 @@
+{
+    "success": "Success",
+    "currentYearUpdated": "Current enrollment year updated",
+    "currentTermUpdated": "Current enrollment term updated",
+    "enrollmentStageUpdated": "Current enrollment stage updated",
+    "unknownUpdateError": "Unable to update enrollment state",
+    "error": "Error",
+    "enrollmentStateManagement": "Enrollment state management",
+    "selectYear": "Current year: ",
+    "selectTerm": "Current term: ",
+    "selectStage": "Current enrollment stage: ",
+    "saveChanges": "Save changes",
+    "AUTUMN": "Autumn",
+    "SPRING": "Spring",
+    "SUMMER": "Summer",
+    "CLOSED": "Enrollment closed",
+    "COURSES": "Course enrollment",
+    "GROUPS": "Group enrollment",
+    "CORRECTION": "Correction",
+    "thisYearUsed": "Enrollment is for this year",
+    "thisTermUsed": "Enrollment is for this term"
+}

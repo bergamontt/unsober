@@ -1,0 +1,22 @@
+{
+    "success": "Успіх",
+    "currentYearUpdated": "Поточний рік запису оновлено",
+    "currentTermUpdated": "Поточний триместр запису оновлено",
+    "enrollmentStageUpdated": "Поточний етап запису оновлено",
+    "unknownUpdateError": "Неможливо оновити стан запису",
+    "error": "Помилка",
+    "enrollmentStateManagement": "Керування станом запису",
+    "selectYear": "Поточний рік: ",
+    "selectTerm": "Поточний триместр: ",
+    "selectStage": "Поточний етап запису: ",
+    "saveChanges": "Оновити зміни",
+    "AUTUMN": "Осінній",
+    "SPRING": "Весняний",
+    "SUMMER": "Літній",
+    "CLOSED": "Запис закритий",
+    "COURSES": "Запис на дисципліни",
+    "GROUPS": "Запис в групи",
+    "CORRECTION": "Корекція",
+    "thisYearUsed": "Запис здійснюється на цей рік",
+    "thisTermUsed": "Запис здійснюється на цей триместр"
+}
