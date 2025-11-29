@@ -1,5 +1,5 @@
 import api from './api.ts';
-import type { EnrollmentStatus, StudentEnrollment, StudentEnrollmentDto } from '../models/StudentEnrollment.ts';
+import type { StudentEnrollment, StudentEnrollmentDto } from '../models/StudentEnrollment.ts';
 
 export const getAllEnrollmentsByStudentId = async (studentId: string | null):
     Promise<StudentEnrollment[]> => {

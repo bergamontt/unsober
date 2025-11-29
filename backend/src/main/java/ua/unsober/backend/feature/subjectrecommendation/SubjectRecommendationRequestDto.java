@@ -14,12 +14,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class SubjectRecommendationRequestDto {
-    @NotNull(message = "{subjectrecommendation.subjectId.required}")
+    @NotNull(message = "{subjectRecommendation.subjectId.required}")
     private UUID subjectId;
 
-    @NotNull(message = "{subjectrecommendation.specialtyId.required}")
+    @NotNull(message = "{subjectRecommendation.specialtyId.required}")
     private UUID specialityId;
 
-    @NotNull(message = "{subjectrecommendation.recommendation.required}")
+    @NotNull(message = "{subjectRecommendation.recommendation.required}")
     private Recommendation recommendation;
 }
