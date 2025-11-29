@@ -11,5 +11,6 @@ public interface EnrollmentRequestService {
     List<EnrollmentRequestResponseDto> getAllWithStatus(RequestStatus status);
     EnrollmentRequestResponseDto getById(UUID id);
     EnrollmentRequestResponseDto update(UUID id, EnrollmentRequestRequestDto requestDto);
+    EnrollmentRequestResponseDto updateStatus(UUID id, RequestStatus status);
     void delete(UUID id);
 }

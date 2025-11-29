@@ -1,0 +1,15 @@
+{
+    "requestSearch": "Пошук запитів студентів",
+    "enterText": "Введіть пошуковий текст",
+    "text": "Пошуковий текст",
+    "success": "Успіх",
+    "requestAccepted": "Запит студента схвалено",
+    "error": "Помилка",
+    "unknownAcceptError": "Запит не вдалося схвалити",
+    "requestDeclined": "Запит студента відхилено",
+    "unknownDeclineError": "Запит не вдалося відхилити",
+    "enrollmentRequestFor": "Запит на запис на: ",
+    "withdrawalRequestFrom": "Запит на виписування з: ",
+    "approve": "Схвалити",
+    "decline": "Відхилити"
+}

@@ -1,6 +1,6 @@
 import { Table, Text } from "@mantine/core";
 import { EnrollmentStage, type AppState } from "../../models/AppState";
-import type { StudentEnrollment } from "../../models/StudentEnrollment";
+import { EnrollmentStatus, type StudentEnrollment } from "../../models/StudentEnrollment";
 import { useTranslation } from "react-i18next";
 import type { CourseGroup } from "../../models/CourseGroup";
 import GroupSelector from "./GroupSelector";
@@ -21,7 +21,8 @@ function CourseGroupList({ state, enrollments }: CourseGroupListProps) {
 
     const termEnrollments = enrollments
         .sort((e1, e2) => e1.course.subject.name.localeCompare(e2.course.subject.name))
-        .filter(e => e.course.subject.term == state.term) ?? [];
+        .filter(e => e.course.subject.term == state.term)
+        .filter(e => e.status != EnrollmentStatus.WITHDRAWN) ?? [];
 
     const groupToStr = (g: CourseGroup): string => {
         return `${g.groupNumber} ${t("group")} (${g.numEnrolled}/${g.maxStudents})`;

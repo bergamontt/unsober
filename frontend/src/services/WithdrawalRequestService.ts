@@ -31,3 +31,10 @@ export const updateWithdrawalRequest = async (id: string, dto: WithdrawalRequest
     const response = await api.patch<WithdrawalRequest>(`/withdrawal-request/${id}`, dto);
     return response.data;
 };
+
+export const updateWithdrawalRequestStatus = async (id: string, status: RequestStatus):
+    Promise<WithdrawalRequest> => {
+    const response = await api.patch<WithdrawalRequest>(`/withdrawal-request/update-status/${id}`,
+        null, { params: { status } });
+    return response.data;
+};

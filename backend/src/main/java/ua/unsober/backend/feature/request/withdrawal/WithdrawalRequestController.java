@@ -42,6 +42,13 @@ public class WithdrawalRequestController {
         return withdrawalRequestService.update(id, dto);
     }
 
+    @PatchMapping("/update-status/{id}")
+    public WithdrawalRequestResponseDto updateStatus(
+            @PathVariable UUID id,
+            @RequestParam RequestStatus status) {
+        return withdrawalRequestService.updateStatus(id, status);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
         withdrawalRequestService.delete(id);

@@ -1,5 +1,5 @@
 import api from './api.ts';
-import type { StudentEnrollment } from '../models/StudentEnrollment.ts';
+import type { EnrollmentStatus, StudentEnrollment, StudentEnrollmentDto } from '../models/StudentEnrollment.ts';
 
 export const getAllEnrollmentsByStudentId = async (studentId: string | null):
     Promise<StudentEnrollment[]> => {
@@ -47,9 +47,18 @@ export const existsEnrollment = async (studentId: string | null, courseId: strin
     return response.data;
 }
 
+export const addStudentEnrollment = async (dto: StudentEnrollmentDto):
+    Promise<StudentEnrollment> => {
+    const response = await api.post<StudentEnrollment>("/student-enrollment", dto);
+    return response.data;
+}
+
+export const deleteStudentEnrollment = async (id: string): Promise<void> => {
+    await api.delete<void>(`/student-enrollment/${id}`);
+}
+
 export const enrollSelf = async (courseId: string):
     Promise<StudentEnrollment> => {
-    console.log(courseId);
     const response = await api.post<StudentEnrollment>("/student-enrollment/enroll-self",
         null, { params: { courseId } },);
     return response.data;

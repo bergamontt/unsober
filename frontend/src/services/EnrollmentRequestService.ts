@@ -14,7 +14,7 @@ export const getEnrollmentRequestsByStatus = async (status: RequestStatus):
 
 export const getEnrollmentRequestById = async (id: string | null):
     Promise<EnrollmentRequest | null> => {
-    if (!id) 
+    if (!id)
         return null;
     const response = await api.get<EnrollmentRequest>(`/enrollment-request/${id}`);
     return response.data;
@@ -29,5 +29,12 @@ export const addEnrollmentRequest = async (dto: EnrollmentRequestDto):
 export const updateEnrollmentRequest = async (id: string, dto: EnrollmentRequestDto):
     Promise<EnrollmentRequest> => {
     const response = await api.patch<EnrollmentRequest>(`/enrollment-request/${id}`, dto);
+    return response.data;
+};
+
+export const updateEnrollmentRequestStatus = async (id: string, status: RequestStatus):
+    Promise<EnrollmentRequest> => {
+    const response = await api.patch<EnrollmentRequest>(`/enrollment-request/update-status/${id}`,
+        null, { params: { status } });
     return response.data;
 };

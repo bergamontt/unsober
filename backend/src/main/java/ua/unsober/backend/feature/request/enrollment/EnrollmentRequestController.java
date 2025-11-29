@@ -42,6 +42,13 @@ public class EnrollmentRequestController {
         return enrollmentRequestService.update(id, dto);
     }
 
+    @PatchMapping("/update-status/{id}")
+    public EnrollmentRequestResponseDto updateStatus(
+            @PathVariable UUID id,
+            @RequestParam RequestStatus status) {
+        return enrollmentRequestService.updateStatus(id, status);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
         enrollmentRequestService.delete(id);

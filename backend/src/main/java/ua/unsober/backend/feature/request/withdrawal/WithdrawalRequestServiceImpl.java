@@ -65,6 +65,14 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
     }
 
     @Override
+    public WithdrawalRequestResponseDto updateStatus(UUID id, RequestStatus status) {
+        WithdrawalRequest existing = withdrawalRequestRepository.findById(id)
+                .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));
+        existing.setStatus(status);
+        return responseMapper.toDto(withdrawalRequestRepository.save(existing));
+    }
+
+    @Override
     public void delete(UUID id) {
         if (withdrawalRequestRepository.existsById(id)) {
             withdrawalRequestRepository.deleteById(id);

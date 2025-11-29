@@ -1,0 +1,15 @@
+{
+    "requestSearch": "搜索学生请求",
+    "enterText": "输入搜索文本",
+    "text": "搜索文本",
+    "success": "成功",
+    "requestAccepted": "学生请求已批准",
+    "error": "错误",
+    "unknownAcceptError": "无法批准请求",
+    "requestDeclined": "学生请求已拒绝",
+    "unknownDeclineError": "无法拒绝请求",
+    "enrollmentRequestFor": "入学请求： ",
+    "withdrawalRequestFrom": "退课请求： ",
+    "approve": "批准",
+    "decline": "拒绝"
+}

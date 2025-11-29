@@ -1,0 +1,15 @@
+{
+    "requestSearch": "Search student requests",
+    "enterText": "Enter search text",
+    "text": "Search text",
+    "success": "Success",
+    "requestAccepted": "Student request accepted",
+    "error": "Error",
+    "unknownAcceptError": "Could not accept the request",
+    "requestDeclined": "Student request declined",
+    "unknownDeclineError": "Could not decline the request",
+    "enrollmentRequestFor": "Enrollment request for: ",
+    "withdrawalRequestFrom": "Withdrawal request from: ",
+    "approve": "Approve",
+    "decline": "Decline"
+}

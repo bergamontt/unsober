@@ -7,6 +7,7 @@ import org.slf4j.MarkerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ua.unsober.backend.common.enums.EnrollmentStatus;
 import ua.unsober.backend.common.exceptions.LocalizedCourseFullExceptionFactory;
 import ua.unsober.backend.common.exceptions.LocalizedEnrollmentActionNotAllowedExceptionFactory;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
@@ -68,12 +69,25 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         return courseGroup;
     }
 
+    private void decreaseEnrollmentCounters(StudentEnrollment enrollment){
+        Course course = enrollment.getCourse();
+        course.setNumEnrolled(course.getNumEnrolled() - 1);
+        courseRepository.save(course);
+
+        CourseGroup group = enrollment.getGroup();
+        if (group != null) {
+            group.setNumEnrolled(group.getNumEnrolled() - 1);
+            courseGroupRepository.save(group);
+        }
+    }
+
     @Override
     public StudentEnrollmentResponseDto create(StudentEnrollmentRequestDto dto) {
         Course course = validateCourse(dto.getCourseId());
         CourseGroup courseGroup = dto.getGroupId() != null ? validateGroup(dto.getGroupId()) : null;
 
         StudentEnrollment enrollment = requestMapper.toEntity(dto);
+        enrollment.setStatus(EnrollmentStatus.FORCE_ENROLLED);
         enrollment.setCourse(course);
         enrollment.setGroup(courseGroup);
 
@@ -177,18 +191,9 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
     public void delete(UUID id) {
         StudentEnrollment enrollment = studentEnrollmentRepository.findById(id)
                 .orElseThrow(() -> notFound.get(ENROLLMENT_NOT_FOUND, id));
-
-        Course course = enrollment.getCourse();
-        course.setNumEnrolled(course.getNumEnrolled() - 1);
-        courseRepository.save(course);
-
-        CourseGroup group = enrollment.getGroup();
-        if (group != null) {
-            group.setNumEnrolled(group.getNumEnrolled() - 1);
-            courseGroupRepository.save(group);
-        }
-
-        studentEnrollmentRepository.delete(enrollment);
+        decreaseEnrollmentCounters(enrollment);
+        enrollment.setStatus(EnrollmentStatus.WITHDRAWN);
+        studentEnrollmentRepository.save(enrollment);
     }
 
     @Override

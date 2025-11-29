@@ -67,6 +67,14 @@ public class EnrollmentRequestServiceImpl implements EnrollmentRequestService {
     }
 
     @Override
+    public EnrollmentRequestResponseDto updateStatus(UUID id, RequestStatus status) {
+        EnrollmentRequest enrollmentRequest = enrollmentRequestRepository.findById(id)
+                .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));
+        enrollmentRequest.setStatus(status);
+        return responseMapper.toDto(enrollmentRequestRepository.save(enrollmentRequest));
+    }
+
+    @Override
     public void delete(UUID id) {
         if (enrollmentRequestRepository.existsById(id)) {
             enrollmentRequestRepository.deleteById(id);

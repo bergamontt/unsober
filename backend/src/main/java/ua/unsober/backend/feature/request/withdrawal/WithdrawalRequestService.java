@@ -11,5 +11,6 @@ public interface WithdrawalRequestService {
     List<WithdrawalRequestResponseDto> getAllWithStatus(RequestStatus status);
     WithdrawalRequestResponseDto getById(UUID id);
     WithdrawalRequestResponseDto update(UUID id, WithdrawalRequestRequestDto dto);
+    WithdrawalRequestResponseDto updateStatus(UUID id, RequestStatus status);
     void delete(UUID id);
 }
