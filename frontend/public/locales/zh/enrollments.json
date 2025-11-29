@@ -15,5 +15,7 @@
     "FREE_CHOICE": "自由选择",
     "MANDATORY": "必修",
     "PROF_ORIENTED": "专业导向",
-    "noEnrollments": "无记录"
+    "noEnrollments": "无记录",
+    "group": "组",
+    "groupNotChosen": "未选择"
 }

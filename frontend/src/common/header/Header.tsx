@@ -61,6 +61,13 @@ function Header() {
                                     {t("enrollments")}
                                 </Tabs.Tab>
                                 <Tabs.Tab
+                                    value='groups'
+                                    bg='black'
+                                    onClick={() => navigate('/groups')}
+                                >
+                                    {t("groups")}
+                                </Tabs.Tab>
+                                <Tabs.Tab
                                     value='schedule'
                                     bg='black'
                                     onClick={() => navigate('/schedule')}

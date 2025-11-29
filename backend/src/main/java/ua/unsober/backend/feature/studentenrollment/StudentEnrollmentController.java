@@ -88,4 +88,12 @@ public class StudentEnrollmentController {
             @RequestParam UUID groupId) {
         return studentEnrollmentService.changeGroup(enrollmentId, groupId);
     }
+
+    @PatchMapping("/clear-group/{enrollmentId}")
+    @Limited(perMinute = 30)
+    @AllowedAtStage(stages = {EnrollmentStage.CORRECTION, EnrollmentStage.GROUPS})
+    public void withdrawFromGroup(
+            @PathVariable UUID enrollmentId) {
+        studentEnrollmentService.withdrawFromGroup(enrollmentId);
+    }
 }

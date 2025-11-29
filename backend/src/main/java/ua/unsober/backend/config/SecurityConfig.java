@@ -43,7 +43,8 @@ public class SecurityConfig {
                                 "/student-enrollment/enroll-self")
                         .hasRole(Role.STUDENT.name())
                         .requestMatchers(HttpMethod.PATCH,
-                                "/student-enrollment/change-group")
+                                "/student-enrollment/change-group",
+                                "/student-enrollment/clear-group/**")
                         .hasRole(Role.STUDENT.name())
                         .requestMatchers(HttpMethod.POST,
                                 "/enrollment-request/**", "/withdrawal-request/**")

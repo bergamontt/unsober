@@ -15,5 +15,7 @@
     "FREE_CHOICE": "Free choice",
     "MANDATORY": "Mandatory",
     "PROF_ORIENTED": "Professionally oriented",
-    "noEnrollments": "No enrollments"
+    "noEnrollments": "No enrollments",
+    "group": "Group",
+    "groupNotChosen": "Not chosen"
 }

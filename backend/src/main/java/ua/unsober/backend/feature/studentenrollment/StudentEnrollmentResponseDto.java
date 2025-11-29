@@ -20,7 +20,7 @@ public class StudentEnrollmentResponseDto {
     private UUID id;
     private StudentResponseDto student;
     private CourseResponseDto course;
-    private CourseGroupResponseDto courseGroup;
+    private CourseGroupResponseDto group;
     private EnrollmentStatus status;
     private Integer enrollmentYear;
     private Instant createdAt;

@@ -6,7 +6,7 @@ export interface StudentEnrollment {
     id: string;
     student: Student;
     course: Course;
-    courseGroup?: CourseGroup;
+    group?: CourseGroup;
     status: string;
     enrollmentYear: number;
     createdAt: string;

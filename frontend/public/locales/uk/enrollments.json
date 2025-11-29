@@ -15,5 +15,7 @@
     "FREE_CHOICE": "Вільного вибору",
     "MANDATORY": "Нормативна",
     "PROF_ORIENTED": "Професійно-орієнтована",
-    "noEnrollments": "Немає записів"
+    "noEnrollments": "Немає записів",
+    "group": "Група",
+    "groupNotChosen": "Не обрана"
 }

@@ -57,7 +57,7 @@ function EnrolledStudents({ courseId }: EnrolledStudentsProps) {
                 {enrollments?.map((e, index) => {
                     const s = e.student;
                     const name = `${s.lastName} ${s.firstName} ${s.patronymic}`;
-                    const groupNum = e.courseGroup?.groupNumber ?? "-";
+                    const groupNum = e.group?.groupNumber ?? "-";
                     const recommendation = recommendations[s.id] ?? "FREE_CHOICE";
 
                     return (

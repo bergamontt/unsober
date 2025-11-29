@@ -1,0 +1,15 @@
+{
+    "courseName": "课程名称",
+    "group": "分组",
+    "groupNumber": "分组编号",
+    "notSelected": "未选择",
+    "noEnrollments": "没有记录",
+    "chosenGroups": "课程分组",
+    "success": "成功",
+    "changedGroupForCourse": "课程 {{courseName}} 的分组已更改",
+    "unknownGroupError": "无法更改分组",
+    "error": "错误",
+    "AUTUMN": "秋季学期",
+    "SPRING": "春季学期",
+    "SUMMER": "夏季学期"
+}

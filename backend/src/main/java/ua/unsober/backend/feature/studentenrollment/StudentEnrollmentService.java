@@ -16,4 +16,5 @@ public interface StudentEnrollmentService {
     void delete(UUID id);
     StudentEnrollmentResponseDto enrollSelf(UUID courseId);
     StudentEnrollmentResponseDto changeGroup(UUID enrollmentId, UUID groupId);
+    void withdrawFromGroup(UUID enrollmentId);
 }

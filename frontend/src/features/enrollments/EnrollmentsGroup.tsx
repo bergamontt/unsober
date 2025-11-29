@@ -43,20 +43,24 @@ function EnrollmentsGroup({ name, enrollments }: EnrollmentGroupParams) {
     const header = (
         <Table.Tr>
             <Table.Th>{t("courseName")}</Table.Th>
+            <Table.Th>{t("group")}</Table.Th>
             <Table.Th>{t("type")}</Table.Th>
             <Table.Th>{t("credits")}</Table.Th>
             <Table.Th>{t("hoursPerWeek")}</Table.Th>
         </Table.Tr>
     );
 
-    const rows = enrollments.map(e =>
-        <Table.Tr key={e.id}>
-            <Table.Td>{e.course.subject.name}</Table.Td>
-            <Table.Td>{t(recommendations[e.id] ?? "FREE_CHOICE")}</Table.Td>
-            <Table.Td>{e.course.subject.credits.toFixed(1)}</Table.Td>
-            <Table.Td>{e.course.subject.hoursPerWeek + t("hoursWeek")}</Table.Td>
-        </Table.Tr>
-    );
+    const rows = enrollments
+        .sort((e1, e2) => e1.course.subject.name.localeCompare(e2.course.subject.name))
+        .map(e =>
+            <Table.Tr key={e.id}>
+                <Table.Td>{e.course.subject.name}</Table.Td>
+                <Table.Td>{e.group?.groupNumber ?? t("groupNotChosen")}</Table.Td>
+                <Table.Td>{t(recommendations[e.id] ?? "FREE_CHOICE")}</Table.Td>
+                <Table.Td>{e.course.subject.credits.toFixed(1)}</Table.Td>
+                <Table.Td>{e.course.subject.hoursPerWeek + t("hoursWeek")}</Table.Td>
+            </Table.Tr>
+        );
 
     return (
         <Stack>
@@ -81,7 +85,7 @@ function EnrollmentsGroup({ name, enrollments }: EnrollmentGroupParams) {
                 </Table.Tbody>
                 <Table.Tfoot>
                     <Table.Tr>
-                        <Table.Td colSpan={2} style={{ fontWeight: 700 }}>
+                        <Table.Td colSpan={3} style={{ fontWeight: 700 }}>
                             {t("total", { defaultValue: "Total" })}
                         </Table.Td>
                         <Table.Td style={{ fontWeight: 700 }}>{totalCredits.toFixed(1)}</Table.Td>

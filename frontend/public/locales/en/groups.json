@@ -1,0 +1,15 @@
+{
+    "courseName": "Course name",
+    "group": "group",
+    "groupNumber": "Group number",
+    "notSelected": "Not selected",
+    "noEnrollments": "No enrollments",
+    "chosenGroups": "Course groups",
+    "success": "Success",
+    "changedGroupForCourse": "Group for course {{courseName}} has been updated",
+    "unknownGroupError": "Failed to change group",
+    "error": "Error",
+    "AUTUMN": "Autumn trimester",
+    "SPRING": "Spring trimester",
+    "SUMMER": "Summer trimester"
+}

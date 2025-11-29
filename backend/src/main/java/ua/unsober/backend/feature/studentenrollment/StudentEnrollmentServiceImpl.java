@@ -221,4 +221,23 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
                         .build()
         );
     }
+
+    @Override
+    public void withdrawFromGroup(UUID enrollmentId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        StudentResponseDto student = studentService.getByEmail(email);
+        StudentEnrollment enrollment = studentEnrollmentRepository.findById(enrollmentId)
+                .orElseThrow(() -> notFound.get(ENROLLMENT_NOT_FOUND, enrollmentId));
+        if(!enrollment.getStudent().getId().equals(student.getId())){
+            throw notAllowed.get();
+        }
+        if(enrollment.getGroup() == null)
+            return;
+        CourseGroup group = enrollment.getGroup();
+        group.setNumEnrolled(group.getNumEnrolled() - 1);
+        courseGroupRepository.save(group);
+        enrollment.setGroup(null);
+        studentEnrollmentRepository.save(enrollment);
+    }
 }

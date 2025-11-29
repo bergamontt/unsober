@@ -1,0 +1,15 @@
+{
+    "courseName": "Назва дисципліни",
+    "group": "група",
+    "groupNumber": "Номер групи",
+    "notSelected": "Не обрано",
+    "noEnrollments": "Немає записів",
+    "chosenGroups": "Групи дисциплін",
+    "success": "Успіх",
+    "changedGroupForCourse": "Групу для дисципліни {{courseName}} змінено",
+    "unknownGroupError": "Не вдалося змінити групу",
+    "error": "Помилка",
+    "AUTUMN": "Осінній триместр",
+    "SPRING": "Весняний триместр",
+    "SUMMER": "Літній триместр"
+}

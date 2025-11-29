@@ -62,3 +62,7 @@ export const changeGroup = async (enrollmentId: string, groupId: string):
     });
     return response.data;
 }
+
+export const withdrawFromGroup = async (enrollmentId: string): Promise<void> => {
+    await api.patch<void>(`/student-enrollment/clear-group/${enrollmentId}`);
+}
