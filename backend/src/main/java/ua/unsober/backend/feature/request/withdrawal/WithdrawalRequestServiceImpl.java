@@ -42,6 +42,14 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
     }
 
     @Override
+    public List<WithdrawalRequestResponseDto> getAllByStudentId(UUID studentId) {
+        return withdrawalRequestRepository.getAllByStudentId(studentId)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public WithdrawalRequestResponseDto getById(UUID id) {
         WithdrawalRequest request = withdrawalRequestRepository.findById(id)
                 .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));

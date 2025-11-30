@@ -30,6 +30,11 @@ public class WithdrawalRequestController {
         return withdrawalRequestService.getAllWithStatus(status);
     }
 
+    @GetMapping("/student/{studentId}")
+    public List<WithdrawalRequestResponseDto> getAllByStudentId(@PathVariable UUID studentId) {
+        return withdrawalRequestService.getAllByStudentId(studentId);
+    }
+
     @GetMapping("/{id}")
     public WithdrawalRequestResponseDto getById(@PathVariable UUID id) {
         return withdrawalRequestService.getById(id);

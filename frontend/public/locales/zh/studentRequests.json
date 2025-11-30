@@ -1,0 +1,18 @@
+{
+    "addRequest": "创建申请",
+    "accepted": "已批准",
+    "declined": "已拒绝",
+    "pending": "待处理",
+    "enrollmentRequestFor": "选课申请：",
+    "withdrawalRequestFrom": "退课申请：",
+    "studentRequestHeader": "提交给教务处的申请",
+    "studentRequestExplanation": "如果您需要选课或退课但无法自行完成，可在此向教务处提交申请。教务处工作人员将审核您的申请，并做出批准或拒绝的决定。",
+    "requestSearch": "搜索我的申请",
+    "enterText": "输入搜索内容",
+    "text": "搜索内容",
+    "requests": "申请筛选",
+    "all": "全部",
+    "ACCEPTED": "已批准",
+    "DECLINED": "已拒绝",
+    "PENDING": "待处理"
+}

@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface EnrollmentRequestRepository extends JpaRepository<EnrollmentRequest, UUID> {
     List<EnrollmentRequest> getAllByStatus(RequestStatus status);
+    List<EnrollmentRequest> getAllByStudentId(UUID studentId);
 }

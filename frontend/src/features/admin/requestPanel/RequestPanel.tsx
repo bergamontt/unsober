@@ -36,7 +36,6 @@ function RequestPanel() {
         const t2 = parseTime(r2.item.createdAt);
         return t1 - t2;
     });
-    console.log(requests);
 
     const components = requests.map(r =>
         r.type == "enrollment" ? (

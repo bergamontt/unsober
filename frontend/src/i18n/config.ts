@@ -14,7 +14,7 @@ i18n
             "groups", "infoPage", "manageDepartments", "manageFaculties", "manageRequests", 
             "manageSpecialities", "manageState", "manageStudents", "manageSubjects", 
             "manageTeachers", "profile", "sections", "specialityErrors", "stageDescription", 
-            "studentEnrollment", "studentErrors", "subjectErrors", "teacherErrors"],
+            "studentEnrollment", "studentErrors", "studentRequests", "subjectErrors", "teacherErrors"],
         defaultNS: "common",
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json",

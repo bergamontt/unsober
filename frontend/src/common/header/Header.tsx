@@ -54,6 +54,13 @@ function Header() {
                             student &&
                             <>
                                 <Tabs.Tab
+                                    value='requests'
+                                    bg='black'
+                                    onClick={() => navigate('/requests')}
+                                >
+                                    {t("requests")}
+                                </Tabs.Tab>
+                                <Tabs.Tab
                                     value='enrollments'
                                     bg='black'
                                     onClick={() => navigate('/enrollments')}

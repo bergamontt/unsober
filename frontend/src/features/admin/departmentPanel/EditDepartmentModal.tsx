@@ -7,7 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { getDepartmentById, updateDepartment } from "../../../services/DepartmentService.ts";
 import type { DepartmentDto } from "../../../models/Department.ts";
 import axios from "axios";
-import { validateDepartmentDto } from "../../../validation/departmentvalidator.ts";
+import { validateDepartmentDto } from "../../../validation/departmentValidator.ts";
 
 type EditModalProps = {
     opened: boolean;

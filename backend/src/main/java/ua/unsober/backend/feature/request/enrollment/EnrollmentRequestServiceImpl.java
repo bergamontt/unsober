@@ -42,6 +42,14 @@ public class EnrollmentRequestServiceImpl implements EnrollmentRequestService {
     }
 
     @Override
+    public List<EnrollmentRequestResponseDto> getAllByStudentId(UUID studentId) {
+        return enrollmentRequestRepository.getAllByStudentId(studentId)
+                .stream()
+                .map(responseMapper::toDto)
+                .toList();
+    }
+
+    @Override
     public EnrollmentRequestResponseDto getById(UUID id) {
         EnrollmentRequest enrollmentRequest = enrollmentRequestRepository.findById(id)
                 .orElseThrow(() -> notFound.get(REQUEST_NOT_FOUND, id));

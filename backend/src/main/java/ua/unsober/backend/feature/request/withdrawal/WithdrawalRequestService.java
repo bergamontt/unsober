@@ -9,6 +9,7 @@ public interface WithdrawalRequestService {
     WithdrawalRequestResponseDto create(WithdrawalRequestRequestDto dto);
     List<WithdrawalRequestResponseDto> getAll();
     List<WithdrawalRequestResponseDto> getAllWithStatus(RequestStatus status);
+    List<WithdrawalRequestResponseDto> getAllByStudentId(UUID studentId);
     WithdrawalRequestResponseDto getById(UUID id);
     WithdrawalRequestResponseDto update(UUID id, WithdrawalRequestRequestDto dto);
     WithdrawalRequestResponseDto updateStatus(UUID id, RequestStatus status);

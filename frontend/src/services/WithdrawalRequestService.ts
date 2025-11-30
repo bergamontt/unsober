@@ -12,6 +12,14 @@ export const getWithdrawalRequestsByStatus = async (status: RequestStatus):
     return response.data;
 };
 
+export const getWithdrawalRequestsByStudent = async (studentId: string | null):
+    Promise<WithdrawalRequest[]> => {
+    if (studentId == null)
+        return [];
+    const response = await api.get<WithdrawalRequest[]>(`/withdrawal-request/student/${studentId}`);
+    return response.data;
+};
+
 export const getWithdrawalRequestById = async (id: string | null):
     Promise<WithdrawalRequest | null> => {
     if (!id)

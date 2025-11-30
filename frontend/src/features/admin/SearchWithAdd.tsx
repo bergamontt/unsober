@@ -2,6 +2,7 @@ import { ActionIcon, Group, Tooltip } from "@mantine/core";
 import Searchbar from "../../common/searchbar/Searchbar";
 import Icon from "../../common/icon/Icon";
 import plus from '../../assets/plus.svg'
+import { useTranslation } from "react-i18next";
 
 type SearchWithAddProps = {
     label: string;
@@ -11,8 +12,9 @@ type SearchWithAddProps = {
 }
 
 function SearchWithAdd(
-    {label, description, placeholder, onAdd} : SearchWithAddProps
+    { label, description, placeholder, onAdd }: SearchWithAddProps
 ) {
+    const { t } = useTranslation("common");
     return (
         <Group grow align="flex-end">
             <Group grow>
@@ -22,7 +24,7 @@ function SearchWithAdd(
                     placeholder={placeholder}
                 />
             </Group>
-            <Tooltip label="Додати">
+            <Tooltip label={t("add")}>
                 <ActionIcon
                     onClick={onAdd}
                     variant="filled"

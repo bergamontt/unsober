@@ -30,6 +30,11 @@ public class EnrollmentRequestController {
         return enrollmentRequestService.getAllWithStatus(status);
     }
 
+    @GetMapping("/student/{studentId}")
+    public List<EnrollmentRequestResponseDto> getAllByStudentId(@PathVariable UUID studentId) {
+        return enrollmentRequestService.getAllByStudentId(studentId);
+    }
+
     @GetMapping("/{id}")
     public EnrollmentRequestResponseDto getById(@PathVariable UUID id) {
         return enrollmentRequestService.getById(id);

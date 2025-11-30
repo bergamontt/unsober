@@ -22,6 +22,7 @@ import CourseGroupPage from '../features/group/CourseGroupPage.tsx';
 import StatePanel from '../features/admin/state/StatePanel.tsx';
 import AuthGuard from '../common/wrappers/AuthGuard.tsx';
 import { UserRole } from '../models/Auth.ts';
+import StudentRequestPage from '../features/request/StudentRequestPage.tsx';
 
 function AppRoutes() {
     return (
@@ -83,6 +84,15 @@ function AppRoutes() {
                     element={
                         <AuthGuard roles={[UserRole.STUDENT]}>
                             <CourseGroupPage />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="requests"
+                    element={
+                        <AuthGuard roles={[UserRole.STUDENT]}>
+                            <StudentRequestPage />
                         </AuthGuard>
                     }
                 />

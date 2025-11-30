@@ -12,6 +12,14 @@ export const getEnrollmentRequestsByStatus = async (status: RequestStatus):
     return response.data;
 };
 
+export const getEnrollmentRequestsByStudent = async (studentId: string | null):
+    Promise<EnrollmentRequest[]> => {
+    if (studentId == null)
+        return [];
+    const response = await api.get<EnrollmentRequest[]>(`/enrollment-request/student/${studentId}`);
+    return response.data;
+};
+
 export const getEnrollmentRequestById = async (id: string | null):
     Promise<EnrollmentRequest | null> => {
     if (!id)

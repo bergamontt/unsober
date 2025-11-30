@@ -1,0 +1,18 @@
+{
+    "addRequest": "Create request",
+    "accepted": "Accepted",
+    "declined": "Declined",
+    "pending": "Pending",
+    "enrollmentRequestFor": "Enrollment request for: ",
+    "withdrawalRequestFrom": "Withdrawal request from: ",
+    "studentRequestHeader": "Requests to the dean's office",
+    "studentRequestExplanation": "Here you can submit a request to the administration if you need to enroll in or withdraw from a course but cannot do it yourself. The dean’s office staff will review your request, and it will be either approved or declined.",
+    "requestSearch": "Search my requests",
+    "enterText": "Enter search text",
+    "text": "Search text",
+    "requests": "Request filtering",
+    "all": "All",
+    "ACCEPTED": "Accepted",
+    "DECLINED": "Declined",
+    "PENDING": "Pending"
+}
