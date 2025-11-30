@@ -5,6 +5,7 @@ import { notifications } from "@mantine/notifications";
 import { addFaculty } from "../../../services/FacultyService.ts";
 import type { FacultyDto } from "../../../models/Faculty.ts";
 import axios from "axios";
+import { validateFacultyDto } from "../../../validation/facultyValidator.ts";
 
 type AddModalProps = {
     opened: boolean;
@@ -13,6 +14,7 @@ type AddModalProps = {
 
 function AddFacultyModal({ opened, close }: AddModalProps) {
     const { t } = useTranslation("manageFaculties");
+    const { t: errT } = useTranslation("facultyErrors");
 
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
@@ -24,26 +26,21 @@ function AddFacultyModal({ opened, close }: AddModalProps) {
         setDescription("");
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [name, description, t]);
-
     const handleSubmit = useCallback(async () => {
-        if (!validateInput()) 
-            return;
-
         const dto: FacultyDto = {
             name,
             description,
         };
+
+        const errs = validateFacultyDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsAdding(true);
         try {
@@ -72,7 +69,7 @@ function AddFacultyModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [validateInput, t, close, name, description]);
+    }, [t, errT, close, name, description]);
 
     return (
         <Modal centered title={t("addFaculty")} opened={opened} onClose={close}>

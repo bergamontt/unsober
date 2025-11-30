@@ -1,10 +1,10 @@
 export interface Faculty {
     id: string;
     name: string;
-    description: string;
+    description?: string;
 }
 
 export interface FacultyDto {
-    name: string;
-    description: string;
+    name?: string;
+    description?: string;
 }

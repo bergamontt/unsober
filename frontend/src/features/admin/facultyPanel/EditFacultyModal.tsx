@@ -6,6 +6,7 @@ import { notifications } from "@mantine/notifications";
 import { getFacultyById, updateFaculty } from "../../../services/FacultyService.ts";
 import type { FacultyDto } from "../../../models/Faculty.ts";
 import axios from "axios";
+import { validateFacultyDto } from "../../../validation/facultyValidator.ts";
 
 type EditModalProps = {
     opened: boolean;
@@ -15,6 +16,7 @@ type EditModalProps = {
 
 function EditFacultyModal({ opened, close, facultyId }: EditModalProps) {
     const { t } = useTranslation("manageFaculties");
+    const { t: errT } = useTranslation("facultyErrors");
     const { data: faculty } = useFetch(getFacultyById, [facultyId]);
 
     const [name, setName] = useState<string>(faculty?.name ?? "");
@@ -23,7 +25,7 @@ function EditFacultyModal({ opened, close, facultyId }: EditModalProps) {
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        if (!faculty) 
+        if (!faculty)
             return;
         setName(faculty.name ?? "");
         setDescription(faculty.description ?? "");
@@ -34,25 +36,21 @@ function EditFacultyModal({ opened, close, facultyId }: EditModalProps) {
         setDescription("");
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [name, description, t]);
-
     const handleSave = useCallback(async () => {
-        if (!validateInput()) return;
-
         const dto: FacultyDto = {
             name,
             description,
         };
+
+        const errs = validateFacultyDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsSaving(true);
         try {
@@ -80,9 +78,9 @@ function EditFacultyModal({ opened, close, facultyId }: EditModalProps) {
         } finally {
             setIsSaving(false);
         }
-    }, [validateInput, t, close, facultyId, name, description]);
+    }, [t, errT, close, facultyId, name, description]);
 
-    if (!facultyId) 
+    if (!facultyId)
         return <></>;
 
     return (

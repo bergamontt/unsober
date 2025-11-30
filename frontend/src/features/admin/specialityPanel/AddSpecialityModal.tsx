@@ -7,6 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { addSpeciality } from "../../../services/SpecialityService.ts";
 import type { SpecialityDto } from "../../../models/Speciality.ts";
 import axios from "axios";
+import { validateSpecialityDto } from "../../../validation/specialityValidator.ts";
 
 type AddModalProps = {
     opened: boolean;
@@ -15,6 +16,7 @@ type AddModalProps = {
 
 function AddSpecialityModal({ opened, close }: AddModalProps) {
     const { t } = useTranslation("manageSpecialities");
+    const { t: errT } = useTranslation("specialityErrors");
     const { data } = useFetch(getAllDepartments, []);
     const departments = data ?? [];
 
@@ -30,43 +32,22 @@ function AddSpecialityModal({ opened, close }: AddModalProps) {
         setDepartmentId(undefined);
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (description.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("descriptionTooShort", { min: 3 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!departmentId) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectDepartment"),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [name, description, departmentId, t]);
-
     const handleSubmit = useCallback(async () => {
-        if (!validateInput())
-            return;
-
         const dto: SpecialityDto = {
             name: name,
             description: description,
             departmentId: departmentId,
         };
+
+        const errs = validateSpecialityDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsAdding(true);
         try {
@@ -95,7 +76,7 @@ function AddSpecialityModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [validateInput, t, close, name, description, departmentId]);
+    }, [t, errT, close, name, description, departmentId]);
 
     return (
         <Modal

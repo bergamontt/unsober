@@ -1,0 +1,5 @@
+{
+    "specialty.name.required": "Specialty name is required.",
+    "specialty.name.size": "Specialty name must be no longer than {{max}} characters.",
+    "specialty.description.size": "Description must be no longer than {{max}} characters."
+}

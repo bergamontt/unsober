@@ -13,8 +13,6 @@
     "delete": "Видалити",
     "error": "Помилка",
     "success": "Успіх",
-    "nameTooShort": "Назва має містити щонайменше {{min}} символів",
-    "descriptionTooShort": "Опис має містити щонайменше {{min}} символів",
     "facultyAdded": "Факультет {{name}} додано",
     "facultyUpdated": "Інформацію про факультет успішно оновлено",
     "facultyDeleted": "Факультет {{name}} видалено",

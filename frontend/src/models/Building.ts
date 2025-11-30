@@ -6,3 +6,10 @@ export interface Building {
     longitude: number;
     photo: Uint8Array;
 }
+
+export interface BuildingDto {
+    name?: string;
+    address?: string;
+    latitude?: number;
+    longitude?: number;
+}

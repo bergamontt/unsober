@@ -1,0 +1,5 @@
+{
+    "faculty.name.required": "教师姓名必填。",
+    "faculty.name.size": "教师姓名长度不得超过 {{max}} 个字符。",
+    "faculty.description.size": "教师描述长度不得超过 {{max}} 个字符。"
+}

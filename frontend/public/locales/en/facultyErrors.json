@@ -1,0 +1,5 @@
+{
+    "faculty.name.required": "Faculty name is required.",
+    "faculty.name.size": "Faculty name must be no longer than {{max}} characters.",
+    "faculty.description.size": "Description must be no longer than {{max}} characters."
+}

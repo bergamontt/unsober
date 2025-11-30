@@ -1,0 +1,6 @@
+{
+    "department.facultyId.required": "院系编号为必填项。",
+    "department.name.required": "部门名称为必填项。",
+    "department.name.size": "部门名称长度不得超过 {{max}} 个字符。",
+    "department.description.size": "部门描述长度不得超过 {{max}} 个字符。"
+}

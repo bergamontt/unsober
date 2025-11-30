@@ -7,6 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { getSpecialityById, updateSpeciality } from "../../../services/SpecialityService.ts";
 import type { SpecialityDto } from "../../../models/Speciality.ts";
 import axios from "axios";
+import { validateSpecialityDto } from "../../../validation/specialityValidator.ts";
 
 type EditModalProps = {
     opened: boolean;
@@ -16,6 +17,7 @@ type EditModalProps = {
 
 function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
     const { t } = useTranslation("manageSpecialities");
+    const { t: errT } = useTranslation("specialityErrors");
     const { data: departments } = useFetch(getAllDepartments, []);
     const { data: speciality } = useFetch(getSpecialityById, [specialityId]);
 
@@ -38,43 +40,22 @@ function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
         setDepartmentId(undefined);
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (description.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("descriptionTooShort", { min: 3 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!departmentId) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectDepartment"),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [name, description, departmentId, t]);
-
     const handleSave = useCallback(async () => {
-        if (!validateInput())
-            return;
-
         const dto: SpecialityDto = {
             name,
             description,
             departmentId,
         };
+
+        const errs = validateSpecialityDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsSaving(true);
         try {
@@ -103,7 +84,7 @@ function EditSpecialityModal({ opened, close, specialityId }: EditModalProps) {
         } finally {
             setIsSaving(false);
         }
-    }, [validateInput, t, close, specialityId, name, description, departmentId]);
+    }, [t, errT, close, specialityId, name, description, departmentId]);
 
     if (!specialityId)
         return <></>;

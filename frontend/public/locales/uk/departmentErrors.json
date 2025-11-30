@@ -1,0 +1,6 @@
+{
+    "department.facultyId.required": "Потрібно вказати факультет.",
+    "department.name.required": "Потрібно вказати назву кафедри.",
+    "department.name.size": "Назва кафедри повинна бути не більше {{max}} символів.",
+    "department.description.size": "Опис повинен бути не більше {{max}} символів."
+}

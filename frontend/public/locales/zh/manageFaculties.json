@@ -13,8 +13,6 @@
     "delete": "删除",
     "error": "错误",
     "success": "成功",
-    "nameTooShort": "名称长度至少为 {{min}} 个字符",
-    "descriptionTooShort": "描述长度至少为 {{min}} 个字符",
     "facultyAdded": "学院 {{name}} 已添加",
     "facultyUpdated": "学院信息已成功更新",
     "facultyDeleted": "学院 {{name}} 已被删除",

@@ -1,0 +1,6 @@
+{
+    "department.facultyId.required": "Faculty is required.",
+    "department.name.required": "Department name is required.",
+    "department.name.size": "Department name must be no longer than {{max}} characters.",
+    "department.description.size": "Description must be no longer than {{max}} characters."
+}

@@ -9,10 +9,10 @@ i18n
         lng: "uk",
         fallbackLng: "en",
         debug: false,
-        ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch", "enrollments",
+        ns: ["adminMenu", "auth", "common", "coursePreview", "courseSearch", "departmentErrors", "enrollments", "facultyErrors",
             "groups", "infoPage", "manageDepartments", "manageFaculties", "manageRequests", 
             "manageSpecialities", "manageState", "manageStudents", "manageSubjects", 
-            "manageTeachers", "profile", "sections", "stageDescription", "studentEnrollment",],
+            "manageTeachers", "profile", "sections", "specialityErrors", "stageDescription", "studentEnrollment",],
         defaultNS: "common",
         backend: {
             loadPath: "/locales/{{lng}}/{{ns}}.json",

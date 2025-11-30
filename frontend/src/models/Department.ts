@@ -4,7 +4,7 @@ export interface Department {
     id: string;
     faculty: Faculty;
     name: string;
-    description: string;
+    description?: string;
 }
 
 export interface DepartmentDto {

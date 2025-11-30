@@ -7,6 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { addDepartment } from "../../../services/DepartmentService.ts";
 import type { DepartmentDto } from "../../../models/Department.ts";
 import axios from "axios";
+import { validateDepartmentDto } from "../../../validation/departmentvalidator.ts";
 
 type AddModalProps = {
     opened: boolean;
@@ -15,6 +16,7 @@ type AddModalProps = {
 
 function AddDepartmentModal({ opened, close }: AddModalProps) {
     const { t } = useTranslation("manageDepartments");
+    const { t: errT } = useTranslation("departmentErrors");
     const { data } = useFetch(getAllFaculties, []);
     const faculties = data ?? [];
 
@@ -30,35 +32,22 @@ function AddDepartmentModal({ opened, close }: AddModalProps) {
         setFacultyId(undefined);
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!facultyId) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectFaculty"),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [name, description, facultyId, t]);
-
     const handleSubmit = useCallback(async () => {
-        if (!validateInput())
-            return;
-
         const dto: DepartmentDto = {
             name,
             description,
             facultyId,
         };
+
+        const errs = validateDepartmentDto(dto, (k, p) => errT(k, p));
+        if(errs.length > 0){
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsAdding(true);
         try {
@@ -87,7 +76,7 @@ function AddDepartmentModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [validateInput, t, close, name, description, facultyId]);
+    }, [t, errT, close, name, description, facultyId]);
 
     return (
         <Modal
