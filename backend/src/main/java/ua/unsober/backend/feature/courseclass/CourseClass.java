@@ -32,7 +32,6 @@ public class CourseClass {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "group_id")
     private CourseGroup group;

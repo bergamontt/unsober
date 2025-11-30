@@ -17,7 +17,6 @@ public class CourseClassRequestDto {
     @NotNull(message = "{courseClass.courseId.required}")
     private UUID courseId;
 
-    @NotNull(message = "{courseClass.groupId.required}")
     private UUID groupId;
 
     @NotBlank(message = "{courseClass.title.required}")
