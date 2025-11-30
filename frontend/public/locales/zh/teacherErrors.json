@@ -1,0 +1,11 @@
+{
+    "teacher.firstName.required": "名字为必填项。",
+    "teacher.firstName.size": "名字长度不得超过 {{max}} 个字符。",
+    "teacher.lastName.required": "姓氏为必填项。",
+    "teacher.lastName.size": "姓氏长度不得超过 {{max}} 个字符。",
+    "teacher.patronymic.required": "父名为必填项。",
+    "teacher.patronymic.size": "父名为必填项。",
+    "teacher.email.required": "邮箱地址为必填项。",
+    "teacher.email.invalid": "邮箱格式无效。",
+    "teacher.email.size": "邮箱地址长度不得超过 {{max}} 个字符。"
+}

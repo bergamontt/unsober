@@ -7,6 +7,7 @@ import { notifications } from "@mantine/notifications";
 import { getStudentById, updateStudent } from "../../../services/StudentService.ts";
 import { StudentStatus, type StudentDto } from "../../../models/Student.ts";
 import axios from "axios";
+import { validateStudentDto } from "../../../validation/studentValidator.ts";
 
 type EditModalProps = {
     opened: boolean;
@@ -16,6 +17,7 @@ type EditModalProps = {
 
 function EditStudentModal({ opened, close, studentId }: EditModalProps) {
     const { t } = useTranslation("manageStudents");
+    const { t: errT } = useTranslation("studentErrors");
     const { data } = useFetch(getAllSpecialities, []);
     const specialities = data ?? [];
     const { data: student } = useFetch(getStudentById, [studentId]);
@@ -57,86 +59,7 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
         setStatus(undefined);
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (surname.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("surnameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (patronymic.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("patronymicTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!studyYear) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectStudyYear"),
-                color: "red",
-            });
-            return false;
-        }
-        if (!specialityId) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectSpeciality"),
-                color: "red",
-            });
-            return false;
-        }
-        if (recordBookNum.trim().length < 3) {
-            notifications.show({
-                title: t("error"),
-                message: t("recordBookTooShort", { min: 3 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (email.trim().length < 5) {
-            notifications.show({
-                title: t("error"),
-                message: t("emailTooShort", { min: 5 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (password && password.length < 7) {
-            notifications.show({
-                title: t("error"),
-                message: t("passwordTooShort", { min: 7 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (!status) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectStatus"),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [name, surname, studyYear, specialityId, recordBookNum, email, password, status, t]);
-
     const handleSave = useCallback(async () => {
-        if (!validateInput())
-            return;
-
         const dto: StudentDto = {
             firstName: name,
             lastName: surname,
@@ -148,6 +71,16 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
             studyYear: studyYear,
             status: status
         };
+
+        const errs = validateStudentDto(dto, (k, p) => errT(k, p), !password);
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsSaving(true);
         try {
@@ -177,7 +110,8 @@ function EditStudentModal({ opened, close, studentId }: EditModalProps) {
         } finally {
             setIsSaving(false);
         }
-    }, [validateInput, t, close]);
+    }, [t, errT, close, name, surname, patronymic,
+        studyYear, specialityId, recordBookNum, email, password, status]);
 
     if (!studentId)
         return <></>;

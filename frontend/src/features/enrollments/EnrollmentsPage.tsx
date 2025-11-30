@@ -6,8 +6,6 @@ import IndividualPlan from "./IndividualPlan";
 import { getAllYearsByStudentId } from "../../services/StudentEnrollmentService";
 import { useStudentStore } from "../../hooks/studentStore";
 import useFetch from "../../hooks/useFetch";
-import AuthGuard from "../../common/wrappers/AuthGuard";
-import { UserRole } from "../../models/Auth";
 
 function EnrollmentsPage() {
     const { user: student } = useStudentStore();
@@ -21,25 +19,23 @@ function EnrollmentsPage() {
         }
     }, [years, setYear]);
     return (
-        <AuthGuard roles={[UserRole.STUDENT]}>
-            <PageWrapper>
-                <Group justify="space-between">
-                    <Title>{t('individualPlan')} </Title>
-                    <NativeSelect
-                        label={t("studyYear")}
-                        data={years.map(year => ({
-                            label: String(year) + "-" + String(year + 1),
-                            value: String(year)
-                        }))}
-                        value={year}
-                        onChange={(e) => {
-                            setYear(Number(e.currentTarget.value));
-                        }}
-                    />
-                </Group>
-                <IndividualPlan year={year} />
-            </PageWrapper>
-        </AuthGuard>
+        <PageWrapper>
+            <Group justify="space-between">
+                <Title>{t('individualPlan')} </Title>
+                <NativeSelect
+                    label={t("studyYear")}
+                    data={years.map(year => ({
+                        label: String(year) + "-" + String(year + 1),
+                        value: String(year)
+                    }))}
+                    value={year}
+                    onChange={(e) => {
+                        setYear(Number(e.currentTarget.value));
+                    }}
+                />
+            </Group>
+            <IndividualPlan year={year} />
+        </PageWrapper>
     );
 }
 

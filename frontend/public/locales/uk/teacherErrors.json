@@ -1,0 +1,11 @@
+{
+    "teacher.firstName.required": "Потрібно вказати ім'я.",
+    "teacher.firstName.size": "Ім'я повинно бути не більше {{max}} символів.",
+    "teacher.lastName.required": "Потрібно вказати прізвище.",
+    "teacher.lastName.size": "Прізвище повинно бути не більше {{max}} символів.",
+    "teacher.patronymic.required": "Потрібно вказати по батькові.",
+    "teacher.patronymic.size": "По батькові повинно бути не більше {{max}} символів.",
+    "teacher.email.required": "Потрібно вказати електронну пошту.",
+    "teacher.email.invalid": "Неправильний формат електронної пошти.",
+    "teacher.email.size": "Електронна пошта повинна бути не більше {{max}} символів."
+}

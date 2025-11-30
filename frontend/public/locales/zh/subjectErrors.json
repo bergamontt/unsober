@@ -1,0 +1,13 @@
+{
+    "subject.name.required": "科目名称为必填项。",
+    "subject.name.size": "科目名称长度不得超过 {{max}} 个字符。",
+    "subject.annotation.size": "注释长度不得超过 {{max}} 个字符。",
+    "subject.facultyName.size": "教师姓名长度不得超过 {{max}} 个字符。",
+    "subject.departmentName.size": "系别名称长度不得超过 {{max}} 个字符。",
+    "subject.educationLevel.required": "教育程度为必填项。",
+    "subject.credits.required": "学分为必填项。",
+    "subject.credits.digits": "学分的整数部分不得超过 {{integer}} 位，小数部分不得超过 {{fraction}} 位（例如 12.3）。",
+    "subject.hoursPerWeek.required": "每周学习小时数为必填项。",
+    "subject.hoursPerWeek.positive": "每周学时必须为零或正整数。",
+    "subject.term.required": "必须完成一个学期。"
+}

@@ -13,7 +13,6 @@ import { enrollSelf, existsEnrollment } from "../../services/StudentEnrollmentSe
 import { notifications } from "@mantine/notifications";
 import { useStudentStore } from "../../hooks/studentStore.ts";
 import axios from "axios";
-import AuthGuard from "../../common/wrappers/AuthGuard.tsx";
 
 function CoursePage() {
     const { id } = useParams();
@@ -61,25 +60,23 @@ function CoursePage() {
     if (!course)
         return <></>;
     return (
-        <AuthGuard>
-            <PageWrapper>
-                <Title>{course.subject.name}</Title>
-                <CourseDetails course={course} />
-                {
-                    enrollmentAllowed && isStudent &&
-                    <Button
-                        variant="outline"
-                        color="green"
-                        disabled={isEnrolled ?? false}
-                        onClick={handleEnroll}
-                        loading={loading}
-                    >
-                        {isEnrolled ? t("enrolled") : t("enroll")}
-                    </Button>
-                }
-                <EnrolledStudents courseId={course.id} />
-            </PageWrapper>
-        </AuthGuard>
+        <PageWrapper>
+            <Title>{course.subject.name}</Title>
+            <CourseDetails course={course} />
+            {
+                enrollmentAllowed && isStudent &&
+                <Button
+                    variant="outline"
+                    color="green"
+                    disabled={isEnrolled ?? false}
+                    onClick={handleEnroll}
+                    loading={loading}
+                >
+                    {isEnrolled ? t("enrolled") : t("enroll")}
+                </Button>
+            }
+            <EnrolledStudents courseId={course.id} />
+        </PageWrapper>
     );
 }
 

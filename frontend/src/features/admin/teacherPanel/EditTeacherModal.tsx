@@ -6,6 +6,7 @@ import { notifications } from "@mantine/notifications";
 import { getTeacherById, updateTeacher } from "../../../services/TeacherService.ts";
 import { type TeacherDto } from "../../../models/Teacher.ts";
 import axios from "axios";
+import { validateTeacherDto } from "../../../validation/teacherValidator.ts";
 
 type EditModalProps = {
     opened: boolean;
@@ -15,6 +16,7 @@ type EditModalProps = {
 
 function EditTeacherModal({ opened, close, teacherId }: EditModalProps) {
     const { t } = useTranslation("manageTeachers");
+    const { t: errT } = useTranslation("teacherErrors");
     const { data: teacher } = useFetch(getTeacherById, [teacherId]);
 
     const [firstName, setFirstName] = useState<string>(teacher?.firstName ?? "");
@@ -40,52 +42,23 @@ function EditTeacherModal({ opened, close, teacherId }: EditModalProps) {
         setEmail("");
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (firstName.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (lastName.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("surnameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (patronymic.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("patronymicTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (email.trim().length < 5) {
-            notifications.show({
-                title: t("error"),
-                message: t("emailTooShort", { min: 5 }),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [firstName, lastName, patronymic, email, t]);
-
     const handleSave = useCallback(async () => {
-        if (!validateInput())
-            return;
-
         const dto: TeacherDto = {
             firstName: firstName,
             lastName: lastName,
             patronymic: patronymic,
             email: email
         };
+
+        const errs = validateTeacherDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsSaving(true);
         try {
@@ -115,7 +88,7 @@ function EditTeacherModal({ opened, close, teacherId }: EditModalProps) {
         } finally {
             setIsSaving(false);
         }
-    }, [validateInput, t, close, teacherId, firstName, lastName, patronymic, email]);
+    }, [t, errT, close, teacherId, firstName, lastName, patronymic, email]);
 
     if (!teacherId)
         return <></>;

@@ -14,7 +14,7 @@ function AuthGuard({ roles, children }: AuthGuardProps) {
     useEffect(() => {
         const hasRequiredRole = roles ?
             currentRoles.some((r: UserRole) => roles.includes(r)) : true;
-        if (!isAuthenticated || !hasRequiredRole || loadingAuth) {
+        if ((!isAuthenticated || !hasRequiredRole) && !loadingAuth) {
             navigate('/login');
         }
     }, [isAuthenticated, loadingAuth, currentRoles, navigate]);

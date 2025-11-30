@@ -5,6 +5,7 @@ import { notifications } from "@mantine/notifications";
 import { addSubject } from "../../../services/SubjectService.ts";
 import { type SubjectDto, Term, EducationLevel } from "../../../models/Subject.ts";
 import axios from "axios";
+import { validateSubjectDto } from "../../../validation/subjectValidator.ts";
 
 type AddModalProps = {
     opened: boolean;
@@ -13,6 +14,7 @@ type AddModalProps = {
 
 function AddSubjectModal({ opened, close }: AddModalProps) {
     const { t } = useTranslation("manageSubjects");
+    const { t: errT } = useTranslation("subjectErrors");
 
     const [name, setName] = useState<string>("");
     const [annotation, setAnnotation] = useState<string>("");
@@ -36,54 +38,7 @@ function AddSubjectModal({ opened, close }: AddModalProps) {
         setTerm(undefined);
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red"
-            });
-            return false;
-        }
-        if (!educationLevel) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectEducationLevel"),
-                color: "red"
-            });
-            return false;
-        }
-        if (!term) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectTerm"),
-                color: "red"
-            });
-            return false;
-        }
-        if (!credits || credits < 1) {
-            notifications.show({
-                title: t("error"),
-                message: t("creditsTooSmall", { min: 1 }),
-                color: "red"
-            });
-            return false;
-        }
-        if (!hoursPerWeek || hoursPerWeek < 1) {
-            notifications.show({
-                title: t("error"),
-                message: t("hoursTooSmall", { min: 1 }),
-                color: "red"
-            });
-            return false;
-        }
-        return true;
-    }, [name, educationLevel, term, credits, hoursPerWeek, t]);
-
     const handleSubmit = useCallback(async () => {
-        if (!validateInput()) 
-            return;
-
         const dto: SubjectDto = {
             name,
             annotation: annotation || undefined,
@@ -94,6 +49,16 @@ function AddSubjectModal({ opened, close }: AddModalProps) {
             hoursPerWeek: hoursPerWeek,
             term: term,
         };
+
+        const errs = validateSubjectDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsAdding(true);
         try {
@@ -121,7 +86,8 @@ function AddSubjectModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [validateInput, t, close, name, annotation, facultyName, departmentName, educationLevel, credits, hoursPerWeek, term]);
+    }, [t, errT, close, name, annotation, facultyName,
+        departmentName, educationLevel, credits, hoursPerWeek, term]);
 
     return (
         <Modal

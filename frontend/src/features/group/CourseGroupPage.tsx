@@ -6,8 +6,6 @@ import PageWrapper from "../../common/pageWrapper/PageWrapper";
 import { Group, Title } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import CourseGroupList from "./CourseGroupList";
-import AuthGuard from "../../common/wrappers/AuthGuard";
-import { UserRole } from "../../models/Auth";
 
 function CourseGroupPage() {
     const { t } = useTranslation("groups");
@@ -24,20 +22,18 @@ function CourseGroupPage() {
         return <></>;
 
     return (
-        <AuthGuard roles={[UserRole.STUDENT]}>
-            <PageWrapper>
-                <Group justify="space-between">
-                    <Title>{t("chosenGroups")} </Title>
-                    <Title order={4}>
-                        {`${state.currentYear}-${state.currentYear + 1}, ${t(state.term)}`}
-                    </Title>
-                </Group>
-                <CourseGroupList
-                    enrollments={enrollments}
-                    state={state}
-                />
-            </PageWrapper>
-        </AuthGuard>
+        <PageWrapper>
+            <Group justify="space-between">
+                <Title>{t("chosenGroups")} </Title>
+                <Title order={4}>
+                    {`${state.currentYear}-${state.currentYear + 1}, ${t(state.term)}`}
+                </Title>
+            </Group>
+            <CourseGroupList
+                enrollments={enrollments}
+                state={state}
+            />
+        </PageWrapper>
     );
 }
 

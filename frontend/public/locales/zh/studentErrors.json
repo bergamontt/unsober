@@ -1,0 +1,18 @@
+{
+    "student.firstName.required": "名字为必填项。",
+    "student.firstName.size": "名字长度不得超过 {{max}} 个字符。",
+    "student.lastName.required": "姓氏为必填项。",
+    "student.lastName.size": "姓氏长度不得超过 {{max}} 个字符。",
+    "student.patronymic.required": "父名为必填项。",
+    "student.patronymic.size": "父名为必填项。",
+    "student.recordBookNumber.required": "学籍簿编号为必填项。",
+    "student.recordBookNumber.size": "学籍簿编号为必填项。",
+    "student.email.required": "邮箱地址为必填项。",
+    "student.email.invalid": "邮箱地址格式无效。",
+    "student.email.size": "邮箱地址长度不得超过 {{max}} 个字符",
+    "student.password.required": "密码为必填项。",
+    "student.specialtyId.required": "专业为必填项。",
+    "student.studyYear.required": "学习年份为必填项。",
+    "student.studyYear.positive": "学习年份必须为正数。",
+    "student.status.required": "学生身份为必填项。"
+}

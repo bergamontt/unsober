@@ -5,6 +5,7 @@ import { notifications } from "@mantine/notifications";
 import { addTeacher } from "../../../services/TeacherService";
 import { type TeacherDto } from "../../../models/Teacher.ts";
 import axios from "axios";
+import { validateTeacherDto } from "../../../validation/teacherValidator.ts";
 
 type AddModalProps = {
     opened: boolean;
@@ -13,6 +14,7 @@ type AddModalProps = {
 
 function AddTeacherModal({ opened, close }: AddModalProps) {
     const { t } = useTranslation("manageTeachers");
+    const { t: errT } = useTranslation("teacherErrors");
 
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -28,52 +30,23 @@ function AddTeacherModal({ opened, close }: AddModalProps) {
         setEmail("");
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (firstName.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (lastName.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("surnameTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (patronymic.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("patronymicTooShort", { min: 2 }),
-                color: "red",
-            });
-            return false;
-        }
-        if (email.trim().length < 5) {
-            notifications.show({
-                title: t("error"),
-                message: t("emailTooShort", { min: 5 }),
-                color: "red",
-            });
-            return false;
-        }
-        return true;
-    }, [firstName, lastName, patronymic, email, t]);
-
     const handleSubmit = useCallback(async () => {
-        if (!validateInput())
-            return;
-
         const dto: TeacherDto = {
             firstName: firstName,
             lastName: lastName,
             patronymic: patronymic,
             email: email
         };
+
+        const errs = validateTeacherDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsAdding(true);
         try {
@@ -102,7 +75,7 @@ function AddTeacherModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [validateInput, t, close, firstName, lastName, patronymic, email]);
+    }, [t, errT, close, firstName, lastName, patronymic, email]);
 
     return (
         <Modal

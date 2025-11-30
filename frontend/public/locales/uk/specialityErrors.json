@@ -1,5 +1,5 @@
 {
-    "specialty.name.required": "Потрібно вказати назву спеціальності.",
-    "specialty.name.size": "Назва спеціальності повинна бути не більше {{max}} символів.",
-    "specialty.description.size": "Опис повинен бути не більше {{max}} символів."
+    "speciality.name.required": "Потрібно вказати назву спеціальності.",
+    "speciality.name.size": "Назва спеціальності повинна бути не більше {{max}} символів.",
+    "speciality.description.size": "Опис повинен бути не більше {{max}} символів."
 }

@@ -1,0 +1,13 @@
+{
+    "subject.name.required": "Потрібно вказати назву предмета.",
+    "subject.name.size": "Назва предмета повинна містити не більше {{max}} символів.",
+    "subject.annotation.size": "Анотація повинна містити не більше {{max}} символів.",
+    "subject.facultyName.size": "Назва факультету повинна містити не більше {{max}} символів.",
+    "subject.departmentName.size": "Назва кафедри повинна містити не більше {{max}} символів.",
+    "subject.educationLevel.required": "Потрібно вказати рівень освіти.",
+    "subject.credits.required": "Потрібно вказати кредити.",
+    "subject.credits.digits": "Кредити повинні мати не більше {{integer}} цифр в цілій частині і не більше {{fraction}} цифри в дробовій (наприклад 12.3).",
+    "subject.hoursPerWeek.required": "Потрібно вказати тижневе навантаження.",
+    "subject.hoursPerWeek.positive": "Тижневе навантаження повинне бути нулем або додатнім цілим числом.",
+    "subject.term.required": "Потрібно вказати семестр."
+}

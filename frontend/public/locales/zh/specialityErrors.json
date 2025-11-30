@@ -1,5 +1,5 @@
 {
-    "specialty.name.required": "专业名称为必填项。",
-    "specialty.name.size": "专业名称长度不得超过 {{max}} 个字符。",
-    "specialty.description.size": "专业描述长度不得超过 {{max}} 个字符。"
+    "speciality.name.required": "专业名称为必填项。",
+    "speciality.name.size": "专业名称长度不得超过 {{max}} 个字符。",
+    "speciality.description.size": "专业描述长度不得超过 {{max}} 个字符。"
 }

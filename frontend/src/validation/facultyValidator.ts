@@ -1,10 +1,5 @@
 import type { FacultyDto } from "../models/Faculty";
-
-type Translator = (key: string, params?: Record<string, any>) => string;
-
-function isBlank(value?: string | null): boolean {
-    return value == null || value.trim().length == 0;
-}
+import { isBlank, type Translator } from "./utils";
 
 export function validateFacultyDto(
     dto: FacultyDto,

@@ -1,0 +1,11 @@
+{
+    "teacher.firstName.required": "First name is required.",
+    "teacher.firstName.size": "First name must be no more than {{max}} characters.",
+    "teacher.lastName.required": "Last name is required.",
+    "teacher.lastName.size": "Last name must be no more than {{max}} characters.",
+    "teacher.patronymic.required": "Patronymic is required.",
+    "teacher.patronymic.size": "Patronymic is required.",
+    "teacher.email.required": "Email is required.",
+    "teacher.email.invalid": "Invalid email format.",
+    "teacher.email.size": "Email must be no more than {{max}} characters."
+}

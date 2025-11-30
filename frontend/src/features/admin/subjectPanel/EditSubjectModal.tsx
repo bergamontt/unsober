@@ -6,6 +6,7 @@ import { notifications } from "@mantine/notifications";
 import { getSubject, updateSubject } from "../../../services/SubjectService.ts";
 import { type SubjectDto, Term, EducationLevel } from "../../../models/Subject.ts";
 import axios from "axios";
+import { validateSubjectDto } from "../../../validation/subjectValidator.ts";
 
 type EditModalProps = {
     opened: boolean;
@@ -15,6 +16,7 @@ type EditModalProps = {
 
 function EditSubjectModal({ opened, close, subjectId }: EditModalProps) {
     const { t } = useTranslation("manageSubjects");
+    const { t: errT } = useTranslation("subjectErrors");
     const { data: subject } = useFetch(getSubject, [subjectId]);
 
     const [name, setName] = useState<string>(subject?.name ?? "");
@@ -29,7 +31,8 @@ function EditSubjectModal({ opened, close, subjectId }: EditModalProps) {
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        if (!subject) return;
+        if (!subject)
+            return;
         setName(subject.name ?? "");
         setAnnotation(subject.annotation ?? "");
         setFacultyName(subject.facultyName ?? "");
@@ -51,53 +54,7 @@ function EditSubjectModal({ opened, close, subjectId }: EditModalProps) {
         setTerm(undefined);
     };
 
-    const validateInput = useCallback((): boolean => {
-        if (name.trim().length < 2) {
-            notifications.show({
-                title: t("error"),
-                message: t("nameTooShort", { min: 2 }),
-                color: "red"
-            });
-            return false;
-        }
-        if (!educationLevel) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectEducationLevel"),
-                color: "red"
-            });
-            return false;
-        }
-        if (!term) {
-            notifications.show({
-                title: t("error"),
-                message: t("selectTerm"),
-                color: "red"
-            });
-            return false;
-        }
-        if (!credits || credits < 1) {
-            notifications.show({
-                title: t("error"),
-                message: t("creditsTooSmall", { min: 1 }),
-                color: "red"
-            });
-            return false;
-        }
-        if (!hoursPerWeek || hoursPerWeek < 1) {
-            notifications.show({
-                title: t("error"),
-                message: t("hoursTooSmall", { min: 1 }),
-                color: "red"
-            });
-            return false;
-        }
-        return true;
-    }, [name, educationLevel, term, credits, hoursPerWeek, t]);
-
     const handleSave = useCallback(async () => {
-        if (!validateInput()) return;
-
         const dto: SubjectDto = {
             name,
             annotation: annotation || undefined,
@@ -108,6 +65,16 @@ function EditSubjectModal({ opened, close, subjectId }: EditModalProps) {
             hoursPerWeek,
             term,
         };
+
+        const errs = validateSubjectDto(dto, (k, p) => errT(k, p));
+        if (errs.length > 0) {
+            notifications.show({
+                title: t("error"),
+                message: errs.join('\n'),
+                color: "red",
+            });
+            return;
+        }
 
         setIsSaving(true);
         try {
@@ -136,7 +103,8 @@ function EditSubjectModal({ opened, close, subjectId }: EditModalProps) {
         } finally {
             setIsSaving(false);
         }
-    }, [validateInput, t, close, subjectId, name, annotation, facultyName, departmentName, educationLevel, credits, hoursPerWeek, term]);
+    }, [t, errT, close, subjectId, name, annotation, facultyName, 
+        departmentName, educationLevel, credits, hoursPerWeek, term]);
 
     if (!subjectId) return <></>;
 

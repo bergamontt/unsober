@@ -1,0 +1,18 @@
+{
+    "student.firstName.required": "First name is required.",
+    "student.firstName.size": "First name must be no more than {{max}} characters.",
+    "student.lastName.required": "Last name is required.",
+    "student.lastName.size": "Last name must be no more than {{max}} characters.",
+    "student.patronymic.required": "Patronymic is required.",
+    "student.patronymic.size": "Patronymic is required.",
+    "student.recordBookNumber.required": "Record book number is required.",
+    "student.recordBookNumber.size": "Record book number is required.",
+    "student.email.required": "Email is required.",
+    "student.email.invalid": "Invalid email format.",
+    "student.email.size": "Email must be no longer than {{max}} characters.",
+    "student.password.required": "Password is required.",
+    "student.specialtyId.required": "Specialty is required.",
+    "student.studyYear.required": "Year of study is required.",
+    "student.studyYear.positive": "Year of study must be a positive number.",
+    "student.status.required": "Student status is required."
+}

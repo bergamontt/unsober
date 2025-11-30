@@ -20,6 +20,8 @@ import InfoPage from '../features/info/InfoPage.tsx';
 import EnrollmentsPage from '../features/enrollments/EnrollmentsPage.tsx';
 import CourseGroupPage from '../features/group/CourseGroupPage.tsx';
 import StatePanel from '../features/admin/state/StatePanel.tsx';
+import AuthGuard from '../common/wrappers/AuthGuard.tsx';
+import { UserRole } from '../models/Auth.ts';
 
 function AppRoutes() {
     return (
@@ -27,15 +29,72 @@ function AppRoutes() {
             <Route path="/" element={<Overlay />}>
                 <Route index element={<MainPage />} />
                 <Route path="login" element={<LoginPage />} />
-                <Route path="profile" element={<ProfilePage />} />
-                <Route path="courses" element={<CoursesPage />} />
-                <Route path="course/:id" element={<CoursePage />} />
-                <Route path="schedule" element={<SchedulePage />} />
-                <Route path="info" element={<InfoPage />} />
-                <Route path="enrollments" element={<EnrollmentsPage />} />
-                <Route path="groups" element={<CourseGroupPage />} />
+                <Route
+                    path="profile"
+                    element={
+                        <AuthGuard>
+                            <ProfilePage />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="courses"
+                    element={
+                        <AuthGuard>
+                            <CoursesPage />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="course/:id"
+                    element={
+                        <AuthGuard>
+                            <CoursePage />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="info"
+                    element={
+                        <AuthGuard>
+                            <InfoPage />
+                        </AuthGuard>
+                    }
+                />
 
-                <Route path="/admin" element={<AdminLayout />}>
+                <Route
+                    path="schedule"
+                    element={
+                        <AuthGuard roles={[UserRole.STUDENT]}>
+                            <SchedulePage />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="enrollments"
+                    element={
+                        <AuthGuard roles={[UserRole.STUDENT]}>
+                            <EnrollmentsPage />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="groups"
+                    element={
+                        <AuthGuard roles={[UserRole.STUDENT]}>
+                            <CourseGroupPage />
+                        </AuthGuard>
+                    }
+                />
+
+                <Route
+                    path="/admin"
+                    element={
+                        <AuthGuard roles={[UserRole.ADMIN]}>
+                            <AdminLayout />
+                        </AuthGuard>
+                    }
+                >
                     <Route path="student" element={<StudentPanel />} />
                     <Route path="request" element={<RequestPanel />} />
                     <Route path="teacher" element={<TeacherPanel />} />

@@ -1,0 +1,18 @@
+{
+    "student.firstName.required": "Потрібно вказати ім'я.",
+    "student.firstName.size": "Ім'я повинно бути не більше {{max}} символів.",
+    "student.lastName.required": "Потрібно вказати прізвище.",
+    "student.lastName.size": "Прізвище повинно бути не більше {{max}} символів.",
+    "student.patronymic.required": "Потрібно вказати по батькові.",
+    "student.patronymic.size": "По батькові повинно бути не більше {{max}} символів.",
+    "student.recordBookNumber.required": "Потрібно вказати номер залікової книжки.",
+    "student.recordBookNumber.size": "Номер залікової книжки повинен бути не більше {{max}} символів.",
+    "student.email.required": "Потрібно вказати електронну пошту.",
+    "student.email.invalid": "Неправильний формат електронної пошти.",
+    "student.email.size": "Електронна пошта повинна бути не більше {{max}} символів.",
+    "student.password.required": "Потрібно вказати пароль.",
+    "student.specialtyId.required": "Потрібно вказати спеціальність.",
+    "student.studyYear.required": "Потрібно вказати курс (рік навчання).",
+    "student.studyYear.positive": "Курс (рік навчання) повинен бути додатнім числом.",
+    "student.status.required": "Потрібно вказати статус студента."
+}
