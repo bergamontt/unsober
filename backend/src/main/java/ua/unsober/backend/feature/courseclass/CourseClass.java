@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 import ua.unsober.backend.feature.building.Building;
-import ua.unsober.backend.feature.course.Course;
 import ua.unsober.backend.feature.coursegroup.CourseGroup;
 import ua.unsober.backend.feature.teacher.Teacher;
 import ua.unsober.backend.common.enums.ClassType;
@@ -29,11 +28,7 @@ public class CourseClass {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
-
-    @ManyToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "group_id", nullable = false)
     private CourseGroup group;
 
     @NotBlank

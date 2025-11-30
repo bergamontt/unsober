@@ -34,14 +34,9 @@ public class CourseClassRequestMapper {
                 .location(dto.getLocation())
                 .build();
 
-        UUID courseId = dto.getCourseId();
         UUID groupId = dto.getGroupId();
         UUID teacherId = dto.getTeacherId();
         UUID buildingId = dto.getBuildingId();
-        if(courseId != null) {
-            entity.setCourse(courseRepository.findById(courseId).orElseThrow(() ->
-                    notFound.get("error.course.notfound", courseId)));
-        }
         if(groupId != null) {
             entity.setGroup(groupRepository.findById(groupId).orElseThrow(() ->
                     notFound.get("error.course-group.notfound", groupId)));

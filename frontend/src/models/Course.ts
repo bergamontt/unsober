@@ -7,3 +7,9 @@ export interface Course {
     numEnrolled: number;
     courseYear: number;
 }
+
+export interface CourseDto {
+    subjectId?: string;
+    maxStudents?: number;
+    courseYear?: number;
+}

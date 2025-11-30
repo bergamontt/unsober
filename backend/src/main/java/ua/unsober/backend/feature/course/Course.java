@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
-import ua.unsober.backend.feature.courseclass.CourseClass;
 import ua.unsober.backend.feature.studentenrollment.StudentEnrollment;
 import ua.unsober.backend.feature.subject.Subject;
 
@@ -44,9 +43,6 @@ public class Course {
     @NotNull
     @Column(name="course_year", nullable=false)
     private Integer courseYear;
-
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    private List<CourseClass> classes;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<StudentEnrollment> enrollments;

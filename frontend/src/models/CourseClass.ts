@@ -1,5 +1,4 @@
 import type { Building } from "./Building";
-import type { Course } from "./Course";
 import type { CourseGroup } from "./CourseGroup";
 import type { Teacher } from "./Teacher";
 
@@ -28,14 +27,25 @@ export type WeekDay = typeof WeekDay[keyof typeof WeekDay];
 
 export interface CourseClass {
     id: string;
-    course: Course;
     group: CourseGroup;
     title: string;
     type: ClassType;
     weeksList: number[];
     weekDay: WeekDay;
     classNumber: number;
-    location: string;
-    building: Building;
-    teacher: Teacher;
+    location?: string;
+    building?: Building;
+    teacher?: Teacher;
+}
+
+export interface CourseClassDto {
+    groupId?: string;
+    title?: string;
+    type?: ClassType;
+    weeksList?: number[];
+    weekDay?: WeekDay;
+    classNumber?: number;
+    location?: string;
+    building?: Building;
+    teacher?: Teacher;
 }

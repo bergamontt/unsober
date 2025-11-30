@@ -10,5 +10,6 @@
     "buildings": "Buildings",
     "edit": "Edit",
     "delete": "Delete",
-    "add": "Add"
+    "add": "Add",
+    "state": "Enrollment"
 }

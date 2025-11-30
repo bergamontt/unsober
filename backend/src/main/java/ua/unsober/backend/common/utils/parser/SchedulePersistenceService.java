@@ -87,7 +87,7 @@ public class SchedulePersistenceService {
             groups = Collections.singletonList(g);
         }
         for (CourseGroup g : groups) {
-            CourseClass cc = buildCourseClassFromDto(classDto, course, g, ClassType.LECTURE);
+            CourseClass cc = buildCourseClassFromDto(classDto, g, ClassType.LECTURE);
             courseClassRepository.save(cc);
         }
     }
@@ -97,7 +97,7 @@ public class SchedulePersistenceService {
         for (Integer groupNumber : groupNumbers) {
             CourseGroup group = courseGroupRepository.findByCourseIdAndGroupNumber(course.getId(), groupNumber)
                     .orElseGet(() -> createCourseGroup(course, groupNumber));
-            CourseClass cc = buildCourseClassFromDto(classDto, course, group, ClassType.PRACTICE);
+            CourseClass cc = buildCourseClassFromDto(classDto, group, ClassType.PRACTICE);
             courseClassRepository.save(cc);
         }
     }
@@ -122,7 +122,7 @@ public class SchedulePersistenceService {
         return courseGroupRepository.save(cg);
     }
 
-    private CourseClass buildCourseClassFromDto(ClassSchedule dto, Course course, CourseGroup group, ClassType type) {
+    private CourseClass buildCourseClassFromDto(ClassSchedule dto, CourseGroup group, ClassType type) {
         String title = dto.getClassName();
         String weeksList = dto.getWeeks() == null ? "" :
                 dto.getWeeks().stream()
@@ -141,7 +141,6 @@ public class SchedulePersistenceService {
         }
 
         return CourseClass.builder()
-                .course(course)
                 .group(group)
                 .title(title)
                 .type(type)

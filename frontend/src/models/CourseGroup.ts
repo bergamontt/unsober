@@ -7,3 +7,9 @@ export interface CourseGroup {
     maxStudents: number;
     numEnrolled: number;
 }
+
+export interface CourseGroupDto {
+    courseId?: string;
+    groupNumber?: number;
+    maxStudents?: number;
+}

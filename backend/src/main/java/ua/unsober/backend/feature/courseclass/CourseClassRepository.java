@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CourseClassRepository extends JpaRepository<CourseClass, UUID> {
-    List<CourseClass> getAllByCourseId(UUID courseId);
+    List<CourseClass> getAllByGroupId(UUID courseId);
 }

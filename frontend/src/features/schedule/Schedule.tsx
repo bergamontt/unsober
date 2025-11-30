@@ -46,8 +46,8 @@ function getClassEndTime(
 }
 
 async function convertClass(courseClass: CourseClass): Promise<CalendarEventExternal[]> {
-    const year = courseClass.course.courseYear;
-    const term = courseClass.course.subject.term;
+    const year = courseClass.group.course.courseYear;
+    const term = courseClass.group.course.subject.term;
     const termInfo = await getTermInfoByYearAndTerm(year, term);
     const termStart = Temporal.PlainDate.from(termInfo.startDate);
     const timeZone = 'Europe/Kyiv';
@@ -107,7 +107,7 @@ function Schedule() {
                 enrollments.map(async e => {
                     const classes = await getAllClassesByCourseId(e.course.id)
                     return classes.filter(courseClass =>
-                        !e.courseGroup || courseClass.group.id == e.courseGroup.id)
+                        !e.group || courseClass.group.id == e.group.id)
                 })
             )
             const classes = results.flat();

@@ -27,7 +27,6 @@ public class CourseClassResponseMapper {
                 .toList();
         return CourseClassResponseDto.builder()
                 .id(courseClass.getId())
-                .course(courseResponseMapper.toDto(courseClass.getCourse()))
                 .group(courseGroupResponseMapper.toDto(courseClass.getGroup()))
                 .title(courseClass.getTitle())
                 .type(courseClass.getType())

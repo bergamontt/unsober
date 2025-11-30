@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.courseclass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
+import ua.unsober.backend.feature.coursegroup.CourseGroupRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class CourseClassServiceImpl implements CourseClassService {
 
     private final CourseClassRepository courseClassRepository;
+    private final CourseGroupRepository courseGroupRepository;
     private final CourseClassRequestMapper requestMapper;
     private final CourseClassResponseMapper responseMapper;
     private final LocalizedEntityNotFoundExceptionFactory notFound;
@@ -41,8 +43,9 @@ public class CourseClassServiceImpl implements CourseClassService {
 
     @Override
     public List<CourseClassResponseDto> getAllByCourseId(UUID courseId) {
-        return courseClassRepository.getAllByCourseId(courseId)
+        return courseGroupRepository.findByCourseId(courseId)
                 .stream()
+                .flatMap(g -> courseClassRepository.getAllByGroupId(g.getId()).stream())
                 .map(responseMapper::toDto)
                 .toList();
     }
@@ -57,7 +60,6 @@ public class CourseClassServiceImpl implements CourseClassService {
         if (newCourseClass.getBuilding() != null) courseClass.setBuilding(newCourseClass.getBuilding());
         if (newCourseClass.getClassNumber() != null) courseClass.setClassNumber(newCourseClass.getClassNumber());
         if (newCourseClass.getTeacher() != null) courseClass.setTeacher(newCourseClass.getTeacher());
-        if (newCourseClass.getCourse() != null) courseClass.setCourse(newCourseClass.getCourse());
         if (newCourseClass.getGroup() != null) courseClass.setGroup(newCourseClass.getGroup());
         if (newCourseClass.getLocation() != null) courseClass.setLocation(newCourseClass.getLocation());
         if (newCourseClass.getType() != null) courseClass.setType(newCourseClass.getType());
