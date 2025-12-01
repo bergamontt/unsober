@@ -7,6 +7,7 @@ import ua.unsober.backend.feature.subject.SubjectResponseDto;
 import ua.unsober.backend.feature.teacher.TeacherResponseDto;
 import ua.unsober.backend.feature.terminfo.TermInfoResponseDto;
 
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class EntityAsserts {
@@ -83,5 +84,12 @@ public class EntityAsserts {
                 .andExpect(jsonPath("$.lastName").value(expected.getLastName()))
                 .andExpect(jsonPath("$.patronymic").value(expected.getPatronymic()))
                 .andExpect(jsonPath("$.email").value(expected.getEmail()));
+    }
+
+    public static void assertAuthResponse(ResultActions result) throws Exception {
+        result.andExpect(jsonPath("$.token", notNullValue()))
+                .andExpect(jsonPath("$.token", not(emptyString())))
+                .andExpect(jsonPath("$.expiresAt", notNullValue()))
+                .andExpect(jsonPath("$.expiresAt", greaterThan(System.currentTimeMillis())));
     }
 }
