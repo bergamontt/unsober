@@ -1,0 +1,6 @@
+{
+    "enrollment.studentId.required": "Student must be specified.",
+    "enrollment.courseId.required": "Course must be specified.",
+    "enrollment.reason.required": "Reason must be specified.",
+    "enrollment.reason.size": "The reason must be no more than {{max}} characters."
+}

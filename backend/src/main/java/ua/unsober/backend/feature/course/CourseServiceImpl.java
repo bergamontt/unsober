@@ -39,6 +39,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable(value = "coursesPage", key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #courseYear")
+    public Page<CourseResponseDto> getAllByYear(Pageable pageable, Integer courseYear) {
+        return courseRepository.findAllByCourseYear(courseYear, pageable)
+                .map(responseMapper::toDto);
+    }
+
+    @Override
     @Cacheable(value = "courseById", key = "#id")
     public CourseResponseDto getById(UUID id) {
         return responseMapper.toDto(

@@ -24,6 +24,11 @@ public class CourseController {
         return courseService.getAll(pageable);
     }
 
+    @GetMapping("/year/{courseYear}")
+    public Page<CourseResponseDto> getAllByYear(Pageable pageable, @PathVariable Integer courseYear) {
+        return courseService.getAllByYear(pageable, courseYear);
+    }
+
     @GetMapping("/{id}")
     public CourseResponseDto getById(@PathVariable UUID id) {
         return courseService.getById(id);

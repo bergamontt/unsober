@@ -1,0 +1,5 @@
+{
+    "withdrawal.studentEnrollmentId.required": "必须指定学生的注册记录。",
+    "withdrawal.reason.required": "必须填写原因。",
+    "withdrawal.reason.size": "原因长度不能超过 {{max}} 个字符。"
+}

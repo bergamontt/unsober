@@ -21,3 +21,29 @@ export const getAllCourses = async (
     });
     return response.data;
 };
+
+export const getAllCoursesByYear = async (
+    params: PageableParams = {},
+    year: number | null
+): Promise<Page<Course>> => {
+    if (year == null) {
+        return ({
+            content: [],
+            page: {
+                size: 0,
+                number: 0,
+                totalElements: 0,
+                totalPages: 0
+            }
+        });
+    }
+
+    const response = await api.get<Page<Course>>(`/course/year/${year}`, {
+        params: {
+            page: params.page ?? 0,
+            size: params.size ?? 15,
+            sort: params.sort,
+        },
+    });
+    return response.data;
+};

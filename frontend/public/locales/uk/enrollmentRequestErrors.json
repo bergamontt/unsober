@@ -1,0 +1,6 @@
+{
+    "enrollment.studentId.required": "Потрібно вказати студента.",
+    "enrollment.courseId.required": "Потрібно вказати курс.",
+    "enrollment.reason.required": "Потрібно вказати причину.",
+    "enrollment.reason.size": "Причина повинна бути не більше {{max}} символів."
+}

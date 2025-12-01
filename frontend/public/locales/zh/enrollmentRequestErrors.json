@@ -1,0 +1,6 @@
+{
+    "enrollment.studentId.required": "必须指定学生。",
+    "enrollment.courseId.required": "必须指定课程。",
+    "enrollment.reason.required": "必须填写原因。",
+    "enrollment.reason.size": "原因长度不能超过 {{max}} 个字符。"
+}

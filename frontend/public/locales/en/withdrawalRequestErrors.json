@@ -1,0 +1,5 @@
+{
+    "withdrawal.studentEnrollmentId.required": "Student enrollment record must be specified.",
+    "withdrawal.reason.required": "Reason must be specified.",
+    "withdrawal.reason.size": "The reason must be no more than {{max}} characters."
+}

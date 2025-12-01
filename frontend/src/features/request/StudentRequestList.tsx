@@ -61,6 +61,7 @@ function StudentRequestList({ showOnly }: StudentRequestListProps) {
             t("withdrawalRequestFrom") + r.item.studentEnrollment.course.subject.name;
         return (
             <StudentRequestCard
+                key={r.item.id}
                 title={
                     <Text size="md">
                         {text}

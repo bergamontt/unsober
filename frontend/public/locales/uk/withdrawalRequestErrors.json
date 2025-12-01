@@ -1,0 +1,5 @@
+{
+    "withdrawal.studentEnrollmentId.required": "Потрібно вказати запис студента.",
+    "withdrawal.reason.required": "Потрібно вказати причину.",
+    "withdrawal.reason.size": "Причина повинна бути не більше {{max}} символів."
+}

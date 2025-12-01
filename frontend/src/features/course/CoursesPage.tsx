@@ -5,16 +5,18 @@ import Searchbar from "../../common/searchbar/Searchbar.tsx";
 import CoursePreview from "./CoursePreview.tsx";
 import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import useFetch from "../../hooks/useFetch.ts";
-import { getAllCourses } from "../../services/CourseService.ts";
+import { getAllCoursesByYear } from "../../services/CourseService.ts";
+import { getAppState } from "../../services/AppStateService.ts";
 
 function CoursesPage() {
     const { t } = useTranslation("courseSearch");
+    const { data: state } = useFetch(getAppState, []);
     const [page, setPage] = useState<number>(1);
 
     const params = useMemo(() => (
         { page: page - 1 }), [page]
     );
-    const { data: pages } = useFetch(getAllCourses, [params]);
+    const { data: pages } = useFetch(getAllCoursesByYear, [params, state?.currentYear ?? null]);
     return (
         <PageWrapper>
             <Title>{t('courseCatalog')} </Title>
