@@ -14,5 +14,18 @@
     "all": "全部",
     "ACCEPTED": "已批准",
     "DECLINED": "已拒绝",
-    "PENDING": "待处理"
+    "PENDING": "待处理",
+    "error": "错误",
+    "success": "成功",
+    "enrollmentRequestAdded": "选课申请已提交审核",
+    "withdrawalRequestAdded": "退课申请已提交审核",
+    "unknownAddError": "无法提交申请",
+    "selectCourse": "选择你想要选修的课程",
+    "reason": "原因",
+    "writeReason": "请描述原因",
+    "submit": "提交",
+    "requestType": "申请类型",
+    "enrollment": "选课申请",
+    "withdrawal": "退课申请",
+    "selectEnrollment": "选择你想要退的课程"
 }

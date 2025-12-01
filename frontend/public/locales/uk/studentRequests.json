@@ -14,5 +14,18 @@
     "all": "Всі",
     "ACCEPTED": "Схвалені",
     "DECLINED": "Відхилені",
-    "PENDING": "Очікувані"
+    "PENDING": "Очікувані",
+    "error": "Помилка",
+    "success": "Успіх",
+    "enrollmentRequestAdded": "Запит на запис подано на розгляд",
+    "withdrawalRequestAdded": "Запит на виписування подано на розгляд",
+    "unknownAddError": "Не вдалося подати запит",
+    "selectCourse": "Оберіть дисципліну, на яку хочете записатися",
+    "reason": "Причина подання",
+    "writeReason": "Опишіть причину",
+    "submit": "Подати",
+    "requestType": "Тип запиту",
+    "enrollment": "Запит на запис",
+    "withdrawal": "Запит на виписування",
+    "selectEnrollment": "Оберіть дисципліну, з якої хочете виписатися"
 }

@@ -14,5 +14,18 @@
     "all": "All",
     "ACCEPTED": "Accepted",
     "DECLINED": "Declined",
-    "PENDING": "Pending"
+    "PENDING": "Pending",
+    "error": "Error",
+    "success": "Success",
+    "enrollmentRequestAdded": "Enrollment request has been submitted for review",
+    "withdrawalRequestAdded": "Withdrawal request has been submitted for review",
+    "unknownAddError": "Failed to submit the request",
+    "selectCourse": "Select the course you want to enroll in",
+    "reason": "Reason",
+    "writeReason": "Describe the reason",
+    "submit": "Submit",
+    "requestType": "Request type",
+    "enrollment": "Enrollment request",
+    "withdrawal": "Withdrawal request",
+    "selectEnrollment": "Select the course you want to withdraw from"
 }

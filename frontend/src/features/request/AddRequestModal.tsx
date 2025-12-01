@@ -1,13 +1,19 @@
-import { Modal } from "@mantine/core";
+import { Modal, Select } from "@mantine/core";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import AddEnrollmentRequestPanel from "./AddEnrollmentRequestPanel";
+import AddWithdrawalRequestPanel from "./AddWithdrawalRequestPanel";
 
-type AddModalProps = {
+interface AddModalProps {
     opened: boolean;
     close: () => void;
 }
 
+type Option = "enrollment" | "withdrawal";
+
 function AddRequestModal({ opened, close }: AddModalProps) {
     const { t } = useTranslation("studentRequests");
+    const [option, setOption] = useState<Option>("enrollment");
 
     return (
         <Modal
@@ -16,6 +22,21 @@ function AddRequestModal({ opened, close }: AddModalProps) {
             opened={opened}
             onClose={close}
         >
+            <Select
+                label={t("requestType")}
+                data={[
+                    { value: "enrollment", label: t("enrollment") },
+                    { value: "withdrawal", label: t("withdrawal") },
+                ]}
+                value={option}
+                onChange={e => setOption(e as Option)}
+            />
+            {
+                option == "enrollment" ?
+                    <AddEnrollmentRequestPanel close={close}/>
+                    :
+                    <AddWithdrawalRequestPanel close={close}/>
+            }
         </Modal>
     );
 }
