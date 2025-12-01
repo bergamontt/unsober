@@ -1,0 +1,173 @@
+package ua.unsober.backend.feature.terminfo;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
+import ua.unsober.backend.common.BaseSystemTest;
+import ua.unsober.backend.common.enums.Term;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static ua.unsober.backend.common.EntityAsserts.assertTermInfo;
+import static ua.unsober.backend.common.EntityAsserts.assertTermInfoArray;
+
+class TermInfoSystemTest extends BaseSystemTest {
+
+    @Autowired
+    TermInfoRepository termInfoRepository;
+
+    @Autowired
+    TermInfoRequestMapper requestMapper;
+
+    @Autowired
+    TermInfoResponseMapper responseMapper;
+
+    @AfterEach
+    void tearDown() {
+        termInfoRepository.deleteAll();
+    }
+
+    @Test
+    void createAsAdminShouldReturnCreatedTermInfo() throws Exception {
+        TermInfo termInfo = termInfo();
+        TermInfoRequestDto requestDto = requestMapper.toDto(termInfo);
+        TermInfoResponseDto responseDto = responseMapper.toDto(termInfo);
+        ResultActions result = mvc.perform(post("/term-info")
+                        .header("Authorization", "Bearer " + adminToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(requestDto))
+                ).andExpect(status().isOk());
+        assertTermInfo(result, responseDto);
+        assertEquals(1, termInfoRepository.count());
+    }
+
+    @Test
+    void createAsStudentShouldFail() throws Exception {
+        TermInfoRequestDto requestDto = requestMapper.toDto(termInfo());
+        mvc.perform(post("/term-info")
+                .header("Authorization", "Bearer " + studentToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(requestDto))
+        ).andExpect(status().isForbidden());
+        assertEquals(0, termInfoRepository.count());
+    }
+
+    @Test
+    void getAllAsAdminShouldReturnAllTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        TermInfoResponseDto expectedDto = responseMapper.toDto(saved);
+        ResultActions result = mvc.perform(get("/term-info")
+                .header("Authorization", "Bearer " + adminToken)
+        ).andExpect(status().isOk());
+        assertTermInfoArray(result, 0, expectedDto);
+        assertEquals(1, termInfoRepository.count());
+    }
+
+    @Test
+    void getAllAsStudentShouldReturnAllTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        TermInfoResponseDto expectedDto = responseMapper.toDto(saved);
+        ResultActions result = mvc.perform(get("/term-info")
+                .header("Authorization", "Bearer " + studentToken)
+        ).andExpect(status().isOk());
+        assertTermInfoArray(result, 0, expectedDto);
+        assertEquals(1, termInfoRepository.count());
+    }
+
+    @Test
+    void getByIdAsAdminShouldReturnTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        TermInfoResponseDto expectedDto = responseMapper.toDto(saved);
+        ResultActions result = mvc.perform(get("/term-info/uuid/{id}", saved.getId())
+                .header("Authorization", "Bearer " + adminToken)
+        ).andExpect(status().isOk());
+        assertTermInfo(result, expectedDto);
+    }
+
+    @Test
+    void getByIdAsStudentShouldReturnTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        TermInfoResponseDto expectedDto = responseMapper.toDto(saved);
+        ResultActions result = mvc.perform(get("/term-info/uuid/{id}", saved.getId())
+                .header("Authorization", "Bearer " + studentToken)
+        ).andExpect(status().isOk());
+        assertTermInfo(result, expectedDto);
+    }
+
+    @Test
+    void getByIdNonExistentShouldReturnBadRequest() throws Exception {
+        mvc.perform(get("/term-info/uuid/{id}", UUID.randomUUID())
+                .header("Authorization", "Bearer " + adminToken)
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getByYearAndTermAsAdminShouldReturnTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        TermInfoResponseDto expectedDto = responseMapper.toDto(saved);
+        ResultActions result = mvc.perform(get("/term-info/year-and-term")
+                .param("year", saved.getStudyYear().toString())
+                .param("term", saved.getTerm().name())
+                .header("Authorization", "Bearer " + adminToken)
+        ).andExpect(status().isOk());
+        assertTermInfo(result, expectedDto);
+    }
+
+    @Test
+    void getByYearAndTermAsStudentShouldReturnTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        TermInfoResponseDto expectedDto = responseMapper.toDto(saved);
+        ResultActions result = mvc.perform(get("/term-info/year-and-term")
+                .param("year", saved.getStudyYear().toString())
+                .param("term", saved.getTerm().name())
+                .header("Authorization", "Bearer " + studentToken)
+        ).andExpect(status().isOk());
+        assertTermInfo(result, expectedDto);
+    }
+
+    @Test
+    void getByYearAndTermNonExistentShouldReturnBadRequest() throws Exception {
+        mvc.perform(get("/term-info/year-and-term")
+                .param("year", "2099")
+                .param("term", Term.SPRING.name())
+                .header("Authorization", "Bearer " + adminToken)
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void deleteAsAdminShouldRemoveTermInfo() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        assertEquals(1, termInfoRepository.count());
+        mvc.perform(delete("/term-info/{id}", saved.getId())
+                .header("Authorization", "Bearer " + adminToken)
+        ).andExpect(status().isOk());
+        assertEquals(0, termInfoRepository.count());
+    }
+
+    @Test
+    void deleteAsStudentShouldFail() throws Exception {
+        TermInfo saved = termInfoRepository.save(termInfo());
+        assertEquals(1, termInfoRepository.count());
+        mvc.perform(delete("/term-info/{id}", saved.getId())
+                .header("Authorization", "Bearer " + studentToken)
+        ).andExpect(status().isForbidden());
+        assertEquals(1, termInfoRepository.count());
+    }
+
+    private TermInfo termInfo() {
+        return TermInfo.builder()
+                .studyYear(2025)
+                .term(Term.AUTUMN)
+                .startDate(LocalDate.of(2025, 9, 1))
+                .endDate(LocalDate.of(2025, 12, 20))
+                .lenWeeks(16)
+                .build();
+    }
+
+}

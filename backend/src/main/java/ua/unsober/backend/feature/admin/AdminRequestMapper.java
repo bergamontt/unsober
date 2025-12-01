@@ -27,4 +27,17 @@ public class AdminRequestMapper {
                 .user(user)
                 .build();
     }
+
+    public AdminRequestDto toDto(Admin entity) {
+        if (entity == null) return null;
+        User user = entity.getUser();
+        return AdminRequestDto.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .patronymic(user.getPatronymic())
+                .email(user.getEmail())
+                .password("")
+                .build();
+    }
+
 }

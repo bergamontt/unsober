@@ -12,4 +12,12 @@ public class BuildingRequestMapper {
                 .longitude(dto.getLongitude())
                 .build();
     }
+    public BuildingRequestDto toDto(Building entity) {
+        return BuildingRequestDto.builder()
+                .name(entity.getName())
+                .address(entity.getAddress())
+                .latitude(entity.getLatitude())
+                .longitude(entity.getLongitude())
+                .build();
+    }
 }

@@ -29,7 +29,6 @@ public class AdminController {
         return adminService.getByEmail(email);
     }
 
-
     @PatchMapping("/{id}")
     @Retryable
     public AdminResponseDto update(
