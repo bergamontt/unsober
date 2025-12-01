@@ -14,4 +14,12 @@ public class FacultyRequestMapper {
                 .description(dto.getDescription())
                 .build();
     }
+
+    public FacultyRequestDto toDto(Faculty entity) {
+        if (entity == null) return null;
+        return new FacultyRequestDto(
+                entity.getName(),
+                entity.getDescription()
+        );
+    }
 }

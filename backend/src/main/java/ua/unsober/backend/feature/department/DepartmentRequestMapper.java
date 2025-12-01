@@ -25,4 +25,13 @@ public class DepartmentRequestMapper {
         }
         return entity;
     }
+
+    public DepartmentRequestDto toDto(Department entity) {
+        if (entity == null) return null;
+        return DepartmentRequestDto.builder()
+                .facultyId(entity.getFaculty() == null ? null : entity.getFaculty().getId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .build();
+    }
 }

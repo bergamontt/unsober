@@ -3,6 +3,8 @@ package ua.unsober.backend.common;
 import org.springframework.test.web.servlet.ResultActions;
 import ua.unsober.backend.feature.admin.AdminResponseDto;
 import ua.unsober.backend.feature.building.BuildingResponseDto;
+import ua.unsober.backend.feature.department.DepartmentResponseDto;
+import ua.unsober.backend.feature.faculty.FacultyResponseDto;
 import ua.unsober.backend.feature.subject.SubjectResponseDto;
 import ua.unsober.backend.feature.teacher.TeacherResponseDto;
 import ua.unsober.backend.feature.terminfo.TermInfoResponseDto;
@@ -92,4 +94,31 @@ public class EntityAsserts {
                 .andExpect(jsonPath("$.expiresAt", notNullValue()))
                 .andExpect(jsonPath("$.expiresAt", greaterThan(System.currentTimeMillis())));
     }
+
+    public static void assertDepartment(ResultActions result, DepartmentResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.faculty.id").value(expected.getFaculty().getId().toString()))
+                .andExpect(jsonPath("$.faculty.name").value(expected.getFaculty().getName()))
+                .andExpect(jsonPath("$.faculty.description").value(expected.getFaculty().getDescription()))
+                .andExpect(jsonPath("$.name").value(expected.getName()))
+                .andExpect(jsonPath("$.description").value(expected.getDescription()));
+    }
+
+    public static void assertDepartmentArray(ResultActions result, int index, DepartmentResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].faculty.id").value(expected.getFaculty().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].faculty.name").value(expected.getFaculty().getName()))
+                .andExpect(jsonPath("$[" + index + "].faculty.description").value(expected.getFaculty().getDescription()))
+                .andExpect(jsonPath("$[" + index + "].name").value(expected.getName()))
+                .andExpect(jsonPath("$[" + index + "].description").value(expected.getDescription()));
+    }
+
+    public static void assertFaculty(ResultActions result, FacultyResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.name").value(expected.getName()))
+                .andExpect(jsonPath("$.description").value(expected.getDescription()));
+    }
+
+    public static void assertFacultyArray(ResultActions result, int index, FacultyResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].name").value(expected.getName()))
+                .andExpect(jsonPath("$[" + index + "].description").value(expected.getDescription()));
+    }
+
 }
