@@ -39,4 +39,19 @@ public class StudentRequestMapper {
         }
         return entity;
     }
+
+    public StudentRequestDto toDto(Student student) {
+        if (student == null) return null;
+        return StudentRequestDto.builder()
+                .firstName(student.getUser().getFirstName())
+                .lastName(student.getUser().getLastName())
+                .patronymic(student.getUser().getPatronymic())
+                .recordBookNumber(student.getRecordBookNumber())
+                .email(student.getUser().getEmail())
+                .password("password")
+                .specialityId(student.getSpeciality() != null ? student.getSpeciality().getId() : null)
+                .studyYear(student.getStudyYear())
+                .status(student.getStatus())
+                .build();
+    }
 }

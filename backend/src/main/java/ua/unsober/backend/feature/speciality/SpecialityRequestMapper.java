@@ -25,4 +25,13 @@ public class SpecialityRequestMapper {
         }
         return entity;
     }
+
+    public SpecialityRequestDto toDto(Speciality entity) {
+        if (entity == null) return null;
+        return SpecialityRequestDto.builder()
+                .departmentId(entity.getDepartment() != null ? entity.getDepartment().getId() : null)
+                .name(entity.getName())
+                .description(entity.getDescription())
+                .build();
+    }
 }

@@ -5,6 +5,8 @@ import ua.unsober.backend.feature.admin.AdminResponseDto;
 import ua.unsober.backend.feature.building.BuildingResponseDto;
 import ua.unsober.backend.feature.department.DepartmentResponseDto;
 import ua.unsober.backend.feature.faculty.FacultyResponseDto;
+import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
+import ua.unsober.backend.feature.student.StudentResponseDto;
 import ua.unsober.backend.feature.subject.SubjectResponseDto;
 import ua.unsober.backend.feature.teacher.TeacherResponseDto;
 import ua.unsober.backend.feature.terminfo.TermInfoResponseDto;
@@ -119,6 +121,42 @@ public class EntityAsserts {
     public static void assertFacultyArray(ResultActions result, int index, FacultyResponseDto expected) throws Exception {
         result.andExpect(jsonPath("$[" + index + "].name").value(expected.getName()))
                 .andExpect(jsonPath("$[" + index + "].description").value(expected.getDescription()));
+    }
+
+    public static void assertSpeciality(ResultActions result, SpecialityResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.name").value(expected.getName()))
+                .andExpect(jsonPath("$.description").value(expected.getDescription()))
+                .andExpect(jsonPath("$.department.id").value(expected.getDepartment().getId().toString()))
+                .andExpect(jsonPath("$.department.name").value(expected.getDepartment().getName()));
+    }
+
+    public static void assertSpecialityArray(ResultActions result, int index, SpecialityResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].name").value(expected.getName()))
+                .andExpect(jsonPath("$[" + index + "].description").value(expected.getDescription()))
+                .andExpect(jsonPath("$[" + index + "].department.id").value(expected.getDepartment().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].department.name").value(expected.getDepartment().getName()));
+    }
+
+    public static void assertStudent(ResultActions result, StudentResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.firstName").value(expected.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(expected.getLastName()))
+                .andExpect(jsonPath("$.patronymic").value(expected.getPatronymic()))
+                .andExpect(jsonPath("$.recordBookNumber").value(expected.getRecordBookNumber()))
+                .andExpect(jsonPath("$.email").value(expected.getEmail()))
+                .andExpect(jsonPath("$.studyYear").value(expected.getStudyYear()))
+                .andExpect(jsonPath("$.status").value(expected.getStatus().name()))
+                .andExpect(jsonPath("$.speciality.id").value(expected.getSpeciality().getId().toString()));
+    }
+
+    public static void assertStudentArray(ResultActions result, int index, StudentResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].firstName").value(expected.getFirstName()))
+                .andExpect(jsonPath("$[" + index + "].lastName").value(expected.getLastName()))
+                .andExpect(jsonPath("$[" + index + "].patronymic").value(expected.getPatronymic()))
+                .andExpect(jsonPath("$[" + index + "].recordBookNumber").value(expected.getRecordBookNumber()))
+                .andExpect(jsonPath("$[" + index + "].email").value(expected.getEmail()))
+                .andExpect(jsonPath("$[" + index + "].studyYear").value(expected.getStudyYear()))
+                .andExpect(jsonPath("$[" + index + "].status").value(expected.getStatus().name()))
+                .andExpect(jsonPath("$[" + index + "].speciality.id").value(expected.getSpeciality().getId().toString()));
     }
 
 }
