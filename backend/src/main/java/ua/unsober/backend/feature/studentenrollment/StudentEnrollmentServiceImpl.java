@@ -87,7 +87,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         CourseGroup courseGroup = dto.getGroupId() != null ? validateGroup(dto.getGroupId()) : null;
 
         StudentEnrollment enrollment = requestMapper.toEntity(dto);
-        enrollment.setStatus(EnrollmentStatus.FORCE_ENROLLED);
+        enrollment.setStatus(EnrollmentStatus.ENROLLED);
         enrollment.setCourse(course);
         enrollment.setGroup(courseGroup);
 

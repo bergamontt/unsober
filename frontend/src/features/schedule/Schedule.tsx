@@ -10,6 +10,8 @@ import type { CourseClass, WeekDay } from '../../models/CourseClass'
 import { getAllClassesByCourseId } from '../../services/CourseClassService'
 import { useEffect, useState } from 'react'
 import { getTermInfoByYearAndTerm } from '../../services/TermInfoService'
+import { EnrollmentStatus } from '../../models/StudentEnrollment'
+import CourseClassEvent from './CourseClassEvent'
 
 const CLASS_SLOTS: Record<number, { start: [number, number]; end: [number, number] }> = {
     1: { start: [8, 30], end: [9, 50] },
@@ -17,9 +19,11 @@ const CLASS_SLOTS: Record<number, { start: [number, number]; end: [number, numbe
     3: { start: [11, 40], end: [13, 0] },
     4: { start: [13, 30], end: [14, 50] },
     5: { start: [15, 0], end: [16, 20] },
-    6: { start: [16, 30], end: [17, 50] },
+    6: { start: [16, 30], end: [18, 50] },
     7: { start: [18, 0], end: [19, 20] }
 };
+
+const timeZone = 'Europe/Kyiv';
 
 function getClassStartTime(
     classNumber: number,
@@ -45,12 +49,15 @@ function getClassEndTime(
         .toZonedDateTime(timeZone);
 }
 
-async function convertClass(courseClass: CourseClass): Promise<CalendarEventExternal[]> {
+export type CalendarEventWithCourse = CalendarEventExternal & {
+    courseClass: CourseClass;
+};
+
+async function convertClass(courseClass: CourseClass): Promise<CalendarEventWithCourse[]> {
     const year = courseClass.group.course.courseYear;
     const term = courseClass.group.course.subject.term;
     const termInfo = await getTermInfoByYearAndTerm(year, term);
     const termStart = Temporal.PlainDate.from(termInfo.startDate);
-    const timeZone = 'Europe/Kyiv';
     const WEEKDAY_TO_ISO: Record<WeekDay, number> = {
         MONDAY: 1,
         TUESDAY: 2,
@@ -68,12 +75,13 @@ async function convertClass(courseClass: CourseClass): Promise<CalendarEventExte
             const classDate = weekStart.add({ days: offsetDays });
             const startZdt = getClassStartTime(courseClass.classNumber, classDate, timeZone);
             const endZdt = getClassEndTime(courseClass.classNumber, classDate, timeZone);
-            const event: CalendarEventExternal = {
+            const event: CalendarEventWithCourse = {
                 id: `${courseClass.id}-${weekNum}`,
                 title: courseClass.title,
                 start: startZdt,
                 end: endZdt,
-                location: courseClass.location
+                location: courseClass.location,
+                courseClass
             };
 
             return event;
@@ -86,29 +94,37 @@ function Schedule() {
     const { user: student } = useStudentStore();
     const { data: enrollments } = useFetch(getAllEnrollmentsByStudentId, [student?.id ?? null]);
     const [allClasses, setAllClasses] = useState<CourseClass[]>([]);
-    const [events, setEvents] = useState<CalendarEventExternal[]>([]);
+    const [events, setEvents] = useState<CalendarEventWithCourse[]>([]);
     const eventsService = useState(() => createEventsServicePlugin())[0];
 
     const calendar = useCalendarApp({
+        timezone: timeZone,
         views: [
             createViewWeek(),
             createViewDay(),
             createViewMonthGrid(),
             createViewMonthAgenda(),
         ],
+        dayBoundaries: {
+            start: '08:00',
+            end: '20:00',
+        },
         events: events,
         plugins: [eventsService],
     });
 
     useEffect(() => {
-        if (!enrollments) return;
+        if (!enrollments)
+            return;
         const load = async () => {
             const results = await Promise.all(
-                enrollments.map(async e => {
-                    const classes = await getAllClassesByCourseId(e.course.id)
-                    return classes.filter(courseClass =>
-                        !e.group || courseClass.group.id == e.group.id)
-                })
+                enrollments
+                    .filter(e => e.status == EnrollmentStatus.ENROLLED)
+                    .map(async e => {
+                        const classes = await getAllClassesByCourseId(e.course.id)
+                        return classes.filter(courseClass =>
+                            !e.group || courseClass.group.id == e.group.id)
+                    })
             )
             const classes = results.flat();
             setAllClasses(classes);
@@ -132,7 +148,17 @@ function Schedule() {
         eventsService.set(events);
     }, [events, eventsService]);
 
-    return <ScheduleXCalendar calendarApp={calendar} />;
+    return (
+        <ScheduleXCalendar
+            calendarApp={calendar}
+            customComponents={{
+                timeGridEvent: CourseClassEvent,
+                dateGridEvent: CourseClassEvent,
+                monthGridEvent: CourseClassEvent,
+                monthAgendaEvent: CourseClassEvent,
+            }}
+        />
+    );
 }
 
 export default Schedule

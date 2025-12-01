@@ -1,0 +1,14 @@
+{
+    "unknown": "Unknown",
+    "online": "Online",
+    "location": "Location",
+    "group": "group",
+    "time": "Time",
+    "teacher": "Teacher",
+    "PRACTICE": "Practice",
+    "SEMINAR": "Seminar",
+    "LECTURE": "Lecture",
+    "CONSULTATION": "Consultation",
+    "CREDIT": "Credit",
+    "EXAM": "Exam"
+}
