@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Builder
 public class TermInfoRequestDto {
     @NotNull(message = "{term-info.year.required}")
-    private Integer year;
+    private Integer studyYear;
 
     @NotNull(message = "{term-info.term.required}")
     private Term term;

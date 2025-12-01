@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface TermInfoRepository extends JpaRepository<TermInfo, UUID> {
-    Optional<TermInfo> getByYearAndTerm(Integer year, Term term);
+    Optional<TermInfo> getByStudyYearAndTerm(Integer year, Term term);
 }

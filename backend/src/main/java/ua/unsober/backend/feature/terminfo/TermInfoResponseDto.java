@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 public class TermInfoResponseDto {
     private UUID id;
-    private Integer year;
+    private Integer studyYear;
     private Term term;
     private LocalDate startDate;
     private LocalDate endDate;

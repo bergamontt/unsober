@@ -26,7 +26,7 @@ public class TermInfo {
 
     @NotNull
     @Column(nullable = false)
-    private Integer year;
+    private Integer studyYear;
 
     @NotNull
     @Enumerated(EnumType.STRING)

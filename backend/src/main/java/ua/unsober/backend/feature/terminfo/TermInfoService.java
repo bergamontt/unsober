@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface TermInfoService {
     TermInfoResponseDto getById(UUID id);
-    TermInfoResponseDto getByYearAndTerm(Integer year, Term term);
+    TermInfoResponseDto getByStudyYearAndTerm(Integer studyYear, Term term);
     List<TermInfoResponseDto> getAll();
     TermInfoResponseDto create(TermInfoRequestDto dto);
     void deleteById(UUID id);

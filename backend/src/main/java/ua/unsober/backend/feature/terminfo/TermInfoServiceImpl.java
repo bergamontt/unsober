@@ -25,9 +25,9 @@ public class TermInfoServiceImpl implements TermInfoService {
     }
 
     @Override
-    public TermInfoResponseDto getByYearAndTerm(Integer year, Term term) {
+    public TermInfoResponseDto getByStudyYearAndTerm(Integer year, Term term) {
         return responseMapper.toDto(
-                termInfoRepository.getByYearAndTerm(year, term).orElseThrow(() ->
+                termInfoRepository.getByStudyYearAndTerm(year, term).orElseThrow(() ->
                         notFound.get("error.term-info-for-year.notfound", term.name(), year))
         );
     }

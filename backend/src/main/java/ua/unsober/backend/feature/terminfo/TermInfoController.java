@@ -30,8 +30,8 @@ public class TermInfoController {
     }
 
     @GetMapping("/year-and-term")
-    public TermInfoResponseDto getByYearAnTerm(@RequestParam Integer year, @RequestParam Term term) {
-        return termInfoService.getByYearAndTerm(year, term);
+    public TermInfoResponseDto getByStudyYearAnTerm(@RequestParam Integer year, @RequestParam Term term) {
+        return termInfoService.getByStudyYearAndTerm(year, term);
     }
 
     @DeleteMapping("/{id}")
