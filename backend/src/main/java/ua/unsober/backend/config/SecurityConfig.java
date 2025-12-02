@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 "/student-enrollment/**", "/student/**", "/course-group/**",
                                 "/admin/**", "/term-info/**", "/course-class/**", "/app-state/**",
                                 "/teacher/**", "/building/**", "/department/**", "/faculty/**",
-                                "/speciality/**"
+                                "/speciality/**", "/static/**"
                         ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
                                 "/student-enrollment/enroll-self")

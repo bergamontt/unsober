@@ -18,6 +18,8 @@
     "@schedule-x/react": "^3.2.0",
     "@schedule-x/theme-default": "^3.3.0",
     "axios": "^1.12.2",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
     "i18next": "^25.5.2",
     "i18next-http-backend": "^3.0.2",
     "jwt-decode": "^4.0.0",

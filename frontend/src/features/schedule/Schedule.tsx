@@ -12,6 +12,13 @@ import { useEffect, useState } from 'react'
 import { getTermInfoByYearAndTerm } from '../../services/TermInfoService'
 import { EnrollmentStatus } from '../../models/StudentEnrollment'
 import CourseClassEvent from './CourseClassEvent'
+import PageWrapper from '../../common/pageWrapper/PageWrapper'
+import { Button, Group, Title } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
+import printer from '../../assets/printer.svg';
+import Icon from '../../common/icon/Icon'
+import { generateSchedule } from '../../services/ScheduleService'
+import { getAppState } from '../../services/AppStateService'
 
 const CLASS_SLOTS: Record<number, { start: [number, number]; end: [number, number] }> = {
     1: { start: [8, 30], end: [9, 50] },
@@ -91,6 +98,8 @@ async function convertClass(courseClass: CourseClass): Promise<CalendarEventWith
 }
 
 function Schedule() {
+    const { t } = useTranslation("sections");
+    const { data: state } = useFetch(getAppState, []);
     const { user: student } = useStudentStore();
     const { data: enrollments } = useFetch(getAllEnrollmentsByStudentId, [student?.id ?? null]);
     const [allClasses, setAllClasses] = useState<CourseClass[]>([]);
@@ -149,15 +158,27 @@ function Schedule() {
     }, [events, eventsService]);
 
     return (
-        <ScheduleXCalendar
-            calendarApp={calendar}
-            customComponents={{
-                timeGridEvent: CourseClassEvent,
-                dateGridEvent: CourseClassEvent,
-                monthGridEvent: CourseClassEvent,
-                monthAgendaEvent: CourseClassEvent,
-            }}
-        />
+        <PageWrapper>
+            <Group justify="space-between">
+                <Title>{t("schedule")} </Title>
+                <Button
+                    color='blue'
+                    leftSection={<Icon src={printer} size="1.5em" />}
+                    onClick={() => { generateSchedule(student ?? null, state ?? null, allClasses); }}
+                >
+                    Print
+                </Button>
+            </Group>
+            <ScheduleXCalendar
+                calendarApp={calendar}
+                customComponents={{
+                    timeGridEvent: CourseClassEvent,
+                    dateGridEvent: CourseClassEvent,
+                    monthGridEvent: CourseClassEvent,
+                    monthAgendaEvent: CourseClassEvent,
+                }}
+            />
+        </PageWrapper>
     );
 }
 

@@ -3,7 +3,7 @@ import type { CourseGroup } from "./CourseGroup";
 import type { Teacher } from "./Teacher";
 
 export const ClassType = {
-    PRACTIEC: 'PRACTICE',
+    PRACTICE: 'PRACTICE',
     SEMINAR: 'SEMINAR',
     LECTURE: 'LECTURE',
     CONSULTATION: 'CONSULTATION',
