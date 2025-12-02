@@ -19,13 +19,13 @@ public class StudyPlanController {
     private final JobLauncher jobLauncher;
     private final Job studyPlanJob;
 
+    @SneakyThrows
     @GetMapping("/{id}/generate")
-    public void generate(@PathVariable String id) throws Exception {
+    public void generate(@PathVariable String id) {
         JobParameters params = new JobParametersBuilder()
                 .addString("studentId", id)
                 .addLong("runAt", System.currentTimeMillis())
                 .toJobParameters();
-
         jobLauncher.run(studyPlanJob, params);
     }
 

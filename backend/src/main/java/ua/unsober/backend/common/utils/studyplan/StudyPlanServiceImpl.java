@@ -267,15 +267,9 @@ public class StudyPlanServiceImpl implements StudyPlanService {
             StudyPlanCategory category = resolveCategory(student, subject);
 
             switch (category) {
-                case MANDATORY -> {
-                    mandatory.add(buildCourseRow(subject, mandatoryIdx++));
-                }
-                case PROF_ORIENTED -> {
-                    profOriented.add(buildCourseRow(subject, profIdx++));
-                }
-                case FREE_CHOICE -> {
-                    freeChoice.add(buildCourseRow(subject, freeIdx++));
-                }
+                case MANDATORY -> mandatory.add(buildCourseRow(subject, mandatoryIdx++));
+                case PROF_ORIENTED -> profOriented.add(buildCourseRow(subject, profIdx++));
+                case FREE_CHOICE -> freeChoice.add(buildCourseRow(subject, freeIdx++));
             }
         }
 

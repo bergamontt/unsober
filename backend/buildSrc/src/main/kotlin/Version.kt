@@ -9,4 +9,5 @@ object Versions {
     const val jsoup = "1.21.2"
     const val openapi = "2.8.13"
     const val unsoberStarer = "0.0.1-SNAPSHOT"
+    const val openhtmltopdf = "1.0.10"
 }

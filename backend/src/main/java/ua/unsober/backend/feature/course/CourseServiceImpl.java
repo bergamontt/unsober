@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -32,9 +33,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @Cacheable(value = "coursesPage", key = "#pageable.pageNumber + '-' + #pageable.pageSize")
-    public Page<CourseResponseDto> getAll(Pageable pageable) {
-        return courseRepository.findAll(pageable)
+    @Cacheable(value = "coursesPage", key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + (#filters.subjectName ?: 'all')")
+    public Page<CourseResponseDto> getAll(CourseFilterDto filters, Pageable pageable) {
+        Specification<Course> spec = CourseSpecification.buildSpecification(filters);
+        return courseRepository.findAll(spec, pageable)
                 .map(responseMapper::toDto);
     }
 

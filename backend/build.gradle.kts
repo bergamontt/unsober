@@ -32,8 +32,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-batch")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
-    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10")
-    implementation("com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10")
+    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:${Versions.openhtmltopdf}")
+    implementation("com.openhtmltopdf:openhtmltopdf-slf4j:${Versions.openhtmltopdf}")
 
     implementation("org.mapstruct:mapstruct:${Versions.mapstruct}")
     implementation("org.apache.poi:poi:${Versions.poi}")

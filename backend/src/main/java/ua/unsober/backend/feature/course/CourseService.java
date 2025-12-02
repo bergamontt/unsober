@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CourseService {
     CourseResponseDto create(CourseRequestDto dto);
-    Page<CourseResponseDto> getAll(Pageable pageable);
+    Page<CourseResponseDto> getAll(CourseFilterDto filters, Pageable pageable);
     Page<CourseResponseDto> getAllByYear(Pageable pageable, Integer courseYear);
     CourseResponseDto getById(UUID id);
     CourseResponseDto update(UUID id, CourseRequestDto dto);

@@ -20,8 +20,11 @@ public class CourseController {
     }
 
     @GetMapping
-    public Page<CourseResponseDto> getAll(Pageable pageable) {
-        return courseService.getAll(pageable);
+    public Page<CourseResponseDto> getAll(
+            @ModelAttribute CourseFilterDto filters,
+            Pageable pageable
+    ) {
+        return courseService.getAll(filters, pageable);
     }
 
     @GetMapping("/year/{courseYear}")
