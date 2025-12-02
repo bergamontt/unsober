@@ -27,4 +27,12 @@ public class WithdrawalRequestRequestMapper {
         }
         return entity;
     }
+
+    public WithdrawalRequestRequestDto toDto(WithdrawalRequest entity) {
+        if (entity == null) return null;
+        return new WithdrawalRequestRequestDto(
+                entity.getStudentEnrollment() != null ? entity.getStudentEnrollment().getId() : null,
+                entity.getReason()
+        );
+    }
 }

@@ -9,6 +9,7 @@ import ua.unsober.backend.feature.coursegroup.CourseGroupResponseDto;
 import ua.unsober.backend.feature.department.DepartmentResponseDto;
 import ua.unsober.backend.feature.faculty.FacultyResponseDto;
 import ua.unsober.backend.feature.request.enrollment.EnrollmentRequestResponseDto;
+import ua.unsober.backend.feature.request.withdrawal.WithdrawalRequestResponseDto;
 import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
 import ua.unsober.backend.feature.student.StudentResponseDto;
 import ua.unsober.backend.feature.studentenrollment.StudentEnrollmentResponseDto;
@@ -296,6 +297,22 @@ public class EntityAsserts {
                 .andExpect(jsonPath("$[" + index + "].status").value(expected.getStatus().toString()))
                 .andExpect(jsonPath("$[" + index + "].student.id").value(expected.getStudent().getId().toString()))
                 .andExpect(jsonPath("$[" + index + "].course.id").value(expected.getCourse().getId().toString()));
+    }
+
+    public static void assertWithdrawalRequest(ResultActions result, WithdrawalRequestResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.reason").value(expected.getReason()))
+                .andExpect(jsonPath("$.status").value(expected.getStatus().toString()))
+                .andExpect(jsonPath("$.studentEnrollment.id").value(expected.getStudentEnrollment().getId().toString()))
+                .andExpect(jsonPath("$.studentEnrollment.student.id").value(expected.getStudentEnrollment().getStudent().getId().toString()))
+                .andExpect(jsonPath("$.studentEnrollment.course.id").value(expected.getStudentEnrollment().getCourse().getId().toString()));
+    }
+
+    public static void assertWithdrawalRequestArray(ResultActions result, int index, WithdrawalRequestResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].reason").value(expected.getReason()))
+                .andExpect(jsonPath("$[" + index + "].status").value(expected.getStatus().toString()))
+                .andExpect(jsonPath("$[" + index + "].studentEnrollment.id").value(expected.getStudentEnrollment().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].studentEnrollment.student.id").value(expected.getStudentEnrollment().getStudent().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].studentEnrollment.course.id").value(expected.getStudentEnrollment().getCourse().getId().toString()));
     }
 
 }
