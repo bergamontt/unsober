@@ -2,6 +2,8 @@ package ua.unsober.backend.feature.subject;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -59,12 +61,13 @@ class SubjectSystemTest extends BaseSystemTest {
         assertEquals(0, subjectRepository.count());
     }
 
-    @Test
-    void getAllAsAdminShouldReturnAllSubjects() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getAllShouldReturnAllSubjects(String token) throws Exception {
         Subject saved = subjectRepository.save(subjectEntity());
         SubjectResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/subject")
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
                 .param("page", "0")
                 .param("size", "10")
         ).andExpect(status().isOk());
@@ -72,43 +75,22 @@ class SubjectSystemTest extends BaseSystemTest {
         assertEquals(1, subjectRepository.count());
     }
 
-    @Test
-    void getAllAsStudentShouldReturnSubjects() throws Exception {
-        Subject saved = subjectRepository.save(subjectEntity());
-        SubjectResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/subject")
-                .header("Authorization", "Bearer " + studentToken)
-                .param("page", "0")
-                .param("size", "10")
-        ).andExpect(status().isOk());
-        assertSubjectArray(result, 0, expectedDto);
-        assertEquals(1, subjectRepository.count());
-    }
-
-    @Test
-    void getByIdAsAdminShouldReturnSubject() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdShouldReturnSubject(String token) throws Exception {
         Subject saved = subjectRepository.save(subjectEntity());
         SubjectResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/subject/{id}", saved.getId())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertSubject(result, expectedDto);
     }
 
-    @Test
-    void getByIdAsStudentShouldReturnSubject() throws Exception {
-        Subject saved = subjectRepository.save(subjectEntity());
-        SubjectResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/subject/{id}", saved.getId())
-                .header("Authorization", "Bearer " + studentToken)
-        ).andExpect(status().isOk());
-        assertSubject(result, expectedDto);
-    }
-
-    @Test
-    void getByIdNonExistentShouldReturnBadRequest() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdNonExistentShouldReturnBadRequest(String token) throws Exception {
         mvc.perform(get("/subject/{id}", UUID.randomUUID())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isBadRequest());
     }
 

@@ -2,6 +2,8 @@ package ua.unsober.backend.feature.building;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -57,52 +59,34 @@ class BuildingSystemTest extends BaseSystemTest {
         assertEquals(0, buildingRepository.count());
     }
 
-    @Test
-    void getAllAsAdminShouldReturnAllBuildings() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getAllShouldReturnAllBuildings(String token) throws Exception {
         Building saved = buildingRepository.save(building());
         BuildingResponseDto expected = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/building")
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertBuildingArray(result, 0, expected);
         assertEquals(1, buildingRepository.count());
     }
 
-    @Test
-    void getAllAsStudentShouldReturnAllBuildings() throws Exception {
-        Building saved = buildingRepository.save(building());
-        BuildingResponseDto expected = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/building")
-                .header("Authorization", "Bearer " + studentToken)
-        ).andExpect(status().isOk());
-        assertBuildingArray(result, 0, expected);
-        assertEquals(1, buildingRepository.count());
-    }
-
-    @Test
-    void getByIdAsAdminShouldReturnBuilding() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdShouldReturnBuilding(String token) throws Exception {
         Building saved = buildingRepository.save(building());
         BuildingResponseDto expected = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/building/{id}", saved.getId())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertBuilding(result, expected);
     }
 
-    @Test
-    void getByIdAsStudentShouldReturnBuilding() throws Exception {
-        Building saved = buildingRepository.save(building());
-        BuildingResponseDto expected = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/building/{id}", saved.getId())
-                .header("Authorization", "Bearer " + studentToken)
-        ).andExpect(status().isOk());
-        assertBuilding(result, expected);
-    }
-
-    @Test
-    void getByIdNonExistentShouldReturnBadRequest() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdNonExistentShouldReturnBadRequest(String token) throws Exception {
         mvc.perform(get("/building/{id}", UUID.randomUUID())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isBadRequest());
     }
 

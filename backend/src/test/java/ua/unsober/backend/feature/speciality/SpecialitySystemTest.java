@@ -2,6 +2,8 @@ package ua.unsober.backend.feature.speciality;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -68,41 +70,34 @@ class SpecialitySystemTest extends BaseSystemTest {
         assertEquals(0, specialityRepository.count());
     }
 
-    @Test
-    void getAllAsAdminShouldReturnAllSpecialities() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getAllShouldReturnAllSpecialities(String token) throws Exception {
         Speciality saved = specialityRepository.save(speciality());
         SpecialityResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/speciality")
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertSpecialityArray(result, 0, expectedDto);
         assertEquals(1, specialityRepository.count());
     }
 
-    @Test
-    void getByIdAdminShouldReturnSpeciality() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdShouldReturnSpeciality(String token) throws Exception {
         Speciality saved = specialityRepository.save(speciality());
         SpecialityResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/speciality/{id}", saved.getId())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertSpeciality(result, expectedDto);
     }
 
-    @Test
-    void getByIdStudentShouldReturnSpeciality() throws Exception {
-        Speciality saved = specialityRepository.save(speciality());
-        SpecialityResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/speciality/{id}", saved.getId())
-                .header("Authorization", "Bearer " + studentToken)
-        ).andExpect(status().isOk());
-        assertSpeciality(result, expectedDto);
-    }
-
-    @Test
-    void getByIdNonExistentShouldReturnBadRequest() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdNonExistentShouldReturnBadRequest(String token) throws Exception {
         mvc.perform(get("/speciality/{id}", UUID.randomUUID())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isBadRequest());
     }
 

@@ -32,4 +32,14 @@ public class SubjectRecommendationRequestMapper {
         }
         return entity;
     }
+
+    public SubjectRecommendationRequestDto toDto(SubjectRecommendation entity) {
+        if (entity == null) return null;
+        return SubjectRecommendationRequestDto.builder()
+                .subjectId(entity.getSubject() != null ? entity.getSubject().getId() : null)
+                .specialityId(entity.getSpeciality() != null ? entity.getSpeciality().getId() : null)
+                .recommendation(entity.getRecommendation())
+                .build();
+    }
+
 }

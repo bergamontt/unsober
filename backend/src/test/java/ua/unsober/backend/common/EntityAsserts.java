@@ -8,6 +8,7 @@ import ua.unsober.backend.feature.faculty.FacultyResponseDto;
 import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
 import ua.unsober.backend.feature.student.StudentResponseDto;
 import ua.unsober.backend.feature.subject.SubjectResponseDto;
+import ua.unsober.backend.feature.subjectrecommendation.SubjectRecommendationResponseDto;
 import ua.unsober.backend.feature.teacher.TeacherResponseDto;
 import ua.unsober.backend.feature.terminfo.TermInfoResponseDto;
 
@@ -158,5 +159,23 @@ public class EntityAsserts {
                 .andExpect(jsonPath("$[" + index + "].status").value(expected.getStatus().name()))
                 .andExpect(jsonPath("$[" + index + "].speciality.id").value(expected.getSpeciality().getId().toString()));
     }
+
+    public static void assertSubjectRecommendation(ResultActions result, SubjectRecommendationResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.subject.id").value(expected.getSubject().getId().toString()))
+                .andExpect(jsonPath("$.subject.name").value(expected.getSubject().getName()))
+                .andExpect(jsonPath("$.speciality.id").value(expected.getSpeciality().getId().toString()))
+                .andExpect(jsonPath("$.speciality.name").value(expected.getSpeciality().getName()))
+                .andExpect(jsonPath("$.recommendation").value(expected.getRecommendation().name()));
+    }
+
+    public static void assertSubjectRecommendationArray(ResultActions result, int index, SubjectRecommendationResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].subject.id").value(expected.getSubject().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].subject.name").value(expected.getSubject().getName()))
+                .andExpect(jsonPath("$[" + index + "].speciality.id").value(expected.getSpeciality().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].speciality.name").value(expected.getSpeciality().getName()))
+                .andExpect(jsonPath("$[" + index + "].recommendation").value(expected.getRecommendation().name()));
+    }
+
+
 
 }

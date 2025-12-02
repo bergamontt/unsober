@@ -2,6 +2,8 @@ package ua.unsober.backend.feature.department;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -62,52 +64,34 @@ class DepartmentSystemTest extends BaseSystemTest {
         assertEquals(0, departmentRepository.count());
     }
 
-    @Test
-    void getAllAsAdminShouldReturnAllDepartments() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getAllShouldReturnAllDepartments(String token) throws Exception {
         Department saved = departmentRepository.save(department());
         DepartmentResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/department")
-                        .header("Authorization", "Bearer " + adminToken))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
         assertDepartmentArray(result, 0, expectedDto);
         assertEquals(1, departmentRepository.count());
     }
 
-    @Test
-    void getAllAsStudentShouldReturnAllDepartments() throws Exception {
-        Department saved = departmentRepository.save(department());
-        DepartmentResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/department")
-                        .header("Authorization", "Bearer " + studentToken))
-                .andExpect(status().isOk());
-        assertDepartmentArray(result, 0, expectedDto);
-        assertEquals(1, departmentRepository.count());
-    }
-
-    @Test
-    void getByIdAsAdminShouldReturnDepartmentWithGivenId() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdAsAdminShouldReturnDepartmentWithGivenId(String token) throws Exception {
         Department saved = departmentRepository.save(department());
         DepartmentResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/department/{id}", saved.getId())
-                        .header("Authorization", "Bearer " + adminToken))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
         assertDepartment(result, expectedDto);
     }
 
-    @Test
-    void getByIdAsStudentShouldReturnDepartmentWithGivenId() throws Exception {
-        Department saved = departmentRepository.save(department());
-        DepartmentResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/department/{id}", saved.getId())
-                        .header("Authorization", "Bearer " + studentToken))
-                .andExpect(status().isOk());
-        assertDepartment(result, expectedDto);
-    }
-
-    @Test
-    void getByIdNonExistentShouldReturnBadRequest() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdNonExistentShouldReturnBadRequest(String token) throws Exception {
         mvc.perform(get("/department/{id}", UUID.randomUUID())
-                        .header("Authorization", "Bearer " + adminToken))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isBadRequest());
     }
 

@@ -2,6 +2,8 @@ package ua.unsober.backend.feature.student;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -72,68 +74,53 @@ class StudentSystemTest extends BaseSystemTest {
         assertEquals(0, studentRepository.count());
     }
 
-    @Test
-    void getAllAsAdminShouldReturnAllStudents() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getAllShouldReturnAllStudents(String token) throws Exception {
         Student saved = studentRepository.save(student());
         StudentResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/student")
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertStudentArray(result, 0, expectedDto);
         assertEquals(1, studentRepository.count());
     }
 
-    @Test
-    void getByIdAsAdminShouldReturnStudent() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdShouldReturnStudent(String token) throws Exception {
         Student saved = studentRepository.save(student());
         StudentResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/student/uuid/{id}", saved.getId())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertStudent(result, expectedDto);
     }
 
-    @Test
-    void getByIdAsStudentShouldReturnStudent() throws Exception {
-        Student saved = studentRepository.save(student());
-        StudentResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/student/uuid/{id}", saved.getId())
-                .header("Authorization", "Bearer " + studentToken)
-        ).andExpect(status().isOk());
-        assertStudent(result, expectedDto);
-    }
-
-    @Test
-    void getByIdNonExistentShouldReturnBadRequest() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByIdNonExistentShouldReturnBadRequest(String token) throws Exception {
         mvc.perform(get("/student/uuid/{id}", UUID.randomUUID())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isBadRequest());
     }
 
-    @Test
-    void getByEmailAsAdminShouldReturnStudent() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByEmailShouldReturnStudent(String token) throws Exception {
         Student saved = studentRepository.save(student());
         StudentResponseDto expectedDto = responseMapper.toDto(saved);
         ResultActions result = mvc.perform(get("/student/email/{email}", saved.getUser().getEmail())
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
         assertStudent(result, expectedDto);
     }
 
-    @Test
-    void getByEmailAsStudentShouldReturnStudent() throws Exception {
-        Student saved = studentRepository.save(student());
-        StudentResponseDto expectedDto = responseMapper.toDto(saved);
-        ResultActions result = mvc.perform(get("/student/email/{email}", saved.getUser().getEmail())
-                .header("Authorization", "Bearer " + studentToken)
-        ).andExpect(status().isOk());
-        assertStudent(result, expectedDto);
-    }
-
-    @Test
-    void getByEmailNonExistentShouldReturnBadRequest() throws Exception {
+    @MethodSource("authTokens")
+    @ParameterizedTest(name = "As {0}")
+    void getByEmailNonExistentShouldReturnBadRequest(String token) throws Exception {
         mvc.perform(get("/student/email/{email}", "e@example.com")
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + token)
         ).andExpect(status().isBadRequest());
     }
 
