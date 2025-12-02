@@ -26,4 +26,13 @@ public class CourseGroupRequestMapper {
         }
         return entity;
     }
+
+    public CourseGroupRequestDto toDto(CourseGroup entity) {
+        if (entity == null) return null;
+        return CourseGroupRequestDto.builder()
+                .courseId(entity.getCourse() != null ? entity.getCourse().getId() : null)
+                .groupNumber(entity.getGroupNumber())
+                .maxStudents(entity.getMaxStudents())
+                .build();
+    }
 }

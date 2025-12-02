@@ -3,6 +3,9 @@ package ua.unsober.backend.common;
 import org.springframework.test.web.servlet.ResultActions;
 import ua.unsober.backend.feature.admin.AdminResponseDto;
 import ua.unsober.backend.feature.building.BuildingResponseDto;
+import ua.unsober.backend.feature.course.CourseResponseDto;
+import ua.unsober.backend.feature.courseclass.CourseClassResponseDto;
+import ua.unsober.backend.feature.coursegroup.CourseGroupResponseDto;
 import ua.unsober.backend.feature.department.DepartmentResponseDto;
 import ua.unsober.backend.feature.faculty.FacultyResponseDto;
 import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
@@ -176,6 +179,70 @@ public class EntityAsserts {
                 .andExpect(jsonPath("$[" + index + "].recommendation").value(expected.getRecommendation().name()));
     }
 
+    public static void assertCourse(ResultActions result, CourseResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.subject.name").value(expected.getSubject().getName()))
+                .andExpect(jsonPath("$.maxStudents").value(expected.getMaxStudents()))
+                .andExpect(jsonPath("$.numEnrolled").value(expected.getNumEnrolled()))
+                .andExpect(jsonPath("$.courseYear").value(expected.getCourseYear()));
+    }
 
+    public static void assertCourseArray(ResultActions result, int index, CourseResponseDto expected) throws Exception {
+        String prefix = "$.content[" + index + "]";
+        result.andExpect(jsonPath(prefix + ".subject.name").value(expected.getSubject().getName()))
+                .andExpect(jsonPath(prefix + ".maxStudents").value(expected.getMaxStudents()))
+                .andExpect(jsonPath(prefix + ".numEnrolled").value(expected.getNumEnrolled()))
+                .andExpect(jsonPath(prefix + ".courseYear").value(expected.getCourseYear()));
+    }
+
+    public static void assertCourseGroup(ResultActions result, CourseGroupResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.course.subject.name").value(expected.getCourse().getSubject().getName()))
+                .andExpect(jsonPath("$.groupNumber").value(expected.getGroupNumber()))
+                .andExpect(jsonPath("$.maxStudents").value(expected.getMaxStudents()))
+                .andExpect(jsonPath("$.numEnrolled").value(expected.getNumEnrolled()))
+                .andExpect(jsonPath("$.course.courseYear").value(expected.getCourse().getCourseYear()));
+    }
+
+    public static void assertCourseGroupArray(ResultActions result, int index, CourseGroupResponseDto expected) throws Exception {
+        String prefix = "$[" + index + "]";
+        result.andExpect(jsonPath(prefix + ".course.subject.name").value(expected.getCourse().getSubject().getName()))
+                .andExpect(jsonPath(prefix + ".groupNumber").value(expected.getGroupNumber()))
+                .andExpect(jsonPath(prefix + ".maxStudents").value(expected.getMaxStudents()))
+                .andExpect(jsonPath(prefix + ".numEnrolled").value(expected.getNumEnrolled()))
+                .andExpect(jsonPath(prefix + ".course.courseYear").value(expected.getCourse().getCourseYear()));
+    }
+
+    public static void assertCourseClass(ResultActions result, CourseClassResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.group.id").value(expected.getGroup().getId().toString()))
+                .andExpect(jsonPath("$.group.groupNumber").value(expected.getGroup().getGroupNumber()))
+                .andExpect(jsonPath("$.group.maxStudents").value(expected.getGroup().getMaxStudents()))
+                .andExpect(jsonPath("$.group.numEnrolled").value(expected.getGroup().getNumEnrolled()))
+                .andExpect(jsonPath("$.group.course.subject.name").value(expected.getGroup().getCourse().getSubject().getName()))
+                .andExpect(jsonPath("$.group.course.courseYear").value(expected.getGroup().getCourse().getCourseYear()))
+                .andExpect(jsonPath("$.title").value(expected.getTitle()))
+                .andExpect(jsonPath("$.type").value(expected.getType().name()))
+                .andExpect(jsonPath("$.weeksList", equalTo(expected.getWeeksList())))
+                .andExpect(jsonPath("$.weekDay").value(expected.getWeekDay().name()))
+                .andExpect(jsonPath("$.classNumber").value(expected.getClassNumber()))
+                .andExpect(jsonPath("$.location").value(expected.getLocation()))
+                .andExpect(jsonPath("$.building.id").value(expected.getBuilding() != null ? expected.getBuilding().getId().toString() : null))
+                .andExpect(jsonPath("$.teacher.id").value(expected.getTeacher() != null ? expected.getTeacher().getId().toString() : null));
+    }
+
+    public static void assertCourseClassArray(ResultActions result, int index, CourseClassResponseDto expected) throws Exception {
+        String prefix = "$[" + index + "]";
+        result.andExpect(jsonPath(prefix + ".group.id").value(expected.getGroup().getId().toString()))
+                .andExpect(jsonPath(prefix + ".group.groupNumber").value(expected.getGroup().getGroupNumber()))
+                .andExpect(jsonPath(prefix + ".group.maxStudents").value(expected.getGroup().getMaxStudents()))
+                .andExpect(jsonPath(prefix + ".group.numEnrolled").value(expected.getGroup().getNumEnrolled()))
+                .andExpect(jsonPath(prefix + ".group.course.subject.name").value(expected.getGroup().getCourse().getSubject().getName()))
+                .andExpect(jsonPath(prefix + ".group.course.courseYear").value(expected.getGroup().getCourse().getCourseYear()))
+                .andExpect(jsonPath(prefix + ".title").value(expected.getTitle()))
+                .andExpect(jsonPath(prefix + ".type").value(expected.getType().name()))
+                .andExpect(jsonPath(prefix + ".weeksList", equalTo(expected.getWeeksList())))
+                .andExpect(jsonPath(prefix + ".classNumber").value(expected.getClassNumber()))
+                .andExpect(jsonPath(prefix + ".location").value(expected.getLocation()))
+                .andExpect(jsonPath(prefix + ".building.id").value(expected.getBuilding() != null ? expected.getBuilding().getId().toString() : null))
+                .andExpect(jsonPath(prefix + ".teacher.id").value(expected.getTeacher() != null ? expected.getTeacher().getId().toString() : null));
+    }
 
 }

@@ -2,6 +2,7 @@ package ua.unsober.backend.feature.courseclass;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.unsober.backend.common.enums.ClassType;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CourseClassRequestDto {
     @NotNull(message = "{courseClass.groupId.required}")
     private UUID groupId;

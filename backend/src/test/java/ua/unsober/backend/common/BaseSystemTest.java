@@ -1,8 +1,9 @@
 package ua.unsober.backend.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import java.util.stream.Stream;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseSystemTest {
     @Autowired
     protected MockMvc mvc;
@@ -34,10 +36,10 @@ public abstract class BaseSystemTest {
     @MockitoBean
     protected JavaMailSender javaMailSender;
 
-    protected static String studentToken;
-    protected static String adminToken;
+    protected String studentToken;
+    protected String adminToken;
 
-    @BeforeEach
+    @BeforeAll
     void generateTokens() {
         studentToken = jwtService.generateToken(
                 new UsernamePasswordAuthenticationToken(
@@ -51,7 +53,7 @@ public abstract class BaseSystemTest {
         );
     }
 
-    protected static Stream<Named<String>> authTokens() {
+    protected Stream<Named<String>> authTokens() {
         return Stream.of(
                 Named.of("admin", adminToken),
                 Named.of("student", studentToken)

@@ -4,17 +4,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ua.unsober.backend.feature.building.BuildingRepository;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
-import ua.unsober.backend.feature.course.CourseRepository;
 import ua.unsober.backend.feature.coursegroup.CourseGroupRepository;
 import ua.unsober.backend.feature.teacher.TeacherRepository;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class CourseClassRequestMapper {
-    private final CourseRepository courseRepository;
     private final CourseGroupRepository groupRepository;
     private final BuildingRepository buildingRepository;
     private final TeacherRepository teacherRepository;
@@ -50,5 +50,23 @@ public class CourseClassRequestMapper {
                     notFound.get("error.teacher.notfound", teacherId)));
         }
         return entity;
+    }
+
+    public CourseClassRequestDto toDto(CourseClass entity) {
+        if (entity == null) return null;
+        List<Integer> weeks = Arrays.stream(entity.getWeeksList().split(","))
+                .map(Integer::valueOf)
+                .toList();
+        return CourseClassRequestDto.builder()
+                .groupId(entity.getGroup() != null ? entity.getGroup().getId() : null)
+                .title(entity.getTitle())
+                .type(entity.getType())
+                .weeksList(weeks)
+                .weekDay(entity.getWeekDay())
+                .classNumber(entity.getClassNumber())
+                .location(entity.getLocation())
+                .buildingId(entity.getBuilding() != null ? entity.getBuilding().getId() : null)
+                .teacherId(entity.getTeacher() != null ? entity.getTeacher().getId() : null)
+                .build();
     }
 }

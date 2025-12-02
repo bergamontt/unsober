@@ -26,4 +26,13 @@ public class CourseRequestMapper {
         }
         return entity;
     }
+
+    public CourseRequestDto toDto(Course entity) {
+        if (entity == null) return null;
+        return CourseRequestDto.builder()
+                .subjectId(entity.getSubject() != null ? entity.getSubject().getId() : null)
+                .maxStudents(entity.getMaxStudents())
+                .courseYear(entity.getCourseYear())
+                .build();
+    }
 }

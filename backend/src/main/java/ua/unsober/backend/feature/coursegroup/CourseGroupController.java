@@ -46,5 +46,3 @@ public class CourseGroupController {
         courseGroupService.delete(id);
     }
 }
-
-
