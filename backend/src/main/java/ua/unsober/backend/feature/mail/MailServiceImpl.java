@@ -19,7 +19,6 @@ public class MailServiceImpl implements MailService {
         String email = enrollment.getStudent().getUser().getEmail();
         String name = enrollment.getStudent().getUser().getFirstName();
         String courseName = enrollment.getCourse().getSubject().getName();
-
         String text = templateLoader.getScheduleChangeText(name, courseName);
 
         SimpleMailMessage message = new SimpleMailMessage();

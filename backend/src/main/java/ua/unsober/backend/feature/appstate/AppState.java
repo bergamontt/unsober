@@ -2,7 +2,10 @@ package ua.unsober.backend.feature.appstate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 import ua.unsober.backend.common.enums.EnrollmentStage;
 import ua.unsober.backend.common.enums.Term;
@@ -11,6 +14,9 @@ import java.time.Instant;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppState {
     @Id
     private Integer id = 1;
