@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Індивідуальний навчальний план</title>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+
+        body {
+            font-family: 'DejaVu', sans-serif;
+            font-size: 9pt;
+            margin: 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        h1, h2, h4 {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 10pt;
+        }
+
+        h2 {
+            font-size: 9pt;
+            margin-top: 4px;
+        }
+
+        h4 {
+            font-size: 9pt;
+            margin-top: 50px;
+            margin-bottom: 25px;
+        }
+
+        .curriculum-print-heading {
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 80px;
+        }
+
+        .curriculum-print-heading span {
+            display: block;
+        }
+
+        .curriculum-info dl {
+            margin-top: 90px;
+        }
+
+        .curriculum-info dt {
+            display: inline;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .curriculum-info dd {
+            display: inline;
+            margin: 0;
+        }
+
+        .curriculum-info dd::after {
+            content: "";
+            display: block;
+        }
+
+        .curriculum-note {
+            margin-top: -65px;
+            margin-bottom: 30px;
+            font-size: 9pt;
+        }
+
+        .curriculum-note ol {
+            margin-left: 20px;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 2px;
+            vertical-align: middle;
+            font-size: 8pt;
+        }
+
+        thead th {
+            background-color: #f0f0f0;
+        }
+
+        .cell-number {
+            width: 5%;
+        }
+
+        .cell-name {
+            width: 40%;
+        }
+
+        .cell-hours {
+            width: 10%;
+        }
+
+        .cell-season {
+            width: 10%;
+        }
+
+        .cell-comment {
+            width: 15%;
+        }
+
+        .section-header-row th {
+            text-align: left;
+            font-weight: bold;
+            background-color: #ffffff;
+        }
+
+        .subtotal-row th {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .total-row th {
+            text-align: right;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+
+        .signature-block {
+            margin-top: 30px;
+        }
+
+        .signature-underline {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            min-width: 20px;
+            height: 14px;
+        }
+
+        .date-line {
+            margin-top: 12px;
+        }
+
+        .date-quote {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            min-width: 60px;
+            height: 14px;
+            text-align: center;
+        }
+
+        .date-month {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            min-width: 140px;
+            height: 14px;
+        }
+
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            font-size: 9pt;
+        }
+
+        .signature-table td {
+            border: none;
+            padding: 2px 0;
+        }
+
+        .signature-table .wide-underline {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            width: 100%;
+            height: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<section class="curriculum-print-heading">
+    <span class="text-uppercase">МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ</span>
+    <span>Національний університет "Києво-Могилянська академія"</span>
+    <span>Індивідуальний навчальний план студента</span>
+    <span>Київ</span>
+    <br/>
+</section>
+
+<section class="curriculum-info">
+    <dl>
+        <dt>Дата</dt>
+        <dd th:text="${currentDate}"></dd>
+
+        <dt>ПІБ студента</dt>
+        <dd th:text="${student.fullName}"></dd>
+
+        <dt>Спеціальність</dt>
+        <dd th:text="${student.specialityName}"></dd>
+
+        <dt>Рік навчання</dt>
+        <dd th:text="${student.studyYear}"></dd>
+
+        <dt>Освітній рівень</dt>
+        <dd th:text="${student.educationLevel}"></dd>
+
+        <dt>Факультет</dt>
+        <dd th:text="${student.faculty}"></dd>
+
+        <dt>Загальна кількість набраних кредитів:</dt>
+        <dd th:text="${student.totalCredits}"></dd>
+
+        <dt>Мною вже прослухано вибіркових дисциплін:</dt>
+    </dl>
+
+    <div class="curriculum-note">
+        <div style="float: right; text-align: right;">
+            Заповнюється і передається<br/>
+            до деканату у двох примірниках,<br/>
+            один з яких залишається у деканаті,<br/>
+            а <strong>другий студент повинен зберігати<br/>
+            протягом всіх років навчання</strong>.
+        </div>
+
+        <div style="clear: both; margin-top: 10px;">
+
+            <ol>
+                <li>
+                    дисциплін професійної та практичної підготовки
+                    <span class="signature-underline"></span> кред.
+                </li>
+                <li>
+                    дисциплін вільного вибору
+                    <span class="signature-underline"></span> кред.
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="text-center">
+    <h4 th:text="${academicYear}"></h4>
+</section>
+
+<section>
+    <table>
+        <thead>
+        <tr>
+            <th rowspan="2" class="text-center cell-number">№</th>
+            <th rowspan="2" class="text-center cell-name">Назва</th>
+            <th rowspan="2" class="text-center cell-hours">Загальна к-ть годин</th>
+            <th class="text-center cell-season">Осінь</th>
+            <th class="text-center cell-season">Весна</th>
+            <th class="text-center cell-season">ДПВС</th>
+            <th rowspan="2" class="text-center cell-comment">Примітка</th>
+        </tr>
+        <tr>
+            <th colspan="3" class="text-center">Тижневі години / Кредити ЄКТС</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr class="section-header-row">
+            <th colspan="7">1. Обов'язкові освітні компоненти</th>
+        </tr>
+
+        <tr class="section-header-row">
+            <th colspan="7">1.1. Навчальні дисципліни</th>
+        </tr>
+
+        <tr th:each="subject : ${mandatorySection.subjects}" class="text-center">
+            <td class="text-right cell-number" th:text="${subject.index}"></td>
+            <td class="text-left cell-name" style="text-align: left;">
+                <span th:text="${subject.subjectName}"></span>
+            </td>
+            <td class="cell-hours" th:text="${subject.totalHoursLabel}"></td>
+
+            <td class="cell-season" th:text="${subject.autumn.label}"></td>
+            <td class="cell-season" th:text="${subject.spring.label}"></td>
+            <td class="cell-season" th:text="${subject.summer.label}"></td>
+
+            <td class="cell-comment" th:text="${subject.comment}"></td>
+        </tr>
+
+        <tr class="text-center subtotal-row">
+            <th colspan="3" class="text-right">Всього за семестр:</th>
+            <td th:text="${mandatorySection.autumnTotal.label}"></td>
+            <td th:text="${mandatorySection.springTotal.label}"></td>
+            <td th:text="${mandatorySection.summerTotal.label}"></td>
+            <td class="cell-comment"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="page-break">
+    <table>
+        <thead>
+        <tr>
+            <th rowspan="2" class="text-center cell-number">№</th>
+            <th rowspan="2" class="text-center cell-name">Назва</th>
+            <th rowspan="2" class="text-center cell-hours">Загальна к-ть годин</th>
+            <th class="text-center cell-season">Осінь</th>
+            <th class="text-center cell-season">Весна</th>
+            <th class="text-center cell-season">ДПВС</th>
+            <th rowspan="2" class="text-center cell-comment">Примітка</th>
+        </tr>
+        <tr>
+            <th colspan="3" class="text-center">Тижневі години / Кредити ЄКТС</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr class="section-header-row">
+            <th colspan="7">2. Вибіркові освітні компоненти</th>
+        </tr>
+
+        <tr class="section-header-row">
+            <th colspan="7">2.1. Навчальні дисципліни професійної підготовки та практика</th>
+        </tr>
+
+        <tr th:each="subject : ${profOrientedSection.subjects}" class="text-center">
+            <td class="text-right cell-number" th:text="${subject.index}"></td>
+            <td class="text-left cell-name" style="text-align: left;">
+                <span th:text="${subject.subjectName}"></span>
+            </td>
+            <td class="cell-hours" th:text="${subject.totalHoursLabel}"></td>
+
+            <td class="cell-season" th:text="${subject.autumn.label}"></td>
+            <td class="cell-season" th:text="${subject.spring.label}"></td>
+            <td class="cell-season" th:text="${subject.summer.label}"></td>
+
+            <td class="cell-comment" th:text="${subject.comment}"></td>
+        </tr>
+
+        <tr class="text-center subtotal-row">
+            <th colspan="3" class="text-right">Всього за семестр:</th>
+            <td th:text="${profOrientedSection.autumnTotal.label}"></td>
+            <td th:text="${profOrientedSection.springTotal.label}"></td>
+            <td th:text="${profOrientedSection.summerTotal.label}"></td>
+            <td class="cell-comment"></td>
+        </tr>
+
+        <tr class="section-header-row">
+            <th colspan="7">2.2. Навчальні дисципліни вільного вибору</th>
+        </tr>
+
+        <tr th:each="subject : ${freeChoiceSection.subjects}" class="text-center">
+            <td class="text-right cell-number" th:text="${subject.index}"></td>
+            <td class="text-left cell-name" style="text-align: left;">
+                <span th:text="${subject.subjectName}"></span>
+            </td>
+            <td class="cell-hours" th:text="${subject.totalHoursLabel}"></td>
+
+            <td class="cell-season" th:text="${subject.autumn.label}"></td>
+            <td class="cell-season" th:text="${subject.spring.label}"></td>
+            <td class="cell-season" th:text="${subject.summer.label}"></td>
+
+            <td class="cell-comment" th:text="${subject.comment}"></td>
+        </tr>
+
+        <tr class="text-center subtotal-row">
+            <th colspan="3" class="text-right">Всього за семестр:</th>
+            <td th:text="${freeChoiceSection.autumnTotal.label}"></td>
+            <td th:text="${freeChoiceSection.springTotal.label}"></td>
+            <td th:text="${freeChoiceSection.summerTotal.label}"></td>
+            <td class="cell-comment"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <tfoot>
+        <tr class="text-center subtotal-row">
+            <th colspan="3" class="text-right">Всього:</th>
+            <td class="cell-season" th:text="${yearTotals.autumn.label}"></td>
+            <td class="cell-season" th:text="${yearTotals.spring.label}"></td>
+            <td class="cell-season" th:text="${yearTotals.summer.label}"></td>
+            <td class="cell-comment"></td>
+        </tr>
+        <tr class="text-center total-row">
+            <th colspan="3" class="text-right">Всього кредитів за рік:</th>
+            <td colspan="3" th:text="${yearTotals.creditsLabel}"></td>
+            <td class="cell-comment"></td>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+
+<section class="signature-block">
+    <table class="signature-table">
+        <tr>
+            <td>
+                <span>Студент</span>
+                <span class="signature-underline" style="min-width: 100px;"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span>Спеціаліст деканату</span>
+                <span class="signature-underline" style="min-width: 100px;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <span>Зміни в плані погоджені з деканом</span>
+                <span class="wide-underline" style="max-width: 300px;"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="date-line">
+                "<span class="date-quote"></span>"
+                <span class="date-month"></span>
+                <span><span th:text="${currentYear}"></span> р.</span>
+            </td>
+        </tr>
+    </table>
+</section>
+
+</body>
+</html>
