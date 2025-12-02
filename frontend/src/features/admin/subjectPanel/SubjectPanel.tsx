@@ -1,4 +1,4 @@
-import { Center, Pagination, Stack, Table } from "@mantine/core";
+import { Center, Pagination, Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
@@ -53,7 +53,17 @@ function SubjectPanel() {
 
     return (
         <Stack>
-            <SearchWithAdd label={t("manageSubjects:subjectSearch")} description={t("manageSubjects:enterName")} placeholder={t("manageSubjects:name")} onAdd={openAdd} />
+            <Stack gap="sm">
+                <Title order={4}>
+                    {t("subjects")}
+                </Title>
+                <SearchWithAdd
+                    label={t("manageSubjects:subjectSearch")}
+                    description={t("manageSubjects:enterName")}
+                    placeholder={t("manageSubjects:name")}
+                    onAdd={openAdd}
+                />
+            </Stack>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

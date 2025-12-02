@@ -11,5 +11,6 @@
     "enrollmentRequestFor": "Enrollment request for: ",
     "withdrawalRequestFrom": "Withdrawal request from: ",
     "approve": "Approve",
-    "decline": "Decline"
+    "decline": "Decline",
+    "requests": "Requests"
 }

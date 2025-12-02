@@ -78,9 +78,9 @@ function StatePanel() {
     const years = range(2000, 2050);
 
     return (
-        <Group grow={false}>
+        <Group >
             <Stack gap="xs">
-                <Title order={3}>
+                <Title order={4}>
                     {t("enrollmentStateManagement")}
                 </Title>
                 <Space />

@@ -1,4 +1,4 @@
-import { Stack, Table } from "@mantine/core";
+import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { useTranslation } from "react-i18next";
@@ -45,12 +45,17 @@ function SpecialityPanel() {
 
     return (
         <Stack>
-            <SearchWithAdd
-                label={t("manageSpecialities:specialitySearch")}
-                description={t("manageSpecialities:enterName")}
-                placeholder={t("manageSpecialities:name")}
-                onAdd={openAdd}
-            />
+            <Stack gap="sm">
+                <Title order={4}>
+                    {t("specialities")}
+                </Title>
+                <SearchWithAdd
+                    label={t("manageSpecialities:specialitySearch")}
+                    description={t("manageSpecialities:enterName")}
+                    placeholder={t("manageSpecialities:name")}
+                    onAdd={openAdd}
+                />
+            </Stack>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

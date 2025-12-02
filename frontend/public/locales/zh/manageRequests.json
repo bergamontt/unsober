@@ -11,5 +11,6 @@
     "enrollmentRequestFor": "入学请求： ",
     "withdrawalRequestFrom": "退课请求： ",
     "approve": "批准",
-    "decline": "拒绝"
+    "decline": "拒绝",
+    "requests": "请求"
 }

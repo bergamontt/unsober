@@ -1,4 +1,4 @@
-import { Stack, Table } from "@mantine/core";
+import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllFaculties } from "../../../services/FacultyService.ts";
 import { useTranslation } from "react-i18next";
@@ -44,12 +44,17 @@ function FacultyPanel() {
 
     return (
         <Stack>
-            <SearchWithAdd
-                label={t("manageFaculties:facultySearch")}
-                description={t("manageFaculties:enterName")}
-                placeholder={t("manageFaculties:name")}
-                onAdd={openAdd}
-            />
+            <Stack gap="sm">
+                <Title order={4}>
+                    {t("faculties")}
+                </Title>
+                <SearchWithAdd
+                    label={t("manageFaculties:facultySearch")}
+                    description={t("manageFaculties:enterName")}
+                    placeholder={t("manageFaculties:name")}
+                    onAdd={openAdd}
+                />
+            </Stack>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

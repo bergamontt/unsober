@@ -1,4 +1,4 @@
-import { Stack, Table } from "@mantine/core";
+import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -44,12 +44,17 @@ function TeacherPanel() {
 
     return (
         <Stack>
-            <SearchWithAdd
-                label={t("manageTeachers:teacherSearch")}
-                description={t("manageTeachers:enterEmail")}
-                placeholder={t("manageTeachers:email")}
-                onAdd={openAdd}
-            />
+             <Stack gap="sm">
+                <Title order={4}>
+                    {t("subjects")}
+                </Title>
+                <SearchWithAdd
+                    label={t("manageTeachers:teacherSearch")}
+                    description={t("manageTeachers:enterEmail")}
+                    placeholder={t("manageTeachers:email")}
+                    onAdd={openAdd}
+                />
+            </Stack>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

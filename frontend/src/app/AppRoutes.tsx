@@ -16,7 +16,7 @@ import DepartmentPanel from '../features/admin/departmentPanel/DepartmentPanel.t
 import BuildingPanel from '../features/admin/buildingPanel/BuildingPanel.tsx';
 import SubjectPanel from '../features/admin/subjectPanel/SubjectPanel.tsx';
 import InfoPage from '../features/info/InfoPage.tsx';
-import StatePanel from '../features/admin/state/StatePanel.tsx';
+import StatePanel from '../features/admin/statePanel/StatePanel.tsx';
 import AuthGuard from '../common/wrappers/AuthGuard.tsx';
 import { UserRole } from '../models/Auth.ts';
 import SettingsPanel from '../features/profile/SettingsPanel.tsx';

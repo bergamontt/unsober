@@ -11,5 +11,6 @@
     "enrollmentRequestFor": "Запит на запис на: ",
     "withdrawalRequestFrom": "Запит на виписування з: ",
     "approve": "Схвалити",
-    "decline": "Відхилити"
+    "decline": "Відхилити",
+    "requests": "Заявки"
 }

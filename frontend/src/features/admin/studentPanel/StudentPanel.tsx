@@ -1,4 +1,4 @@
-import { Stack, Table } from "@mantine/core";
+import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllStudents } from "../../../services/StudentService.ts";
 import { useTranslation } from "react-i18next";
@@ -46,12 +46,17 @@ function StudentPanel() {
 
     return (
         <Stack>
-            <SearchWithAdd
-                label={t("manageStudents:studentSearch")}
-                description={t("manageStudents:enterEmail")}
-                placeholder={t("manageStudents:email")}
-                onAdd={openAdd}
-            />
+            <Stack gap="sm">
+                <Title order={4}>
+                    {t("students")}
+                </Title>
+                <SearchWithAdd
+                    label={t("manageStudents:studentSearch")}
+                    description={t("manageStudents:enterEmail")}
+                    placeholder={t("manageStudents:email")}
+                    onAdd={openAdd}
+                />
+            </Stack>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

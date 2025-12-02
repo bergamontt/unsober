@@ -1,4 +1,4 @@
-import { Stack, Table } from "@mantine/core";
+import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllDepartments } from "../../../services/DepartmentService.ts";
 import { useTranslation } from "react-i18next";
@@ -44,12 +44,17 @@ function DepartmentPanel() {
 
     return (
         <Stack>
-            <SearchWithAdd
-                label={t("manageDepartments:departmentSearch")}
-                description={t("manageDepartments:enterName")}
-                placeholder={t("manageDepartments:name")}
-                onAdd={openAdd}
-            />
+            <Stack gap="sm">
+                <Title order={4}>
+                    {t("departments")}
+                </Title>
+                <SearchWithAdd
+                    label={t("manageDepartments:departmentSearch")}
+                    description={t("manageDepartments:enterName")}
+                    placeholder={t("manageDepartments:name")}
+                    onAdd={openAdd}
+                />
+            </Stack>
             <Table striped highlightOnHover withTableBorder>
                 <Table.Thead>
                     <Table.Tr>

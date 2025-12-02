@@ -1,4 +1,4 @@
-import { Stack } from "@mantine/core";
+import { Stack, Title } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import useFetch from "../../../hooks/useFetch.ts";
 import Searchbar from "../../../common/searchbar/Searchbar.tsx";
@@ -47,11 +47,16 @@ function RequestPanel() {
 
     return (
         <Stack>
-            <Searchbar
-                label={t("requestSearch")}
-                description={t("enterText")}
-                placeholder={t("text")}
-            />
+            <Stack gap="sm">
+                <Title order={4}>
+                    {t("requests")}
+                </Title>
+                <Searchbar
+                    label={t("requestSearch")}
+                    description={t("enterText")}
+                    placeholder={t("text")}
+                />
+            </Stack>
             <Stack>
                 {components}
             </Stack>
