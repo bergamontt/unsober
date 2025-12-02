@@ -1,5 +1,6 @@
 package ua.unsober.backend.common.jobs.studyplan;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepContribution;
@@ -21,9 +22,9 @@ public class StudyPlanSelectionTasklet implements Tasklet {
 
     @Override
     public RepeatStatus execute(
-            StepContribution contribution,
+            @NonNull StepContribution contribution,
             ChunkContext chunkContext
-    ) throws Exception {
+    ) {
         JobExecution jobExecution = chunkContext.getStepContext()
                 .getStepExecution()
                 .getJobExecution();

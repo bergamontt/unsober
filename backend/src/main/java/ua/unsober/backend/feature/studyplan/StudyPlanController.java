@@ -6,10 +6,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/study-plan")
@@ -20,7 +17,7 @@ public class StudyPlanController {
     private final Job studyPlanJob;
 
     @SneakyThrows
-    @GetMapping("/{id}/generate")
+    @PostMapping("/{id}/generate")
     public void generate(@PathVariable String id) {
         JobParameters params = new JobParametersBuilder()
                 .addString("studentId", id)

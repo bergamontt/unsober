@@ -42,8 +42,8 @@ public class SecurityConfig {
                                 "/speciality/**", "/static/**"
                         ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
-                                "/student-enrollment/enroll-self")
-                        .hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
+                                "/student-enrollment/enroll-self", "/study-plan/**")
+                        .hasAnyRole(Role.STUDENT.name())
                         .requestMatchers(HttpMethod.PATCH,
                                 "/student-enrollment/change-group",
                                 "/student-enrollment/clear-group/**")
