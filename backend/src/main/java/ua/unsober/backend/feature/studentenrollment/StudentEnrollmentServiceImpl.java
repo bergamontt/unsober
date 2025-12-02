@@ -71,12 +71,12 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
     private void decreaseEnrollmentCounters(StudentEnrollment enrollment){
         Course course = enrollment.getCourse();
-        course.setNumEnrolled(course.getNumEnrolled() - 1);
+        course.setNumEnrolled(Math.max(0, course.getNumEnrolled() - 1));
         courseRepository.save(course);
 
         CourseGroup group = enrollment.getGroup();
         if (group != null) {
-            group.setNumEnrolled(group.getNumEnrolled() - 1);
+            group.setNumEnrolled(Math.max(0, group.getNumEnrolled() - 1));
             courseGroupRepository.save(group);
         }
     }

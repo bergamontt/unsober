@@ -41,4 +41,15 @@ public class StudentEnrollmentRequestMapper {
 
         return entity;
     }
+
+    public StudentEnrollmentRequestDto toDto(StudentEnrollment entity) {
+        if (entity == null) return null;
+        return StudentEnrollmentRequestDto.builder()
+                .studentId(entity.getStudent() != null ? entity.getStudent().getId() : null)
+                .courseId(entity.getCourse() != null ? entity.getCourse().getId() : null)
+                .groupId(entity.getGroup() != null ? entity.getGroup().getId() : null)
+                .enrollmentYear(entity.getEnrollmentYear())
+                .build();
+    }
+
 }

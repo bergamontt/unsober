@@ -10,6 +10,7 @@ import ua.unsober.backend.feature.department.DepartmentResponseDto;
 import ua.unsober.backend.feature.faculty.FacultyResponseDto;
 import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
 import ua.unsober.backend.feature.student.StudentResponseDto;
+import ua.unsober.backend.feature.studentenrollment.StudentEnrollmentResponseDto;
 import ua.unsober.backend.feature.subject.SubjectResponseDto;
 import ua.unsober.backend.feature.subjectrecommendation.SubjectRecommendationResponseDto;
 import ua.unsober.backend.feature.teacher.TeacherResponseDto;
@@ -243,6 +244,43 @@ public class EntityAsserts {
                 .andExpect(jsonPath(prefix + ".location").value(expected.getLocation()))
                 .andExpect(jsonPath(prefix + ".building.id").value(expected.getBuilding() != null ? expected.getBuilding().getId().toString() : null))
                 .andExpect(jsonPath(prefix + ".teacher.id").value(expected.getTeacher() != null ? expected.getTeacher().getId().toString() : null));
+    }
+
+    public static void assertStudentEnrollment(ResultActions result, StudentEnrollmentResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.student.id").value(expected.getStudent().getId().toString()))
+                .andExpect(jsonPath("$.student.firstName").value(expected.getStudent().getFirstName()))
+                .andExpect(jsonPath("$.student.lastName").value(expected.getStudent().getLastName()))
+                .andExpect(jsonPath("$.student.patronymic").value(expected.getStudent().getPatronymic()))
+                .andExpect(jsonPath("$.student.email").value(expected.getStudent().getEmail()))
+                .andExpect(jsonPath("$.student.recordBookNumber").value(expected.getStudent().getRecordBookNumber()))
+                .andExpect(jsonPath("$.student.studyYear").value(expected.getStudent().getStudyYear()))
+                .andExpect(jsonPath("$.student.status").value(expected.getStudent().getStatus().name()))
+                .andExpect(jsonPath("$.course.id").value(expected.getCourse().getId().toString()))
+                .andExpect(jsonPath("$.course.subject.name").value(expected.getCourse().getSubject().getName()))
+                .andExpect(jsonPath("$.course.courseYear").value(expected.getCourse().getCourseYear()))
+                .andExpect(jsonPath("$.course.maxStudents").value(expected.getCourse().getMaxStudents()))
+                .andExpect(jsonPath("$.course.numEnrolled").value(expected.getCourse().getNumEnrolled()))
+                .andExpect(jsonPath("$.status").value(expected.getStatus().name()))
+                .andExpect(jsonPath("$.enrollmentYear").value(expected.getEnrollmentYear()))
+                .andExpect(jsonPath("$.createdAt").exists());
+    }
+
+    public static void assertStudentEnrollmentArray(ResultActions result, int index, StudentEnrollmentResponseDto expected) throws Exception {
+        String prefix = "$[" + index + "]";
+        result.andExpect(jsonPath(prefix + ".student.id").value(expected.getStudent().getId().toString()))
+                .andExpect(jsonPath(prefix + ".student.firstName").value(expected.getStudent().getFirstName()))
+                .andExpect(jsonPath(prefix + ".student.lastName").value(expected.getStudent().getLastName()))
+                .andExpect(jsonPath(prefix + ".student.patronymic").value(expected.getStudent().getPatronymic()))
+                .andExpect(jsonPath(prefix + ".student.email").value(expected.getStudent().getEmail()))
+                .andExpect(jsonPath(prefix + ".student.recordBookNumber").value(expected.getStudent().getRecordBookNumber()))
+                .andExpect(jsonPath(prefix + ".student.studyYear").value(expected.getStudent().getStudyYear()))
+                .andExpect(jsonPath(prefix + ".student.status").value(expected.getStudent().getStatus().name()))
+                .andExpect(jsonPath(prefix + ".course.id").value(expected.getCourse().getId().toString()))
+                .andExpect(jsonPath(prefix + ".course.subject.name").value(expected.getCourse().getSubject().getName()))
+                .andExpect(jsonPath(prefix + ".course.courseYear").value(expected.getCourse().getCourseYear()))
+                .andExpect(jsonPath(prefix + ".status").value(expected.getStatus().name()))
+                .andExpect(jsonPath(prefix + ".enrollmentYear").value(expected.getEnrollmentYear()))
+                .andExpect(jsonPath(prefix + ".createdAt").exists());
     }
 
 }
