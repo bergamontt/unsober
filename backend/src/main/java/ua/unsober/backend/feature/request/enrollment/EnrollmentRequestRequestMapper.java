@@ -33,4 +33,13 @@ public class EnrollmentRequestRequestMapper {
         }
         return entity;
     }
+
+    public EnrollmentRequestRequestDto toDto(EnrollmentRequest entity) {
+        if (entity == null) return null;
+        return new EnrollmentRequestRequestDto(
+                entity.getStudent() != null ? entity.getStudent().getId() : null,
+                entity.getCourse() != null ? entity.getCourse().getId() : null,
+                entity.getReason()
+        );
+    }
 }

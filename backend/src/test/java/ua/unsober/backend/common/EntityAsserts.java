@@ -8,6 +8,7 @@ import ua.unsober.backend.feature.courseclass.CourseClassResponseDto;
 import ua.unsober.backend.feature.coursegroup.CourseGroupResponseDto;
 import ua.unsober.backend.feature.department.DepartmentResponseDto;
 import ua.unsober.backend.feature.faculty.FacultyResponseDto;
+import ua.unsober.backend.feature.request.enrollment.EnrollmentRequestResponseDto;
 import ua.unsober.backend.feature.speciality.SpecialityResponseDto;
 import ua.unsober.backend.feature.student.StudentResponseDto;
 import ua.unsober.backend.feature.studentenrollment.StudentEnrollmentResponseDto;
@@ -281,6 +282,20 @@ public class EntityAsserts {
                 .andExpect(jsonPath(prefix + ".status").value(expected.getStatus().name()))
                 .andExpect(jsonPath(prefix + ".enrollmentYear").value(expected.getEnrollmentYear()))
                 .andExpect(jsonPath(prefix + ".createdAt").exists());
+    }
+
+    public static void assertEnrollmentRequest(ResultActions result, EnrollmentRequestResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$.reason").value(expected.getReason()))
+                .andExpect(jsonPath("$.status").value(expected.getStatus().toString()))
+                .andExpect(jsonPath("$.student.id").value(expected.getStudent().getId().toString()))
+                .andExpect(jsonPath("$.course.id").value(expected.getCourse().getId().toString()));
+    }
+
+    public static void assertEnrollmentRequestArray(ResultActions result, int index, EnrollmentRequestResponseDto expected) throws Exception {
+        result.andExpect(jsonPath("$[" + index + "].reason").value(expected.getReason()))
+                .andExpect(jsonPath("$[" + index + "].status").value(expected.getStatus().toString()))
+                .andExpect(jsonPath("$[" + index + "].student.id").value(expected.getStudent().getId().toString()))
+                .andExpect(jsonPath("$[" + index + "].course.id").value(expected.getCourse().getId().toString()));
     }
 
 }

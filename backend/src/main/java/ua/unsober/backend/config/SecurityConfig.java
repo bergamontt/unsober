@@ -43,14 +43,14 @@ public class SecurityConfig {
                         ).hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
                                 "/student-enrollment/enroll-self")
-                        .hasRole(Role.STUDENT.name())
+                        .hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.PATCH,
                                 "/student-enrollment/change-group",
                                 "/student-enrollment/clear-group/**")
-                        .hasRole(Role.STUDENT.name())
+                        .hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST,
                                 "/enrollment-request/**", "/withdrawal-request/**")
-                        .hasRole(Role.STUDENT.name())
+                        .hasAnyRole(Role.STUDENT.name(), Role.ADMIN.name())
                         .anyRequest().hasRole(Role.ADMIN.name())
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
