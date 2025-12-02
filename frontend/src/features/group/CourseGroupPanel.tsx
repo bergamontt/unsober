@@ -2,12 +2,11 @@ import useFetch from "../../hooks/useFetch";
 import { getAppState } from "../../services/AppStateService";
 import { getAllEnrollmentsByStudentIdAndYear } from "../../services/StudentEnrollmentService";
 import { useStudentStore } from "../../hooks/studentStore";
-import PageWrapper from "../../common/pageWrapper/PageWrapper";
-import { Group, Title } from "@mantine/core";
+import { Group, Stack, Title } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import CourseGroupList from "./CourseGroupList";
 
-function CourseGroupPage() {
+function CourseGroupPanel() {
     const { t } = useTranslation("groups");
     const { user: student } = useStudentStore();
 
@@ -22,7 +21,11 @@ function CourseGroupPage() {
         return <></>;
 
     return (
-        <PageWrapper>
+        <Stack
+            align="flex-end"
+            justify="center"
+            pl="6em"
+        >
             <Group justify="space-between">
                 <Title>{t("chosenGroups")} </Title>
                 <Title order={4}>
@@ -33,8 +36,8 @@ function CourseGroupPage() {
                 enrollments={enrollments}
                 state={state}
             />
-        </PageWrapper>
+        </Stack>
     );
 }
 
-export default CourseGroupPage;
+export default CourseGroupPanel;

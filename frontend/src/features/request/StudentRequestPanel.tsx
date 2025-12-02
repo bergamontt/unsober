@@ -1,5 +1,4 @@
 import { Stack, Title, Text, Group, NativeSelect, Space, Box } from "@mantine/core";
-import PageWrapper from "../../common/pageWrapper/PageWrapper";
 import { useTranslation } from "react-i18next";
 import SearchWithAdd from "../admin/SearchWithAdd";
 import { useDisclosure } from "@mantine/hooks";
@@ -8,13 +7,13 @@ import AddRequestModal from "./AddRequestModal";
 import { RequestStatus } from "../../models/Request";
 import { useState } from "react";
 
-function StudentRequestPage() {
+function StudentRequestPanel() {
     const { t } = useTranslation("studentRequests");
     const [addOpened, { open, close }] = useDisclosure(false);
     const [filter, setFilter] = useState<RequestStatus | undefined>();
 
     return (
-        <PageWrapper>
+        <Stack pl="6em">
             <Stack gap="4">
                 <Title order={2} pb="0.4em">
                     {t("studentRequestHeader")}
@@ -49,7 +48,7 @@ function StudentRequestPage() {
                     />
                 </Group>
 
-                <Space h="xs"/>
+                <Space h="xs" />
 
                 <StudentRequestList showOnly={filter} />
             </Stack>
@@ -58,8 +57,8 @@ function StudentRequestPage() {
                 opened={addOpened}
                 close={close}
             />
-        </PageWrapper>
+        </Stack>
     );
 }
 
-export default StudentRequestPage;
+export default StudentRequestPanel;

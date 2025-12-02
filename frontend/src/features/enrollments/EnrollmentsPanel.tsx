@@ -1,5 +1,4 @@
-import { Group, NativeSelect, Title } from "@mantine/core";
-import PageWrapper from "../../common/pageWrapper/PageWrapper";
+import { Group, NativeSelect, Stack, Title } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import IndividualPlan from "./IndividualPlan";
@@ -7,7 +6,7 @@ import { getAllYearsByStudentId } from "../../services/StudentEnrollmentService"
 import { useStudentStore } from "../../hooks/studentStore";
 import useFetch from "../../hooks/useFetch";
 
-function EnrollmentsPage() {
+function EnrollmentsPanel() {
     const { user: student } = useStudentStore();
     const { t } = useTranslation("enrollments");
     const { data } = useFetch(getAllYearsByStudentId, [student?.id ?? null]);
@@ -19,7 +18,7 @@ function EnrollmentsPage() {
         }
     }, [years, setYear]);
     return (
-        <PageWrapper>
+        <Stack pl="6em">
             <Group justify="space-between">
                 <Title>{t('individualPlan')} </Title>
                 <NativeSelect
@@ -35,8 +34,8 @@ function EnrollmentsPage() {
                 />
             </Group>
             <IndividualPlan year={year} />
-        </PageWrapper>
+        </Stack>
     );
 }
 
-export default EnrollmentsPage;
+export default EnrollmentsPanel;

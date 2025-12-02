@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import Overlay from "../common/overlay/Overlay.tsx";
 import MainPage from "../features/main/MainPage.tsx";
 import LoginPage from "../features/auth/LoginPage.tsx";
-import ProfilePage from '../features/profile/ProfilePage.tsx';
 import CoursesPage from '../features/course/CoursesPage.tsx';
 import CoursePage from '../features/course/CoursePage.tsx';
 import SchedulePage from '../features/schedule/SchedulePage.tsx';
@@ -17,12 +16,15 @@ import DepartmentPanel from '../features/admin/departmentPanel/DepartmentPanel.t
 import BuildingPanel from '../features/admin/buildingPanel/BuildingPanel.tsx';
 import SubjectPanel from '../features/admin/subjectPanel/SubjectPanel.tsx';
 import InfoPage from '../features/info/InfoPage.tsx';
-import EnrollmentsPage from '../features/enrollments/EnrollmentsPage.tsx';
-import CourseGroupPage from '../features/group/CourseGroupPage.tsx';
 import StatePanel from '../features/admin/state/StatePanel.tsx';
 import AuthGuard from '../common/wrappers/AuthGuard.tsx';
 import { UserRole } from '../models/Auth.ts';
-import StudentRequestPage from '../features/request/StudentRequestPage.tsx';
+import SettingsPanel from '../features/profile/SettingsPanel.tsx';
+import ProfilePanel from '../features/profile/ProfilePanel.tsx';
+import ProfileLayout from '../features/profile/ProfileLayout.tsx';
+import EnrollmentsPanel from '../features/enrollments/EnrollmentsPanel.tsx';
+import CourseGroupPanel from '../features/group/CourseGroupPanel.tsx';
+import StudentRequestPanel from '../features/request/StudentRequestPanel.tsx';
 
 function AppRoutes() {
     return (
@@ -34,10 +36,41 @@ function AppRoutes() {
                     path="profile"
                     element={
                         <AuthGuard>
-                            <ProfilePage />
+                            <ProfileLayout />
                         </AuthGuard>
                     }
-                />
+                >
+                    <Route path="" element={<ProfilePanel />} />
+                    <Route path="settings" element={<SettingsPanel />} />
+
+                    <Route
+                        path="enrollments"
+                        element={
+                            <AuthGuard roles={[UserRole.STUDENT]}>
+                                <EnrollmentsPanel />
+                            </AuthGuard>
+                        }
+                    />
+
+                    <Route
+                        path="groups"
+                        element={
+                            <AuthGuard roles={[UserRole.STUDENT]}>
+                                <CourseGroupPanel />
+                            </AuthGuard>
+                        }
+                    />
+
+                    <Route
+                        path="requests"
+                        element={
+                            <AuthGuard roles={[UserRole.STUDENT]}>
+                                <StudentRequestPanel />
+                            </AuthGuard>
+                        }
+                    />
+                </Route>
+
                 <Route
                     path="courses"
                     element={
@@ -68,31 +101,6 @@ function AppRoutes() {
                     element={
                         <AuthGuard roles={[UserRole.STUDENT]}>
                             <SchedulePage />
-                        </AuthGuard>
-                    }
-                />
-                <Route
-                    path="enrollments"
-                    element={
-                        <AuthGuard roles={[UserRole.STUDENT]}>
-                            <EnrollmentsPage />
-                        </AuthGuard>
-                    }
-                />
-                <Route
-                    path="groups"
-                    element={
-                        <AuthGuard roles={[UserRole.STUDENT]}>
-                            <CourseGroupPage />
-                        </AuthGuard>
-                    }
-                />
-
-                <Route
-                    path="requests"
-                    element={
-                        <AuthGuard roles={[UserRole.STUDENT]}>
-                            <StudentRequestPage />
                         </AuthGuard>
                     }
                 />
