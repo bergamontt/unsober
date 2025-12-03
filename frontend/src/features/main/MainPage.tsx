@@ -32,6 +32,7 @@ function MainPage() {
                             variant="outline"
                             color="indigo"
                             radius="xl"
+                            onClick={() => window.location.replace("https://distedu.ukma.edu.ua/my/")}
                         >
                             {t("sections:news")}
                         </Button>
