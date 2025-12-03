@@ -17,6 +17,12 @@ public class MailTemplateLoader {
                 .replace("{course}", course);
     }
 
+    public String getStageChangeText(String name, String stage) {
+        return loadTemplate(MailTemplate.STAGE_CHANGE)
+                .replace("{name}", name)
+                .replace("{stage}", stage);
+    }
+
     @SneakyThrows
     private String loadTemplate(MailTemplate template) {
         ClassPathResource resource = new ClassPathResource(template.getPath());
