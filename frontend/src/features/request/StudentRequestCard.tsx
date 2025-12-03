@@ -32,7 +32,7 @@ function StudentRequestCard({ title, reason, status, createdAt }: StudentRequest
                 text = "declined";
                 break;
             default:
-                color = "yellow";
+                color = "#0096FF";
                 icon = <Icon src={hourglass} />;
                 text = "pending"
                 break;

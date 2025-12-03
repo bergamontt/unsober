@@ -35,7 +35,7 @@ function InfoPage() {
                 <Text size="lg">
                     {t(`infoPage:${appState.enrollmentStage}`)}
                 </Text>
-                <Text size="lg">
+                <Text size="md">
                     {t(`stageDescription:${appState.enrollmentStage}`)}
                 </Text>
             </Stack>
