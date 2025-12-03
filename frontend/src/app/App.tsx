@@ -6,15 +6,19 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';
 import { AuthProvider } from '../hooks/authStore';
+import {ModalsProvider} from '@mantine/modals';
+
 
 function App() {
     return (
         <AuthProvider>
             <MantineProvider>
-                <Notifications />
-                <BrowserRouter>
-                    <AppRoutes />
-                </BrowserRouter>
+                <ModalsProvider>
+                    <Notifications />
+                    <BrowserRouter>
+                        <AppRoutes />
+                    </BrowserRouter>
+                </ModalsProvider>
             </MantineProvider>
         </AuthProvider>
     );

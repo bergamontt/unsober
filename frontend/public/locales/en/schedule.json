@@ -1,5 +1,15 @@
 {
-    "error": "Error",
-    "unknownDownloadError": "Failed to generate schedule",
-    "generate": "Generate"
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "lecture": "Lecture",
+  "practice": "Practice",
+  "seminar": "Seminar",
+  "consultation": "Consultation",
+  "credit": "Credit",
+  "exam": "Exam"
 }

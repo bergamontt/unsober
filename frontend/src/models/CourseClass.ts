@@ -46,6 +46,6 @@ export interface CourseClassDto {
     weekDay?: WeekDay;
     classNumber?: number;
     location?: string;
-    building?: Building;
-    teacher?: Teacher;
+    buildingId?: string;
+    teacherId?: string;
 }

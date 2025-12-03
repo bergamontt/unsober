@@ -1,4 +1,4 @@
-import type { Course, CourseFilterDto } from "../models/Course";
+import type {Course, CourseDto, CourseFilterDto} from "../models/Course";
 import type { Page, PageableParams } from "../models/Page";
 import api from "./api";
 
@@ -49,3 +49,17 @@ export const getAllCoursesByYear = async (
     });
     return response.data;
 };
+
+export const addCourse = async (dto: CourseDto): Promise<Course> => {
+    const response = await api.post<Course>('/course', dto);
+    return response.data;
+}
+
+export const updateCourse = async (id: string, dto: CourseDto): Promise<Course> => {
+    const response = await api.patch<Course>(`/course/${id}`, dto);
+    return response.data;
+}
+
+export const deleteCourse = async (id: string): Promise<void> => {
+    await api.delete<void>(`/course/${id}`);
+}
