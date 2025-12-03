@@ -1,19 +1,22 @@
-import type {CourseClass} from "../../../models/CourseClass.ts";
-import type {CourseGroup} from "../../../models/CourseGroup.ts";
-import {ActionIcon, Button, Group, Stack, Table, Tooltip, Text} from "@mantine/core";
-import {useTranslation} from "react-i18next";
+import type { CourseClass } from "../../../models/CourseClass.ts";
+import type { CourseGroup } from "../../../models/CourseGroup.ts";
+import { ActionIcon, Button, Group, Stack, Table, Tooltip, Text } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 import RowActions from "../RowActions.tsx";
 import Icon from "../../../common/icon/Icon.tsx";
 import plus from "../../../assets/plus_black.svg";
 import editIcon from "../../../assets/edit.svg";
 import delIcon from "../../../assets/delete.svg";
-import type {Course} from "../../../models/Course.ts";
-import {modals} from "@mantine/modals";
+import type { Course } from "../../../models/Course.ts";
+import { modals } from "@mantine/modals";
 import GroupModal from "./GroupModal";
-import {deleteCourseGroup} from "../../../services/CourseGroupService";
-import {notifications} from "@mantine/notifications";
+import { deleteCourseGroup } from "../../../services/CourseGroupService";
+import { notifications } from "@mantine/notifications";
 import ClassModal from "./ClassModal";
-import {deleteCourseClass} from "../../../services/CourseClassService";
+import { deleteCourseClass } from "../../../services/CourseClassService";
+import { useState } from "react";
+import EditCourseModal from "./EditCourseModal.tsx";
+import DeleteCourseModal from "./DeleteCourseModal.tsx";
 
 interface ClassTableProps {
     classes: CourseClass[];
@@ -24,13 +27,15 @@ interface ClassTableProps {
 }
 
 function ClassTable({
-                        classes,
-                        group = undefined,
-                        course,
-                        groupNums = undefined,
-                        groupIds = undefined
-                    }: ClassTableProps) {
-    const {t} = useTranslation(["coursePanel", "schedule", "adminMenu"]);
+    classes,
+    group = undefined,
+    course,
+    groupNums = undefined,
+    groupIds = undefined
+}: ClassTableProps) {
+    const { t } = useTranslation(["coursePanel", "schedule", "adminMenu"]);
+    const [editCourseOpen, setEditCourseOpen] = useState(false);
+    const [deleteCourseOpen, setDeleteCourseOpen] = useState(false);
 
     if (group) {
         return (
@@ -45,7 +50,7 @@ function ClassTable({
                                 openGroupModal(course.id, groupNums!, group, t);
                             }}
                         >
-                            <Icon src={editIcon}/>
+                            <Icon src={editIcon} />
                         </ActionIcon>
                     </Tooltip>
                     <Tooltip label={t("adminMenu:delete")}>
@@ -54,7 +59,7 @@ function ClassTable({
                             color="red"
                             onClick={() => confirmGroupDelete(group.id, t)}
                         >
-                            <Icon src={delIcon}/>
+                            <Icon src={delIcon} />
                         </ActionIcon>
                     </Tooltip>
                 </Group>
@@ -105,10 +110,10 @@ function ClassTable({
                     </Table>
                 }
 
-                <Button bd={"1px dashed #DEE2E6"} leftSection={<Icon src={plus} size={"20px"}/>} color={"black"}
-                        radius={0} variant={"outline"} fullWidth onClick={() =>
-                    openClassModal([group.id], false, course.subject.name, null, t)
-                }>
+                <Button bd={"1px dashed #DEE2E6"} leftSection={<Icon src={plus} size={"20px"} />} color={"black"}
+                    radius={0} variant={"outline"} fullWidth onClick={() =>
+                        openClassModal([group.id], false, course.subject.name, null, t)
+                    }>
                     {t("addClass")}
                 </Button>
             </Stack>
@@ -116,26 +121,36 @@ function ClassTable({
     } else {
         return (
             <Stack gap={0}>
+                <EditCourseModal
+                    courseId={course.id}
+                    opened={editCourseOpen}
+                    close={() => setEditCourseOpen(false)}
+                />
+
+                <DeleteCourseModal
+                    courseId={course.id}
+                    opened={deleteCourseOpen}
+                    close={() => setDeleteCourseOpen(false)}
+                />
+
                 <Group align={"center"} justify={"start"} fw={600} mb={5} gap={"xs"}>
                     {`${t("all")} (${getEnrollmentNums(course, t)})`}
                     <Tooltip label={t("adminMenu:edit")}>
                         <ActionIcon
                             variant="light"
                             color="indigo"
-                            onClick={() => {
-                                // openGroupModal(course.id, groupNums!, group, t);
-                            }}
+                            onClick={() => setEditCourseOpen(true)}
                         >
-                            <Icon src={editIcon}/>
+                            <Icon src={editIcon} />
                         </ActionIcon>
                     </Tooltip>
                     <Tooltip label={t("adminMenu:delete")}>
                         <ActionIcon
                             variant="light"
                             color="red"
-                            // onClick={() => confirmGroupDelete(group.id, t)}
+                            onClick={() => setDeleteCourseOpen(true)}
                         >
-                            <Icon src={delIcon}/>
+                            <Icon src={delIcon} />
                         </ActionIcon>
                     </Tooltip>
                 </Group>
@@ -187,10 +202,10 @@ function ClassTable({
                 }
                 {
                     groupIds &&
-                    <Button bd={"1px dashed #DEE2E6"} leftSection={<Icon src={plus} size={"20px"}/>} color={"black"}
-                            radius={0} variant={"outline"} fullWidth onClick={() =>
-                        openClassModal(groupIds, true, course.subject.name, null, t)
-                    }>
+                    <Button bd={"1px dashed #DEE2E6"} leftSection={<Icon src={plus} size={"20px"} />} color={"black"}
+                        radius={0} variant={"outline"} fullWidth onClick={() =>
+                            openClassModal(groupIds, true, course.subject.name, null, t)
+                        }>
                         {t("addClass")}
                     </Button>
                 }
@@ -253,7 +268,7 @@ function openGroupModal(courseId: string, groupNums: number[], group: CourseGrou
         onClose: () => {
             //TODO refresh
         },
-        children: <GroupModal courseId={courseId} groupNums={groupNums} group={group}/>
+        children: <GroupModal courseId={courseId} groupNums={groupNums} group={group} />
     })
 }
 
@@ -265,7 +280,7 @@ function openClassModal(groupIds: string[], isLecture: boolean, courseTitle: str
             //TODO refresh
         },
         children: <ClassModal groupIds={groupIds} isLecture={isLecture} courseTitle={courseTitle}
-                              courseClass={courseClass}/>
+            courseClass={courseClass} />
     })
 }
 
@@ -278,8 +293,8 @@ function confirmGroupDelete(groupId: string, t: any) {
                 {t("deleteGroupBody")}
             </Text>
         ),
-        labels: {confirm: `${t("adminMenu:delete")}`, cancel: `${t("adminMenu:cancel")}`},
-        confirmProps: {color: 'red'},
+        labels: { confirm: `${t("adminMenu:delete")}`, cancel: `${t("adminMenu:cancel")}` },
+        confirmProps: { color: 'red' },
         onCancel: () => {
         },
         onConfirm: () => {
@@ -311,8 +326,8 @@ function confirmClassDelete(classId: string, t: any) {
                 {t("deleteClassBody")}
             </Text>
         ),
-        labels: {confirm: `${t("adminMenu:delete")}`, cancel: `${t("adminMenu:cancel")}`},
-        confirmProps: {color: 'red'},
+        labels: { confirm: `${t("adminMenu:delete")}`, cancel: `${t("adminMenu:cancel")}` },
+        confirmProps: { color: 'red' },
         onCancel: () => {
         },
         onConfirm: () => {

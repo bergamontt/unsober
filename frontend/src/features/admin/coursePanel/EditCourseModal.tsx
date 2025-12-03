@@ -1,5 +1,5 @@
 import { Button, Modal, NumberInput, Select, Stack } from "@mantine/core";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
@@ -8,14 +8,16 @@ import useFetch from "../../../hooks/useFetch.ts";
 import { getAppState } from "../../../services/AppStateService.ts";
 import type { CourseDto } from "../../../models/Course.ts";
 import { validateCourseDto } from "../../../validation/courseValidator.ts";
-import { addCourse } from "../../../services/CourseService.ts";
+import { getCourseById, updateCourse } from "../../../services/CourseService.ts";
 
 type AddModalProps = {
     opened: boolean;
     close: () => void;
+    courseId: string;
 }
 
-function AddCourseModal({ opened, close }: AddModalProps) {
+function EditCourseModal({ opened, close, courseId }: AddModalProps) {
+    const { data: course } = useFetch(getCourseById, [courseId]);
     const { t } = useTranslation("coursePanel");
     const { t: errT } = useTranslation("courseErrors");
     const { data: state } = useFetch(getAppState, []);
@@ -30,10 +32,17 @@ function AddCourseModal({ opened, close }: AddModalProps) {
     const { data } = useFetch(getSubjects, [params]);
     const subjects = data?.content ?? [];
 
-    const [subjectId, setSubjectId] = useState<string | undefined>();
-    const [maxStudents, setMaxStudents] = useState<number | undefined>();
+    const [subjectId, setSubjectId] = useState<string | undefined>(course?.subject.id);
+    const [maxStudents, setMaxStudents] = useState<number | undefined>(course?.maxStudents);
 
     const [isAdding, setIsAdding] = useState(false);
+
+    useEffect(() => {
+        if (!course)
+            return;
+        setSubjectId(course.subject.id);
+        setMaxStudents(course.maxStudents);
+    }, [course]);
 
     const resetForm = () => {
         setSubjectId(undefined);
@@ -59,17 +68,17 @@ function AddCourseModal({ opened, close }: AddModalProps) {
 
         setIsAdding(true);
         try {
-            await addCourse(dto);
+            await updateCourse(courseId, dto);
             notifications.show({
                 title: t("success"),
-                message: t("courseAdded"),
+                message: t("courseUpdated"),
                 color: "green",
             });
             close();
             resetForm();
             window.location.reload();
         } catch (err: unknown) {
-            let errorMessage = t("unknownAddError");
+            let errorMessage = t("unknownUpdateError");
             if (axios.isAxiosError(err)) {
                 const data = err.response?.data;
                 if (typeof data === "string" && data.trim()) {
@@ -84,12 +93,12 @@ function AddCourseModal({ opened, close }: AddModalProps) {
         } finally {
             setIsAdding(false);
         }
-    }, [t, errT, close, state, subjectId, maxStudents]);
+    }, [t, errT, close, courseId, state, subjectId, maxStudents]);
 
     return (
         <Modal
             centered
-            title={t("addCourse")}
+            title={t("editCourse")}
             opened={opened}
             onClose={close}
         >
@@ -115,11 +124,11 @@ function AddCourseModal({ opened, close }: AddModalProps) {
                     loading={isAdding}
                     disabled={isAdding}
                 >
-                    {t("addCourse")}
+                    {t("saveChanges")}
                 </Button>
             </Stack>
         </Modal>
     );
 }
 
-export default AddCourseModal;
+export default EditCourseModal;

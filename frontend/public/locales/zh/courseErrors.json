@@ -1,0 +1,5 @@
+{
+    "course.subjectId.required": "必须选择科目。",
+    "course.maxStudents.non-negative": "学生人数必须为零或正数。",
+    "course.courseYear.required": "必须选择学年。"
+}

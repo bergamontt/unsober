@@ -1,0 +1,5 @@
+{
+    "course.subjectId.required": "A subject is required.",
+    "course.maxStudents.non-negative": "The number of students must be zero or a positive number.",
+    "course.courseYear.required": "Academic year is required."
+}

@@ -1,27 +1,27 @@
-import {Stack, Button, Group, Loader, Center} from "@mantine/core";
-import {useTranslation} from "react-i18next";
-import type {Course} from "../../../models/Course.ts";
-import {useNavigate} from "react-router";
+import { Stack, Button, Group, Loader, Center } from "@mantine/core";
+import { useTranslation } from "react-i18next";
+import type { Course } from "../../../models/Course.ts";
+import { useNavigate } from "react-router";
 import useFetch from "../../../hooks/useFetch.ts";
-import {getAllClassesByCourseId} from "../../../services/CourseClassService.ts";
-import {useEffect, useState} from "react";
-import type {CourseGroup} from "../../../models/CourseGroup.ts";
-import type {CourseClass} from "../../../models/CourseClass.ts";
+import { getAllClassesByCourseId } from "../../../services/CourseClassService.ts";
+import { useEffect, useState } from "react";
+import type { CourseGroup } from "../../../models/CourseGroup.ts";
+import type { CourseClass } from "../../../models/CourseClass.ts";
 import ClassTable from "./ClassTable.tsx";
 import Icon from "../../../common/icon/Icon.tsx";
 import plus from "../../../assets/plus.svg";
 import GroupModal from "./GroupModal.tsx";
-import {modals} from "@mantine/modals";
-import {getAllGroupsByCourseId} from "../../../services/CourseGroupService";
+import { modals } from "@mantine/modals";
+import { getAllGroupsByCourseId } from "../../../services/CourseGroupService";
 
 interface CoursePanelProps {
     course: Course
 }
 
-function CoursePanelInfo({course}: CoursePanelProps) {
-    const {t} = useTranslation(["coursePanel", "schedule"]);
-    const {data: classes} = useFetch(getAllClassesByCourseId, [course.id]);
-    const {data: groups} = useFetch(getAllGroupsByCourseId, [course.id]);
+function CoursePanelInfo({ course }: CoursePanelProps) {
+    const { t } = useTranslation(["coursePanel", "schedule"]);
+    const { data: classes } = useFetch(getAllClassesByCourseId, [course.id]);
+    const { data: groups } = useFetch(getAllGroupsByCourseId, [course.id]);
     const [lectures, setLectures] = useState([] as CourseClass[]);
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ function CoursePanelInfo({course}: CoursePanelProps) {
                         onClick={() => {
                             openGroupModal(course.id, groups.map(g => g.groupNumber).sort(), null, t);
                         }}
-                        leftSection={<Icon src={plus} size={"24px"}/>}
+                        leftSection={<Icon src={plus} size={"24px"} />}
                     >
                         {t('addGroup')}
                     </Button>
@@ -69,9 +69,9 @@ function CoursePanelInfo({course}: CoursePanelProps) {
                         .sort((a, b) => a.groupNumber - b.groupNumber)
                         .map((group: CourseGroup) => (
                             <ClassTable classes={classes} group={group} key={group.id} course={course}
-                                        groupNums={groups.map(g => g.groupNumber).sort()}/>
-                    ))
-                    || <Center><Loader color="gray" size="xl" mt={50} mb={50}/></Center>
+                                groupNums={groups.map(g => g.groupNumber).sort()} />
+                        ))
+                    || <Center><Loader color="gray" size="xl" mt={50} mb={50} /></Center>
                 }
             </Stack>
         </Stack>
@@ -87,7 +87,7 @@ function openGroupModal(courseId: string, groupNums: number[], group: CourseGrou
         onClose: () => {
 
         },
-        children: <GroupModal courseId={courseId} groupNums={groupNums} group={group}/>
+        children: <GroupModal courseId={courseId} groupNums={groupNums} group={group} />
     })
 }
 

@@ -1,0 +1,5 @@
+{
+    "course.subjectId.required": "Потрібно вказати дисципліну.",
+    "course.maxStudents.non-negative": "Кількість студентів повинна бути нуль або додатнє число.",
+    "course.courseYear.required": "Потрібно вказати навчальний рік."
+}

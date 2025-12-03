@@ -8,19 +8,22 @@ export type DeleteModalProps = {
     confirmLabel: string;
     loading: boolean;
     onConfirm: () => void;
+    title?: string;
 };
 
 function DeleteModal({
     opened, close, message, denyLabel,
-    confirmLabel, loading, onConfirm,
+    confirmLabel, loading, onConfirm, title
 }: DeleteModalProps) {
     return (
         <Modal
             size="xs"
             centered
+            title={title}
             opened={opened}
             onClose={close}
             withCloseButton={false}
+            
         >
             <Stack mt="xs">
                 <Text>
