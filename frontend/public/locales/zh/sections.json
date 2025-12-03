@@ -10,5 +10,6 @@
     "enrollments": "入学人数",
     "groups": "分组",
     "requests": "请求",
-    "checkout": "请在日历中查看您所在小组的课程表"
+    "checkout": "请在日历中查看您所在小组的课程表",
+    "logOut": "注销"
 }

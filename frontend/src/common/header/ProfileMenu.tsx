@@ -6,15 +6,18 @@ import admin from '../../assets/admin.svg';
 import requests from '../../assets/request.svg';
 import groups from '../../assets/student-hat-light.svg';
 import enrollments from '../../assets/study-plan.svg';
+import logOut from '../../assets/log-out.svg';
 import Icon from '../icon/Icon.tsx';
 import { useTranslation } from 'react-i18next';
 import { useUserDetailsStore } from '../../hooks/userDetailsStore';
 import { useAdminStore } from '../../hooks/adminStore';
 import { useStudentStore } from '../../hooks/studentStore.ts';
+import { useAuthStore } from '../../hooks/authStore.tsx';
 
 function ProfileMenu() {
     const navigate = useNavigate();
     const { t } = useTranslation("sections");
+    const { removeToken } = useAuthStore();
     const { user: adminUser } = useAdminStore();
     const { user: student } = useStudentStore();
     const { firstName, lastName } = useUserDetailsStore();
@@ -82,6 +85,17 @@ function ProfileMenu() {
                         </Menu.Item>
                     </>
                 }
+
+                <Menu.Item
+                    color="red"
+                    leftSection={<Icon src={logOut} />}
+                    onClick={() => { 
+                        removeToken();
+                        navigate('/admin/student');
+                    }}
+                >
+                    {t("logOut")}
+                </Menu.Item>
             </Menu.Dropdown>
         </Menu>
     );
