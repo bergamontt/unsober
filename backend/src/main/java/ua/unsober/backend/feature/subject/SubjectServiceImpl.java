@@ -3,6 +3,7 @@ package ua.unsober.backend.feature.subject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -26,8 +27,9 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Page<SubjectResponseDto> getAll(Pageable pageable) {
-        return subjectRepository.findAll(pageable)
+    public Page<SubjectResponseDto> getAll(SubjectFilterDto filters, Pageable pageable) {
+        Specification<Subject> spec = SubjectSpecification.buildSpecification(filters);
+        return subjectRepository.findAll(spec, pageable)
                 .map(responseMapper::toDto);
     }
 

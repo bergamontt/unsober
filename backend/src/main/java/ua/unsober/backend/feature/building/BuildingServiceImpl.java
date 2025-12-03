@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.building;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 import ua.unsober.unsoberstartermap.MapService;
@@ -27,8 +28,9 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public List<BuildingResponseDto> getAll() {
-        return buildingRepository.findAll()
+    public List<BuildingResponseDto> getAll(BuildingFilterDto filters) {
+        Specification<Building> spec = BuildingSpecification.buildSpecification(filters);
+        return buildingRepository.findAll(spec)
                 .stream()
                 .map(responseMapper::toDto)
                 .map(this::addMap)

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface FacultyService {
     FacultyResponseDto create(FacultyRequestDto dto);
-    List<FacultyResponseDto> getAll();
+    List<FacultyResponseDto> getAll(FacultyFilterDto filters);
     FacultyResponseDto getById(UUID id);
     FacultyResponseDto update(UUID id, FacultyRequestDto dto);
     void delete(UUID id);

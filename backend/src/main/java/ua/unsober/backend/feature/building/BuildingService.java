@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface BuildingService {
     BuildingResponseDto create(BuildingRequestDto dto);
-    List<BuildingResponseDto> getAll();
+    List<BuildingResponseDto> getAll(BuildingFilterDto filters);
     BuildingResponseDto getById(UUID id);
     BuildingResponseDto update(UUID id, BuildingRequestDto dto);
     void delete(UUID id);

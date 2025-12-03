@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.teacher;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -25,8 +26,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherResponseDto> getAll() {
-        return teacherRepository.findAll()
+    public List<TeacherResponseDto> getAll(TeacherFilterDto filters) {
+        Specification<Teacher> spec = TeacherSpecification.buildSpecification(filters);
+        return teacherRepository.findAll(spec)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();

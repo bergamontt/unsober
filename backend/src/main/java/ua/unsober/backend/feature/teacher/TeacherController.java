@@ -21,8 +21,8 @@ public class TeacherController {
     }
 
     @GetMapping
-    public List<TeacherResponseDto> getAll() {
-        return teacherService.getAll();
+    public List<TeacherResponseDto> getAll(@ModelAttribute TeacherFilterDto filters) {
+        return teacherService.getAll(filters);
     }
 
     @GetMapping("/{id}")

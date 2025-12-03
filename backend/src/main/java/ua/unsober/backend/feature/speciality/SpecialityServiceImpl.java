@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.speciality;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -25,8 +26,9 @@ public class SpecialityServiceImpl implements SpecialityService {
     }
 
     @Override
-    public List<SpecialityResponseDto> getAll() {
-        return specialityRepository.findAll()
+    public List<SpecialityResponseDto> getAll(SpecialityFilterDto filters) {
+        Specification<Speciality> spec = SpecialitySpecification.buildSpecification(filters);
+        return specialityRepository.findAll(spec)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();

@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface DepartmentService {
     DepartmentResponseDto create(DepartmentRequestDto dto);
-    List<DepartmentResponseDto> getAll();
+    List<DepartmentResponseDto> getAll(DepartmentFilterDto filters);
     DepartmentResponseDto getById(UUID id);
     DepartmentResponseDto update(UUID id, DepartmentRequestDto dto);
     void delete(UUID id);

@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.department;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -25,8 +26,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<DepartmentResponseDto> getAll() {
-        return departmentRepository.findAll().stream()
+    public List<DepartmentResponseDto> getAll(DepartmentFilterDto filters) {
+        Specification<Department> spec = DepartmentSpecification.buildSpecification(filters);
+        return departmentRepository.findAll(spec).stream()
                 .map(responseMapper::toDto)
                 .toList();
     }

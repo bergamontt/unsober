@@ -20,8 +20,8 @@ public class SpecialityController {
     }
 
     @GetMapping
-    public List<SpecialityResponseDto> getAll() {
-        return specialityService.getAll();
+    public List<SpecialityResponseDto> getAll(@ModelAttribute SpecialityFilterDto filters) {
+        return specialityService.getAll(filters);
     }
 
     @GetMapping("/{id}")

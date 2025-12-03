@@ -20,8 +20,8 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentResponseDto> getAll() {
-        return studentService.getAll();
+    public List<StudentResponseDto> getAll(@ModelAttribute StudentFilterDto filters) {
+        return studentService.getAll(filters);
     }
 
     @GetMapping("/uuid/{id}")

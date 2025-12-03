@@ -20,8 +20,11 @@ public class SubjectController {
     }
 
     @GetMapping
-    public Page<SubjectResponseDto> getAll(Pageable pageable) {
-        return subjectService.getAll(pageable);
+    public Page<SubjectResponseDto> getAll(
+            @ModelAttribute SubjectFilterDto filters,
+            Pageable pageable
+    ) {
+        return subjectService.getAll(filters, pageable);
     }
 
     @GetMapping("/{id}")

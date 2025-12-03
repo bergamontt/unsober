@@ -20,8 +20,8 @@ public class FacultyController {
     }
 
     @GetMapping
-    public List<FacultyResponseDto> getAll() {
-        return facultyService.getAll();
+    public List<FacultyResponseDto> getAll(@ModelAttribute FacultyFilterDto filters) {
+        return facultyService.getAll(filters);
     }
 
     @GetMapping("/{id}")

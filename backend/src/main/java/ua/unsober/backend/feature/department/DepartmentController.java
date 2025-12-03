@@ -20,8 +20,8 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public List<DepartmentResponseDto> getAll() {
-        return departmentService.getAll();
+    public List<DepartmentResponseDto> getAll(@ModelAttribute DepartmentFilterDto filters) {
+        return departmentService.getAll(filters);
     }
 
     @GetMapping("/{id}")

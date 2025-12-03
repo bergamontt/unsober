@@ -33,7 +33,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @Cacheable(value = "coursesPage", key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + (#filters.subjectName ?: 'all')")
+    @Cacheable(value = "coursesPage", key =
+            "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + " +
+            "(#filters.subjectName ?: 'all') + '-' + " +
+            "(#filters.educationLevel ?: 'all') + '-' + " +
+            "(#filters.credits ?: 'all') + '-' + " +
+            "(#filters.term ?: 'all') + '-' + " +
+            "(#filters.courseYear ?: 'all')")
     public Page<CourseResponseDto> getAll(CourseFilterDto filters, Pageable pageable) {
         Specification<Course> spec = CourseSpecification.buildSpecification(filters);
         return courseRepository.findAll(spec, pageable)

@@ -20,8 +20,8 @@ public class BuildingController {
     }
 
     @GetMapping
-    public List<BuildingResponseDto> getAll() {
-        return buildingService.getAll();
+    public List<BuildingResponseDto> getAll(@ModelAttribute BuildingFilterDto filters) {
+        return buildingService.getAll(filters);
     }
 
     @GetMapping("/{id}")

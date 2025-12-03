@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.student;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,8 +49,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponseDto> getAll() {
-        return studentRepository.findAll()
+    public List<StudentResponseDto> getAll(StudentFilterDto filters) {
+        Specification<Student> spec = StudentSpecification.buildSpecification(filters);
+        return studentRepository.findAll(spec)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();

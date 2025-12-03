@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.faculty;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
 
@@ -26,8 +27,9 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public List<FacultyResponseDto> getAll() {
-        return facultyRepository.findAll().stream()
+    public List<FacultyResponseDto> getAll(FacultyFilterDto filters) {
+        Specification<Faculty> spec = FacultySpecification.buildSpecification(filters);
+        return facultyRepository.findAll(spec).stream()
                 .map(responseMapper::toDto)
                 .toList();
     }
