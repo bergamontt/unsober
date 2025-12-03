@@ -3,19 +3,20 @@ package ua.unsober.backend.feature.course;
 import org.springframework.data.jpa.domain.Specification;
 import ua.unsober.backend.common.enums.EducationLevel;
 import ua.unsober.backend.common.enums.Term;
-
 import java.math.BigDecimal;
 
 public class CourseSpecification {
 
     private CourseSpecification() {}
 
+    private static final String SUBJECT = "subject";
+
     public static Specification<Course> hasSubjectNameContaining(String subjectName) {
         return (root, query, criteriaBuilder) -> {
             if (subjectName == null || subjectName.isBlank())
                 return null;
             return criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("subject").get("name")),
+                    criteriaBuilder.lower(root.get(SUBJECT).get("name")),
                     "%" + subjectName.toLowerCase() + "%"
             );
         };
@@ -26,7 +27,7 @@ public class CourseSpecification {
             if (educationLevel == null)
                 return null;
             return criteriaBuilder.equal(
-                    root.get("subject").get("educationLevel"),
+                    root.get(SUBJECT).get("educationLevel"),
                     educationLevel
             );
         };
@@ -37,7 +38,7 @@ public class CourseSpecification {
             if (credits == null)
                 return null;
             return criteriaBuilder.equal(
-                    root.get("subject").get("credits"),
+                    root.get(SUBJECT).get("credits"),
                     credits
             );
         };
@@ -48,7 +49,7 @@ public class CourseSpecification {
             if (term == null)
                 return null;
             return criteriaBuilder.equal(
-                    root.get("subject").get("term"),
+                    root.get(SUBJECT).get("term"),
                     term
             );
         };

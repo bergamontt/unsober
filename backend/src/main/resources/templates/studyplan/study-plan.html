@@ -255,33 +255,33 @@
 </section>
 
 <section class="text-center">
-    <h4 th:text="${academicYear}"></h4>
+    <h4 th:text="${academicYear} ?: 'Навчальний рік не вказано'">Навчальний рік не вказано</h4>
 </section>
 
 <section>
     <table>
         <thead>
         <tr>
-            <th rowspan="2" class="text-center cell-number">№</th>
-            <th rowspan="2" class="text-center cell-name">Назва</th>
-            <th rowspan="2" class="text-center cell-hours">Загальна к-ть годин</th>
-            <th class="text-center cell-season">Осінь</th>
-            <th class="text-center cell-season">Весна</th>
-            <th class="text-center cell-season">ДПВС</th>
-            <th rowspan="2" class="text-center cell-comment">Примітка</th>
+            <th rowspan="2" scope="col" class="text-center cell-number">№</th>
+            <th rowspan="2" scope="col" class="text-center cell-name">Назва</th>
+            <th rowspan="2" scope="col" class="text-center cell-hours">Загальна к-ть годин</th>
+            <th scope="col" class="text-center cell-season">Осінь</th>
+            <th scope="col" class="text-center cell-season">Весна</th>
+            <th scope="col" class="text-center cell-season">ДПВС</th>
+            <th rowspan="2" scope="col" class="text-center cell-comment">Примітка</th>
         </tr>
         <tr>
-            <th colspan="3" class="text-center">Тижневі години / Кредити ЄКТС</th>
+            <th colspan="3" scope="colgroup" class="text-center">Тижневі години / Кредити ЄКТС</th>
         </tr>
         </thead>
 
         <tbody>
         <tr class="section-header-row">
-            <th colspan="7">1. Обов'язкові освітні компоненти</th>
+            <th colspan="7" scope="rowgroup">1. Обов'язкові освітні компоненти</th>
         </tr>
 
         <tr class="section-header-row">
-            <th colspan="7">1.1. Навчальні дисципліни</th>
+            <th colspan="7" scope="rowgroup">1.1. Навчальні дисципліни</th>
         </tr>
 
         <tr th:each="subject : ${mandatorySection.subjects}" class="text-center">
@@ -299,7 +299,7 @@
         </tr>
 
         <tr class="text-center subtotal-row">
-            <th colspan="3" class="text-right">Всього за семестр:</th>
+            <th colspan="3" scope="row"><span class="visually-hidden">Всього за семестр обов'язкових дисциплін</span>Всього за семестр:</th>
             <td th:text="${mandatorySection.autumnTotal.label}"></td>
             <td th:text="${mandatorySection.springTotal.label}"></td>
             <td th:text="${mandatorySection.summerTotal.label}"></td>
@@ -313,26 +313,26 @@
     <table>
         <thead>
         <tr>
-            <th rowspan="2" class="text-center cell-number">№</th>
-            <th rowspan="2" class="text-center cell-name">Назва</th>
-            <th rowspan="2" class="text-center cell-hours">Загальна к-ть годин</th>
-            <th class="text-center cell-season">Осінь</th>
-            <th class="text-center cell-season">Весна</th>
-            <th class="text-center cell-season">ДПВС</th>
-            <th rowspan="2" class="text-center cell-comment">Примітка</th>
+            <th rowspan="2" scope="col" class="text-center cell-number">№</th>
+            <th rowspan="2" scope="col" class="text-center cell-name">Назва</th>
+            <th rowspan="2" scope="col" class="text-center cell-hours">Загальна к-ть годин</th>
+            <th scope="col" class="text-center cell-season">Осінь</th>
+            <th scope="col" class="text-center cell-season">Весна</th>
+            <th scope="col" class="text-center cell-season">ДПВС</th>
+            <th rowspan="2" scope="col" class="text-center cell-comment">Примітка</th>
         </tr>
         <tr>
-            <th colspan="3" class="text-center">Тижневі години / Кредити ЄКТС</th>
+            <th colspan="3" scope="colgroup" class="text-center">Тижневі години / Кредити ЄКТС</th>
         </tr>
         </thead>
 
         <tbody>
         <tr class="section-header-row">
-            <th colspan="7">2. Вибіркові освітні компоненти</th>
+            <th colspan="7" scope="rowgroup">2. Вибіркові освітні компоненти</th>
         </tr>
 
         <tr class="section-header-row">
-            <th colspan="7">2.1. Навчальні дисципліни професійної підготовки та практика</th>
+            <th colspan="7" scope="rowgroup">2.1. Навчальні дисципліни професійної підготовки та практика</th>
         </tr>
 
         <tr th:each="subject : ${profOrientedSection.subjects}" class="text-center">
@@ -350,7 +350,7 @@
         </tr>
 
         <tr class="text-center subtotal-row">
-            <th colspan="3" class="text-right">Всього за семестр:</th>
+            <th colspan="3" scope="row"><span class="visually-hidden">Всього за семестр професійної підготовки</span>Всього за семестр:</th>
             <td th:text="${profOrientedSection.autumnTotal.label}"></td>
             <td th:text="${profOrientedSection.springTotal.label}"></td>
             <td th:text="${profOrientedSection.summerTotal.label}"></td>
@@ -358,7 +358,7 @@
         </tr>
 
         <tr class="section-header-row">
-            <th colspan="7">2.2. Навчальні дисципліни вільного вибору</th>
+            <th colspan="7" scope="rowgroup">2.2. Навчальні дисципліни вільного вибору</th>
         </tr>
 
         <tr th:each="subject : ${freeChoiceSection.subjects}" class="text-center">
@@ -376,7 +376,7 @@
         </tr>
 
         <tr class="text-center subtotal-row">
-            <th colspan="3" class="text-right">Всього за семестр:</th>
+            <th colspan="3" scope="row"><span class="visually-hidden">Всього за семестр вільного вибору</span>Всього за семестр:</th>
             <td th:text="${freeChoiceSection.autumnTotal.label}"></td>
             <td th:text="${freeChoiceSection.springTotal.label}"></td>
             <td th:text="${freeChoiceSection.summerTotal.label}"></td>
@@ -404,7 +404,7 @@
 </section>
 
 <section class="signature-block">
-    <table class="signature-table">
+    <table class="signature-table" aria-hidden="true">
         <tr>
             <td>
                 <span>Студент</span>
