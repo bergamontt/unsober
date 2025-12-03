@@ -31,3 +31,7 @@ export interface StudentDto {
     studyYear?: number;
     status?: StudentStatus;
 }
+
+export interface StudentFilterDto {
+    email?: string;
+}

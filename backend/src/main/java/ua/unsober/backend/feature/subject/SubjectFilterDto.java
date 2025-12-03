@@ -6,4 +6,3 @@ import lombok.Data;
 public class SubjectFilterDto {
     private String name;
 }
-

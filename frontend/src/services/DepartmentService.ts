@@ -1,8 +1,12 @@
-import type { Department, DepartmentDto } from "../models/Department";
+import type { Department, DepartmentDto, DepartmentFilterDto } from "../models/Department";
 import api from "./api";
 
-export const getAllDepartments = async (): Promise<Department[]> => {
-    const response = await api.get<Department[]>('/department');
+export const getAllDepartments = async (
+    filters: DepartmentFilterDto = {}
+): Promise<Department[]> => {
+    const response = await api.get<Department[]>('/department', {
+        params: filters
+    });
     return response.data;
 };
 

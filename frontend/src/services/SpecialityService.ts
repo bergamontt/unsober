@@ -1,8 +1,12 @@
 import api from './api.ts';
-import type { Speciality, SpecialityDto } from '../models/Speciality.ts'
+import type { Speciality, SpecialityDto, SpecialityFilterDto } from '../models/Speciality.ts'
 
-export const getAllSpecialities = async (): Promise<Speciality[]> => {
-    const response = await api.get<Speciality[]>('/speciality');
+export const getAllSpecialities = async (
+    filters: SpecialityFilterDto = {}
+): Promise<Speciality[]> => {
+    const response = await api.get<Speciality[]>('/speciality', {
+        params: filters
+    });
     return response.data;
 };
 

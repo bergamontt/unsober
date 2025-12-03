@@ -1,8 +1,8 @@
 import api from './api.ts';
-import type { Student, StudentDto } from '../models/Student.ts'
+import type { Student, StudentDto, StudentFilterDto } from '../models/Student.ts'
 
 export const getStudentById = async (id: string | null): Promise<Student | null> => {
-    if(!id)
+    if (!id)
         return null;
     const response = await api.get<Student>(`/student/uuid/${id}`);
     return response.data;
@@ -13,8 +13,12 @@ export const getStudentByEmail = async (email: string): Promise<Student> => {
     return response.data;
 };
 
-export const getAllStudents = async (): Promise<Student[]> => {
-    const response = await api.get<Student[]>('/student');
+export const getAllStudents = async (
+    filters: StudentFilterDto = {}
+): Promise<Student[]> => {
+    const response = await api.get<Student[]>('/student', {
+        params: filters
+    });
     return response.data;
 };
 
