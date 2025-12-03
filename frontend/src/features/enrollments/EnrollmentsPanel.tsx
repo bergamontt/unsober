@@ -1,6 +1,6 @@
 import { Button, Group, NativeSelect, Stack, Title } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import IndividualPlan from "./IndividualPlan";
 import { getAllYearsByStudentId } from "../../services/StudentEnrollmentService";
 import { useStudentStore } from "../../hooks/studentStore";
@@ -8,10 +8,12 @@ import useFetch from "../../hooks/useFetch";
 import download from "../../assets/download.svg";
 import Icon from "../../common/icon/Icon";
 import { downloadStudyPlan } from "../../services/StudyPlanService";
+import { notifications } from "@mantine/notifications";
 
 function EnrollmentsPanel() {
     const { user: student } = useStudentStore();
     const { t } = useTranslation("enrollments");
+    const [isDownloading, setIsDownloading] = useState(false);
     const { data } = useFetch(getAllYearsByStudentId, [student?.id ?? null]);
     const years = data ?? [];
     const [year, setYear] = useState<number>(years[0]);
@@ -20,6 +22,21 @@ function EnrollmentsPanel() {
             setYear(years[0]);
         }
     }, [years, setYear]);
+
+    const handleDownload = useCallback(async () => {
+        setIsDownloading(true);
+        try {
+            await downloadStudyPlan(student?.id ?? null);
+        } catch (err: unknown) {
+            notifications.show({
+                title: t("error"),
+                message: t("unknownDownloadError"),
+                color: "red",
+            });
+        } finally {
+            setIsDownloading(false);
+        }
+    }, [t, close, student]);
 
     return (
         <Stack pl="6em">
@@ -46,8 +63,10 @@ function EnrollmentsPanel() {
                     />
                     <Button
                         color='green'
+                        loading={isDownloading}
+                        disabled={isDownloading}
                         leftSection={<Icon src={download} size="1.5em" />}
-                        onClick={() => { downloadStudyPlan(student?.id ?? null); }}
+                        onClick={handleDownload}
                     >
                         {t("download")}
                     </Button>

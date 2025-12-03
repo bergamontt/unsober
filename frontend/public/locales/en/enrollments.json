@@ -18,5 +18,7 @@
     "noEnrollments": "No enrollments",
     "group": "Group",
     "groupNotChosen": "Not chosen",
-    "download": "Download"
+    "download": "Download",
+    "error": "Error",
+    "unknownDownloadError": "Could not download individual study plan"
 }

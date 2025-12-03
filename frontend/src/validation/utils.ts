@@ -4,6 +4,10 @@ export function isBlank(value?: string | null): boolean {
     return value == null || value.trim().length == 0;
 }
 
+export function isNumber(value: any): value is number {
+    return typeof value === "number" && !isNaN(value);
+}
+
 export function isPositiveInt(value?: number | null): boolean {
     return typeof value === "number"
         && Number.isFinite(value)
@@ -21,7 +25,7 @@ export function isIntegerLike(value: unknown): boolean {
 }
 
 export function matchesDigits(value: unknown, maxInt: number, maxFrac: number): boolean {
-    if (typeof value !== "number" || !Number.isFinite(value)) 
+    if (typeof value !== "number" || !Number.isFinite(value))
         return false;
     const s = Math.abs(value).toString();
     const parts = s.includes("e") ? Number(Math.abs(value)).toFixed(Math.max(maxFrac, 6)) : s;
@@ -29,9 +33,9 @@ export function matchesDigits(value: unknown, maxInt: number, maxFrac: number): 
     const [intPart, fracPart] = normalized.split(".");
     const intDigits = intPart.replace(/^0+(?=\d)|^$/g, (m) => (m === "" ? "0" : ""));
     const fracDigits = fracPart ?? "";
-    if (intDigits.length > maxInt) 
+    if (intDigits.length > maxInt)
         return false;
-    if (fracDigits.length > maxFrac) 
+    if (fracDigits.length > maxFrac)
         return false;
     return true;
 }

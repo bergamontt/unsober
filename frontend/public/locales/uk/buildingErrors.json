@@ -1,0 +1,14 @@
+{
+    "building.name.required": "Потрібно вказати назву будівлі.",
+    "building.name.size": "Назва будівлі повинна бути не більше {{max}} символів.",
+    "building.address.required": "Потрібно вказати адресу.",
+    "building.address.size": "Адреса повинна бути не більше {{max}} символів.",
+    "building.latitude.required": "Потрібно вказати широту.",
+    "building.latitude.min": "Широта не може бути меншою за {{min}}.",
+    "building.latitude.max": "Широта не може бути більшою за {{max}}.",
+    "building.latitude.digits": "Широта повинна містити до 2 цілих та до 8 дробових знаків.",
+    "building.longitude.required": "Потрібно вказати довготу.",
+    "building.longitude.min": "Довгота не може бути меншою за {{min}}.",
+    "building.longitude.max": "Довгота не може бути більшою за {{max}}.",
+    "building.longitude.digits": "Довгота повинна містити до 3 цілих та до 8 дробових знаків."
+}

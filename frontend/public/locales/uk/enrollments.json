@@ -18,5 +18,7 @@
     "noEnrollments": "Немає записів",
     "group": "Група",
     "groupNotChosen": "Не обрана",
-    "download": "Завантажити"
+    "download": "Завантажити",
+    "error": "Помилка",
+    "unknownDownloadError": "Не вдалося завантажити ІНП"
 }

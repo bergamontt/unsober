@@ -18,14 +18,16 @@ function ProfilePanel() {
             <Text size="lg">
                 {lastName} {firstName} {patronymic}
             </Text>
-            <Title order={5}>
-                {t('profile:speciality')}
-            </Title>
             {
                 student &&
-                <Text size="lg">
-                    {student.speciality.name}, {student.studyYear} рік навчання
-                </Text>
+                <>
+                    <Title order={5}>
+                        {t('profile:speciality')}
+                    </Title>
+                    <Text size="lg">
+                        {student.speciality.name}, {student.studyYear} рік навчання
+                    </Text>
+                </>
             }
             <Title order={5}>
                 {t('profile:email')}

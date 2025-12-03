@@ -1,0 +1,14 @@
+{
+    "building.name.required": "Building name is required.",
+    "building.name.size": "Building name must be no more than {{max}} characters.",
+    "building.address.required": "Address is required.",
+    "building.address.size": "Address must be no more than {{max}} characters.",
+    "building.latitude.required": "Latitude is required.",
+    "building.latitude.min": "Latitude cannot be less than {{min}}.",
+    "building.latitude.max": "Latitude cannot be greater than {{max}}.",
+    "building.latitude.digits": "Latitude must contain up to 2 integers and up to 8 decimal places.",
+    "building.longitude.required": "Longitude is required.",
+    "building.longitude.min": "Longitude cannot be less than {{min}}.",
+    "building.longitude.max": "Longitude cannot be greater than {{max}}.",
+    "building.longitude.digits": "Longitude must contain up to 3 integers and up to 8 decimal digits."
+}

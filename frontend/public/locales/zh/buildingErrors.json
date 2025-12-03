@@ -1,0 +1,14 @@
+{
+    "building.name.required": "建筑物名称为必填项。",
+    "building.name.size": "建筑物名称长度不得超过 {{max}} 个字符。",
+    "building.address.required": "地址为必填项。",
+    "building.address.size": "地址长度不得超过 {{max}} 个字符。",
+    "building.latitude.required": "纬度为必填项。",
+    "building.latitude.min": "纬度不能小于 {{min}}。",
+    "building.latitude.max": "纬度不能大于 {{max}}。",
+    "building.latitude.digits": "纬度最多包含 2 个整数和 8 位小数。",
+    "building.longitude.required": "经度为必填项。",
+    "building.longitude.min": "经度不能小于 {{min}}。",
+    "building.longitude.max": "经度不能大于 {{max}}。",
+    "building.longitude.digits": "经度必须包含最多 3 个整数和最多 8 位小数。"
+}
