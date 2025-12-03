@@ -143,7 +143,8 @@ function Schedule() {
     }, [enrollments]);
 
     useEffect(() => {
-        if (!allClasses.length) return;
+        if (!allClasses.length) 
+            return;
         const loadEvents = async () => {
             const eventsArrays = await Promise.all(allClasses.map(convertClass));
             const newEvents = eventsArrays.flat();
@@ -171,7 +172,7 @@ function Schedule() {
         } finally {
             setIsDownloading(false);
         }
-    }, [t, close, student]);
+    }, [t, close, student, state, allClasses]);
 
     return (
         <>
