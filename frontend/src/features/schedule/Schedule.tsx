@@ -8,7 +8,7 @@ import { useStudentStore } from '../../hooks/studentStore'
 import { getAllEnrollmentsByStudentId } from '../../services/StudentEnrollmentService'
 import type { CourseClass, WeekDay } from '../../models/CourseClass'
 import { getAllClassesByCourseId } from '../../services/CourseClassService'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getTermInfoByYearAndTerm } from '../../services/TermInfoService'
 import { EnrollmentStatus } from '../../models/StudentEnrollment'
 import CourseClassEvent from './CourseClassEvent'
@@ -18,6 +18,7 @@ import printer from '../../assets/printer.svg';
 import Icon from '../../common/icon/Icon'
 import { generateSchedule } from '../../services/ScheduleService'
 import { getAppState } from '../../services/AppStateService'
+import { notifications } from '@mantine/notifications'
 
 const CLASS_SLOTS: Record<number, { start: [number, number]; end: [number, number] }> = {
     1: { start: [8, 30], end: [9, 50] },
@@ -97,12 +98,13 @@ async function convertClass(courseClass: CourseClass): Promise<CalendarEventWith
 }
 
 function Schedule() {
-    const { t } = useTranslation("sections");
+    const { t } = useTranslation(["sections", "schedule"]);
     const { data: state } = useFetch(getAppState, []);
     const { user: student } = useStudentStore();
     const { data: enrollments } = useFetch(getAllEnrollmentsByStudentId, [student?.id ?? null]);
     const [allClasses, setAllClasses] = useState<CourseClass[]>([]);
     const [events, setEvents] = useState<CalendarEventWithCourse[]>([]);
+    const [isDownloading, setIsDownloading] = useState(false);
     const eventsService = useState(() => createEventsServicePlugin())[0];
 
     const calendar = useCalendarApp({
@@ -156,19 +158,36 @@ function Schedule() {
         eventsService.set(events);
     }, [events, eventsService]);
 
+    const handleDownload = useCallback(async () => {
+        setIsDownloading(true);
+        try {
+            await generateSchedule(student ?? null, state ?? null, allClasses);
+        } catch (err: unknown) {
+            notifications.show({
+                title: t("schedule:error"),
+                message: t("schedule:unknownDownloadError"),
+                color: "red",
+            });
+        } finally {
+            setIsDownloading(false);
+        }
+    }, [t, close, student]);
+
     return (
         <>
             <Group justify="space-between">
                 <Stack gap="xs">
-                    <Title>{t("schedule")} </Title>
-                    <Text c="dimmed">{t("checkout")}</Text>
+                    <Title>{t("sections:schedule")} </Title>
+                    <Text c="dimmed">{t("sections:checkout")}</Text>
                 </Stack>
                 <Button
                     color='blue'
                     leftSection={<Icon src={printer} size="1.5em" />}
-                    onClick={() => { generateSchedule(student ?? null, state ?? null, allClasses); }}
+                    loading={isDownloading}
+                    disabled={isDownloading}
+                    onClick={handleDownload}
                 >
-                    Print
+                    {t("schedule:generate")}
                 </Button>
             </Group>
             <ScheduleXCalendar
