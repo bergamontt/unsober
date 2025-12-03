@@ -4,5 +4,18 @@
     "courseSearchbarDescr": "输入学科名称",
     "courseSearchbarPlchldr": "学科名称",
     "recommended": "推荐",
-    "mandatory": "必修"
+    "mandatory": "必修",
+    "courseYearLabel": "当前学年",
+    "courseYearPlcfldr": "选择年份…",
+    "courseLevelLabel": "教育层次",
+    "courseLevelPlcfldr": "选择层次…",
+    "courseTermLabel": "学期",
+    "courseTermPlcfldr": "选择学期…",
+    "courseCreditsLabel": "学分",
+    "courseCreditsPlcfldr": "选择学分…",
+    "autumn": "秋季",
+    "spring": "春季",
+    "summer": "夏季",
+    "batchelor": "本科",
+    "master": "硕士"
 }

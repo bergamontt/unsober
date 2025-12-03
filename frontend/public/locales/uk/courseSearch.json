@@ -4,5 +4,18 @@
     "courseSearchbarDescr": "Введіть назву дисципліни",
     "courseSearchbarPlchldr": "Назва дисципліни",
     "recommended": "Рекомендована",
-    "mandatory": "Нормативна"
+    "mandatory": "Нормативна",
+    "courseYearLabel": "Поточний рік",
+    "courseYearPlcfldr": "Оберіть рік...",
+    "courseLevelLabel": "Освітній рівень",
+    "courseLevelPlcfldr": "Оберіть рівень...",
+    "courseTermLabel": "Семестр",
+    "courseTermPlcfldr": "Оберіть семестр...",
+    "courseCreditsLabel": "Кредити",
+    "courseCreditsPlcfldr": "Оберіть кількість кредитів...",
+    "autumn": "Осінь",
+    "spring": "Весна",
+    "summer": "Літо",
+    "batchelor": "Бакалавр",
+    "master": "Магістр"
 }

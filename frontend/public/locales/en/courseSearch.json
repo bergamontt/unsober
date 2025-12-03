@@ -4,5 +4,18 @@
     "courseSearchbarDescr": "Enter the name of the course",
     "courseSearchbarPlchldr": "Name of discipline",
     "recommended": "Recommended",
-    "mandatory": "Mandatory"
+    "mandatory": "Mandatory",
+    "courseYearLabel": "Current year",
+    "courseYearPlcfldr": "Select year...",
+    "courseLevelLabel": "Educational level",
+    "courseLevelPlcfldr": "Select level...",
+    "courseTermLabel": "Term",
+    "courseTermPlcfldr": "Select term...",
+    "courseCreditsLabel": "Credits",
+    "courseCreditsPlcfldr": "Select credits...",
+    "autumn": "Autumn",
+    "spring": "Spring",
+    "summer": "Summer",
+    "batchelor": "Batchelor",
+    "master": "Master"
 }
