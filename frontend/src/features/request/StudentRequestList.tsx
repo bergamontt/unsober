@@ -1,14 +1,16 @@
 import { useTranslation } from "react-i18next";
 import type { EnrollmentRequest, RequestStatus, WithdrawalRequest } from "../../models/Request";
 import useFetch from "../../hooks/useFetch";
-import { getEnrollmentRequestsByStudent } from "../../services/EnrollmentRequestService";
+import { getAllEnrollmentRequests } from "../../services/EnrollmentRequestService";
 import { useStudentStore } from "../../hooks/studentStore";
-import { getWithdrawalRequestsByStudent } from "../../services/WithdrawalRequestService";
+import { getAllWithdrawalRequests } from "../../services/WithdrawalRequestService";
 import StudentRequestCard from "./StudentRequestCard";
 import { Stack, Text } from "@mantine/core";
+import { useMemo } from "react";
 
 interface StudentRequestListProps {
-    showOnly: RequestStatus | undefined
+    status?: RequestStatus,
+    reason?: string
 }
 
 type AnyRequest =
@@ -19,24 +21,20 @@ interface Request {
     status: RequestStatus;
 }
 
-const getFilterByStatus = (status: RequestStatus | undefined):
-    ((r: Request) => boolean) => {
-    if (!status)
-        return _ => true;
-    return r => r.status == status;
-}
-
-function StudentRequestList({ showOnly }: StudentRequestListProps) {
+function StudentRequestList({ status, reason }: StudentRequestListProps) {
     const { t } = useTranslation("studentRequests");
     const { user: student } = useStudentStore();
+    const filters = useMemo(() => ({
+        status,
+        reason
+    }), [status, reason]);
     const { data: enrollmentRequestsRaw } = useFetch(
-        getEnrollmentRequestsByStudent, [student?.id ?? null]);
+        getAllEnrollmentRequests, [filters]);
     const { data: withdrawalRequestsRaw } = useFetch(
-        getWithdrawalRequestsByStudent, [student?.id ?? null]);
+        getAllWithdrawalRequests, [filters]);
 
-    const filterFunc = getFilterByStatus(showOnly);
-    const enrollmentRequests = enrollmentRequestsRaw?.filter(filterFunc) ?? [];
-    const withdrawalRequests = withdrawalRequestsRaw?.filter(filterFunc) ?? [];
+    const enrollmentRequests = enrollmentRequestsRaw ?? [];
+    const withdrawalRequests = withdrawalRequestsRaw ?? [];
 
     const requests: AnyRequest[] = [
         ...enrollmentRequests.map(r => ({ type: "enrollment", item: r } as AnyRequest)),

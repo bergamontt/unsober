@@ -6,16 +6,18 @@ type SearchbarProps = {
     label: string;
     description?: string;
     placeholder?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function Searchbar({label, description, placeholder}: SearchbarProps) {
-    return(
+function Searchbar({ label, description, placeholder, onChange }: SearchbarProps) {
+    return (
         <TextInput
             label={label}
-            leftSection={<Icon src={search}/>}
+            leftSection={<Icon src={search} />}
             rightSection={<Kbd mr="1.8em">Enter</Kbd>}
             description={description}
             placeholder={placeholder}
+            onChange={onChange}
             size="md"
             width="md"
         />

@@ -5,18 +5,23 @@ import Searchbar from "../../common/searchbar/Searchbar.tsx";
 import CoursePreview from "./CoursePreview.tsx";
 import PageWrapper from "../../common/pageWrapper/PageWrapper.tsx";
 import useFetch from "../../hooks/useFetch.ts";
-import { getAllCoursesByYear } from "../../services/CourseService.ts";
+import { getAllCourses } from "../../services/CourseService.ts";
 import { getAppState } from "../../services/AppStateService.ts";
 
 function CoursesPage() {
     const { t } = useTranslation("courseSearch");
     const { data: state } = useFetch(getAppState, []);
     const [page, setPage] = useState<number>(1);
+    const [name, setName] = useState<string>("");
 
+    const filters = useMemo(() => ({
+        subjectName: name,
+        courseYear: state?.currentYear
+    }), [name, state]);
     const params = useMemo(() => (
         { page: page - 1 }), [page]
     );
-    const { data: pages } = useFetch(getAllCoursesByYear, [params, state?.currentYear ?? null]);
+    const { data: pages } = useFetch(getAllCourses, [params, filters]);
     return (
         <PageWrapper>
             <Title>{t('courseCatalog')} </Title>
@@ -24,6 +29,7 @@ function CoursesPage() {
                 label={t('courseSearchbarLabel')}
                 description={t('courseSearchbarDescr')}
                 placeholder={t('courseSearchbarPlchldr')}
+                onChange={e => setName(e.currentTarget.value)}
             />
             <Stack align="stretch" justify="space-between" flex={1}>
                 <Stack align="stretch" gap={0}>
