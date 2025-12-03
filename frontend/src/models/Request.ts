@@ -23,6 +23,11 @@ export interface WithdrawalRequestDto {
     reason?: string;
 }
 
+export interface WithdrawalRequestFilterDto {
+    reason?: string;
+    status?: RequestStatus;
+}
+
 export interface EnrollmentRequest {
     id: string;
     student: Student;
@@ -36,4 +41,9 @@ export interface EnrollmentRequestDto {
     studentId?: string;
     courseId?: string;
     reason?: string;
+}
+
+export interface EnrollmentRequestFilterDto {
+    reason?: string;
+    status?: RequestStatus;
 }

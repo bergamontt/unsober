@@ -13,3 +13,7 @@ export interface BuildingDto {
     latitude?: number;
     longitude?: number;
 }
+
+export interface BuildingFilterDto {
+    name?: string;
+}

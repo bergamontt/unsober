@@ -12,3 +12,7 @@ export interface SpecialityDto {
     name?: string;
     description?: string;
 }
+
+export interface SpecialityFilterDto {
+    name?: string;
+}

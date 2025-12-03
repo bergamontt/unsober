@@ -1,12 +1,14 @@
 import type { Page, PageableParams } from '../models/Page.ts';
-import type { Subject, SubjectDto } from '../models/Subject.ts';
+import type { Subject, SubjectDto, SubjectFilterDto } from '../models/Subject.ts';
 import api from './api.ts';
 
 export const getSubjects = async (
-    params: PageableParams = {}
+    params: PageableParams = {},
+    filters: SubjectFilterDto = {}
 ): Promise<Page<Subject>> => {
     const response = await api.get<Page<Subject>>("/subject", {
         params: {
+            ...filters,
             page: params.page ?? 0,
             size: params.size ?? 15,
             sort: params.sort,

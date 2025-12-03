@@ -35,3 +35,7 @@ export interface SubjectDto {
     hoursPerWeek?: number;
     term?: Term;
 }
+
+export interface SubjectFilterDto {
+    name?: string;
+}

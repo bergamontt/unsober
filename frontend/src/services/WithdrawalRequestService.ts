@@ -1,8 +1,12 @@
-import type { RequestStatus, WithdrawalRequest, WithdrawalRequestDto } from "../models/Request";
+import type { RequestStatus, WithdrawalRequest, WithdrawalRequestDto, WithdrawalRequestFilterDto } from "../models/Request";
 import api from "./api";
 
-export const getAllWithdrawalRequests = async (): Promise<WithdrawalRequest[]> => {
-    const response = await api.get<WithdrawalRequest[]>('/withdrawal-request');
+export const getAllWithdrawalRequests = async (
+    filters: WithdrawalRequestFilterDto = {}
+): Promise<WithdrawalRequest[]> => {
+    const response = await api.get<WithdrawalRequest[]>('/withdrawal-request', {
+        params: filters
+    });
     return response.data;
 };
 

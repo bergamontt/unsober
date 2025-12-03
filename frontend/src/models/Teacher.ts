@@ -12,3 +12,7 @@ export interface TeacherDto {
     patronymic?: string;
     email?: string;
 }
+
+export interface TeacherFilterDto {
+    email?: string;
+}

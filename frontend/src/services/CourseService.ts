@@ -1,4 +1,4 @@
-import type { Course } from "../models/Course";
+import type { Course, CourseFilterDto } from "../models/Course";
 import type { Page, PageableParams } from "../models/Page";
 import api from "./api";
 
@@ -10,10 +10,12 @@ export const getCourseById = async (id: string | null): Promise<Course | null> =
 };
 
 export const getAllCourses = async (
-    params: PageableParams = {}
+    params: PageableParams = {},
+    filters: CourseFilterDto = {},
 ): Promise<Page<Course>> => {
     const response = await api.get<Page<Course>>("/course", {
         params: {
+            ...filters,
             page: params.page ?? 0,
             size: params.size ?? 15,
             sort: params.sort,

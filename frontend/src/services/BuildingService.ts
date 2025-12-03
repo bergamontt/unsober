@@ -1,8 +1,12 @@
 import api from "./api";
 import type { Building, BuildingDto } from "../models/Building";
 
-export const getAllBuildings = async (): Promise<Building[]> => {
-    const response = await api.get<Building[]>('/building');
+export const getAllBuildings = async (
+    filters: BuildingDto = {}
+): Promise<Building[]> => {
+    const response = await api.get<Building[]>('/building', {
+        params: filters
+    });
     return response.data;
 };
 

@@ -8,3 +8,7 @@ export interface FacultyDto {
     name?: string;
     description?: string;
 }
+
+export interface FacultyFilterDto {
+    name?: string;
+}

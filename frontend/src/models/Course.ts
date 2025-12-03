@@ -1,4 +1,4 @@
-import type { Subject } from "./Subject";
+import type { EducationLevel, Subject, Term } from "./Subject";
 
 export interface Course {
     id: string;
@@ -11,5 +11,13 @@ export interface Course {
 export interface CourseDto {
     subjectId?: string;
     maxStudents?: number;
+    courseYear?: number;
+}
+
+export interface CourseFilterDto {
+    subjectName?: string;
+    educationLevel?: EducationLevel;
+    credits?: number;
+    term?: Term;
     courseYear?: number;
 }

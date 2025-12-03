@@ -1,8 +1,12 @@
-import type { EnrollmentRequest, EnrollmentRequestDto, RequestStatus } from "../models/Request";
+import type { EnrollmentRequest, EnrollmentRequestDto, EnrollmentRequestFilterDto, RequestStatus } from "../models/Request";
 import api from "./api";
 
-export const getAllEnrollmentRequests = async (): Promise<EnrollmentRequest[]> => {
-    const response = await api.get<EnrollmentRequest[]>('/enrollment-request');
+export const getAllEnrollmentRequests = async (
+    filters: EnrollmentRequestFilterDto = {}
+): Promise<EnrollmentRequest[]> => {
+    const response = await api.get<EnrollmentRequest[]>('/enrollment-request', {
+        params: filters
+    });
     return response.data;
 };
 

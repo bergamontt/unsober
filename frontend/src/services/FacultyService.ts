@@ -1,8 +1,12 @@
-import type { Faculty, FacultyDto } from "../models/Faculty";
+import type { Faculty, FacultyDto, FacultyFilterDto } from "../models/Faculty";
 import api from "./api";
 
-export const getAllFaculties = async (): Promise<Faculty[]> => {
-    const response = await api.get<Faculty[]>('/faculty');
+export const getAllFaculties = async (
+    filters: FacultyFilterDto = {}
+): Promise<Faculty[]> => {
+    const response = await api.get<Faculty[]>('/faculty', {
+        params: filters
+    });
     return response.data;
 };
 

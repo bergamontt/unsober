@@ -12,3 +12,7 @@ export interface DepartmentDto {
     name?: string;
     description?: string;
 }
+
+export interface DepartmentFilterDto {
+    name?: string;
+}
