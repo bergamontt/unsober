@@ -21,8 +21,8 @@ public class WithdrawalRequestController {
     }
 
     @GetMapping
-    public List<WithdrawalRequestResponseDto> getAll() {
-        return withdrawalRequestService.getAll();
+    public List<WithdrawalRequestResponseDto> getAll(@ModelAttribute WithdrawalRequestFilterDto filters) {
+        return withdrawalRequestService.getAll(filters);
     }
 
     @GetMapping("/status/{status}")

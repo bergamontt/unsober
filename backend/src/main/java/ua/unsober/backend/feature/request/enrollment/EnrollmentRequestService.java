@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface EnrollmentRequestService {
     EnrollmentRequestResponseDto create(EnrollmentRequestRequestDto requestDto);
-    List<EnrollmentRequestResponseDto> getAll();
+    List<EnrollmentRequestResponseDto> getAll(EnrollmentRequestFilterDto filters);
     List<EnrollmentRequestResponseDto> getAllWithStatus(RequestStatus status);
     List<EnrollmentRequestResponseDto> getAllByStudentId(UUID studentId);
     EnrollmentRequestResponseDto getById(UUID id);

@@ -1,6 +1,7 @@
 package ua.unsober.backend.feature.request.withdrawal;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.unsober.backend.common.enums.RequestStatus;
 import ua.unsober.backend.common.exceptions.LocalizedEntityNotFoundExceptionFactory;
@@ -26,8 +27,9 @@ public class WithdrawalRequestServiceImpl implements WithdrawalRequestService {
     }
 
     @Override
-    public List<WithdrawalRequestResponseDto> getAll() {
-        return withdrawalRequestRepository.findAll()
+    public List<WithdrawalRequestResponseDto> getAll(WithdrawalRequestFilterDto filters) {
+        Specification<WithdrawalRequest> spec = WithdrawalRequestSpecification.buildSpecification(filters);
+        return withdrawalRequestRepository.findAll(spec)
                 .stream()
                 .map(responseMapper::toDto)
                 .toList();

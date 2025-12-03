@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface WithdrawalRequestService {
     WithdrawalRequestResponseDto create(WithdrawalRequestRequestDto dto);
-    List<WithdrawalRequestResponseDto> getAll();
+    List<WithdrawalRequestResponseDto> getAll(WithdrawalRequestFilterDto filters);
     List<WithdrawalRequestResponseDto> getAllWithStatus(RequestStatus status);
     List<WithdrawalRequestResponseDto> getAllByStudentId(UUID studentId);
     WithdrawalRequestResponseDto getById(UUID id);

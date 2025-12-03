@@ -21,8 +21,8 @@ public class EnrollmentRequestController {
     }
 
     @GetMapping
-    public List<EnrollmentRequestResponseDto> getAll() {
-        return enrollmentRequestService.getAll();
+    public List<EnrollmentRequestResponseDto> getAll(@ModelAttribute EnrollmentRequestFilterDto filters) {
+        return enrollmentRequestService.getAll(filters);
     }
 
     @GetMapping("/status/{status}")
