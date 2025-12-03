@@ -2,7 +2,7 @@ import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllFaculties } from "../../../services/FacultyService.ts";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AddFacultyModal from "./AddFacultyModal.tsx";
 import DeleteFacultyModal from "./DeleteFacultyModal.tsx";
 import EditFacultyModal from "./EditFacultyModal.tsx";
@@ -17,8 +17,12 @@ function FacultyPanel() {
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
+    const [name, setName] = useState<string>("");
 
-    const { data } = useFetch(getAllFaculties, []);
+    const filters = useMemo(() => ({
+        name
+    }), [name]);
+    const { data } = useFetch(getAllFaculties, [filters]);
     const faculties = data ?? [];
 
     const rows = faculties.map((f, index) => (
@@ -53,6 +57,7 @@ function FacultyPanel() {
                     description={t("manageFaculties:enterName")}
                     placeholder={t("manageFaculties:name")}
                     onAdd={openAdd}
+                    onChange={e => setName(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

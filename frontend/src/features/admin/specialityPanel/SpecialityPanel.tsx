@@ -2,7 +2,7 @@ import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllSpecialities } from "../../../services/SpecialityService.ts";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AddSpecialityModal from "./AddSpecialityModal.tsx";
 import DeleteSpecialityModal from "./DeleteSpecialityModal.tsx";
 import EditSpecialityModal from "./EditSpecialityModal.tsx";
@@ -17,8 +17,12 @@ function SpecialityPanel() {
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
+    const [name, setName] = useState<string>("");
 
-    const { data } = useFetch(getAllSpecialities, []);
+    const filters = useMemo(() => ({
+        name
+    }), [name]);
+    const { data } = useFetch(getAllSpecialities, [filters]);
     const specialities = data ?? [];
 
     const rows = specialities.map((s, index) => (
@@ -54,6 +58,7 @@ function SpecialityPanel() {
                     description={t("manageSpecialities:enterName")}
                     placeholder={t("manageSpecialities:name")}
                     onAdd={openAdd}
+                    onChange={e => setName(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

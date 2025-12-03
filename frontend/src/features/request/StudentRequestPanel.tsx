@@ -10,7 +10,8 @@ import { useState } from "react";
 function StudentRequestPanel() {
     const { t } = useTranslation("studentRequests");
     const [addOpened, { open, close }] = useDisclosure(false);
-    const [filter, setFilter] = useState<RequestStatus | undefined>();
+    const [status, setStatus] = useState<RequestStatus | undefined>();
+    const [reason, setReason] = useState<string>("");
 
     return (
         <Stack pl="2em">
@@ -31,6 +32,7 @@ function StudentRequestPanel() {
                             description={t("enterText")}
                             placeholder={t("text")}
                             onAdd={open}
+                            onChange={e => setReason(e.currentTarget.value)}
                         />
                     </Box>
                     <NativeSelect
@@ -41,16 +43,19 @@ function StudentRequestPanel() {
                             { value: RequestStatus.DECLINED, label: t(RequestStatus.DECLINED) },
                             { value: RequestStatus.PENDING, label: t(RequestStatus.PENDING) }
                         ]}
-                        value={filter ?? undefined}
+                        value={status ?? undefined}
                         onChange={(e) =>
-                            setFilter((e.currentTarget.value as RequestStatus) || undefined)
+                            setStatus((e.currentTarget.value as RequestStatus) || undefined)
                         }
                     />
                 </Group>
 
                 <Space h="xs" />
 
-                <StudentRequestList showOnly={filter} />
+                <StudentRequestList
+                    status={status}
+                    reason={reason}
+                />
             </Stack>
 
             <AddRequestModal

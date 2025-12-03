@@ -1,7 +1,7 @@
 import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useFetch from "../../../hooks/useFetch.js";
 import RowActions from "../RowActions.js";
 import SearchWithAdd from "../SearchWithAdd.js";
@@ -17,8 +17,12 @@ function BuildingPanel() {
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
+    const [name, setName] = useState<string>("");
 
-    const { data } = useFetch(getAllBuildings, []);
+    const filters = useMemo(() => ({
+        name
+    }), [name]);
+    const { data } = useFetch(getAllBuildings, [filters]);
     const buildings = data ?? [];
 
     const rows = buildings.map((b, index) => (
@@ -53,6 +57,7 @@ function BuildingPanel() {
                     description={t("manageBuildings:enterName")}
                     placeholder={t("manageBuildings:name")}
                     onAdd={openAdd}
+                    onChange={e => setName(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

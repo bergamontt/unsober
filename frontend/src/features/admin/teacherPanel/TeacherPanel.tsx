@@ -1,7 +1,7 @@
 import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useFetch from "../../../hooks/useFetch.ts";
 import { getAllTeachers } from "../../../services/TeacherService.ts";
 import RowActions from "../RowActions.tsx";
@@ -17,8 +17,12 @@ function TeacherPanel() {
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
+    const [email, setEmail] = useState<string>("");
 
-    const { data } = useFetch(getAllTeachers, []);
+    const filters = useMemo(() => ({
+        email
+    }), [email]);
+    const { data } = useFetch(getAllTeachers, [filters]);
     const teachers = data ?? [];
 
     const rows = teachers.map((teacher, index) => (
@@ -44,7 +48,7 @@ function TeacherPanel() {
 
     return (
         <Stack>
-             <Stack gap="sm">
+            <Stack gap="sm">
                 <Title order={4}>
                     {t("subjects")}
                 </Title>
@@ -53,6 +57,7 @@ function TeacherPanel() {
                     description={t("manageTeachers:enterEmail")}
                     placeholder={t("manageTeachers:email")}
                     onAdd={openAdd}
+                    onChange={e => setEmail(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

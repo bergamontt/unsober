@@ -18,11 +18,15 @@ function SubjectPanel() {
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
     const [page, setPage] = useState<number>(1);
+    const [name, setName] = useState<string>("");
 
+    const filters = useMemo(() => ({
+        name
+    }), [name]);
     const params = useMemo(() => (
         { page: page - 1 }), [page]
     );
-    const { data: pages } = useFetch(getSubjects, [params]);
+    const { data: pages } = useFetch(getSubjects, [params, filters]);
     const subjects = pages?.content ?? [];
 
     const rows = subjects.map((subject, index) => (
@@ -62,6 +66,7 @@ function SubjectPanel() {
                     description={t("manageSubjects:enterName")}
                     placeholder={t("manageSubjects:name")}
                     onAdd={openAdd}
+                    onChange={e => setName(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

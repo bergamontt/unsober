@@ -2,7 +2,7 @@ import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllStudents } from "../../../services/StudentService.ts";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AddStudentModal from "./AddStudentModal.tsx";
 import DeleteStudentModal from "./DeleteStudentModal.tsx";
 import EditStudentModal from "./EditStudentModal.tsx";
@@ -17,8 +17,12 @@ function StudentPanel() {
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
+    const [email, setEmail] = useState<string>("");
 
-    const { data } = useFetch(getAllStudents, []);
+    const filters = useMemo(() => ({
+        email
+    }), [email]);
+    const { data } = useFetch(getAllStudents, [filters]);
     const students = data ?? [];
 
     const rows = students.map((student, index) => (
@@ -55,6 +59,7 @@ function StudentPanel() {
                     description={t("manageStudents:enterEmail")}
                     placeholder={t("manageStudents:email")}
                     onAdd={openAdd}
+                    onChange={e => setEmail(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

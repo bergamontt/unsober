@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import useFetch from "../../../hooks/useFetch.ts";
 import Searchbar from "../../../common/searchbar/Searchbar.tsx";
 import EnrollmentRequestCard from "./EnrollmentRequestCard.tsx";
-import { getEnrollmentRequestsByStatus } from "../../../services/EnrollmentRequestService.ts";
+import { getAllEnrollmentRequests } from "../../../services/EnrollmentRequestService.ts";
 import { RequestStatus, type EnrollmentRequest, type WithdrawalRequest } from "../../../models/Request.ts";
-import { getWithdrawalRequestsByStatus } from "../../../services/WithdrawalRequestService.ts";
+import { getAllWithdrawalRequests } from "../../../services/WithdrawalRequestService.ts";
 import WithdrawalRequestCard from "./WithdrawalRequestCard.tsx";
+import { useMemo, useState } from "react";
 
 type AnyRequest =
     | { type: "enrollment"; item: EnrollmentRequest }
@@ -14,11 +15,18 @@ type AnyRequest =
 
 function RequestPanel() {
     const { t } = useTranslation("manageRequests");
+    const [reason, setReason] = useState<string>("");
+
+    const filters = useMemo(() => ({
+        reason,
+        status: RequestStatus.PENDING
+    }), [reason]);
+
     const { data: enrollmentRequestsRaw } = useFetch(
-        getEnrollmentRequestsByStatus, [RequestStatus.PENDING]);
+        getAllEnrollmentRequests, [filters]);
     const enrollmentRequests = enrollmentRequestsRaw ?? [];
     const { data: withdrawalRequestsRaw } = useFetch(
-        getWithdrawalRequestsByStatus, [RequestStatus.PENDING]);
+        getAllWithdrawalRequests, [filters]);
     const withdrawalRequests = withdrawalRequestsRaw ?? [];
 
     const requests: AnyRequest[] = [
@@ -55,6 +63,7 @@ function RequestPanel() {
                     label={t("requestSearch")}
                     description={t("enterText")}
                     placeholder={t("text")}
+                    onChange={e => setReason(e.currentTarget.value)}
                 />
             </Stack>
             <Stack>

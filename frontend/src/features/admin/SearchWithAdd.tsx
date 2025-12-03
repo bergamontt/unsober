@@ -9,10 +9,11 @@ type SearchWithAddProps = {
     description?: string;
     placeholder?: string;
     onAdd: () => void;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function SearchWithAdd(
-    { label, description, placeholder, onAdd }: SearchWithAddProps
+    { label, description, placeholder, onAdd, onChange }: SearchWithAddProps
 ) {
     const { t } = useTranslation("common");
     return (
@@ -22,6 +23,7 @@ function SearchWithAdd(
                     label={label}
                     description={description}
                     placeholder={placeholder}
+                    onChange={onChange}
                 />
             </Group>
             <Tooltip label={t("add")}>

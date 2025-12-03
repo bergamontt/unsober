@@ -2,7 +2,7 @@ import { Stack, Table, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { getAllDepartments } from "../../../services/DepartmentService.ts";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AddDepartmentModal from "./AddDepartmentModal.tsx";
 import DeleteDepartmentModal from "./DeleteDepartmentModal.tsx";
 import EditDepartmentModal from "./EditDepartmentModal.tsx";
@@ -17,8 +17,12 @@ function DepartmentPanel() {
     const [deleteOpened, { open: openDelete, close: closeDelete }] = useDisclosure(false);
     const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
     const [currentId, setCurrentId] = useState<string | null>(null);
+    const [name, setName] = useState<string>("");
 
-    const { data } = useFetch(getAllDepartments, []);
+    const filters = useMemo(() => ({
+        name
+    }), [name]);
+    const { data } = useFetch(getAllDepartments, [filters]);
     const departments = data ?? [];
 
     const rows = departments.map((d, index) => (
@@ -53,6 +57,7 @@ function DepartmentPanel() {
                     description={t("manageDepartments:enterName")}
                     placeholder={t("manageDepartments:name")}
                     onAdd={openAdd}
+                    onChange={e => setName(e.currentTarget.value)}
                 />
             </Stack>
             <Table striped highlightOnHover withTableBorder>

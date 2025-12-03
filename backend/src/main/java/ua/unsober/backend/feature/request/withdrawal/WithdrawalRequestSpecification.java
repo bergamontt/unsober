@@ -3,6 +3,8 @@ package ua.unsober.backend.feature.request.withdrawal;
 import org.springframework.data.jpa.domain.Specification;
 import ua.unsober.backend.common.enums.RequestStatus;
 
+import java.util.UUID;
+
 public class WithdrawalRequestSpecification {
 
     private WithdrawalRequestSpecification() {}
@@ -28,10 +30,20 @@ public class WithdrawalRequestSpecification {
         };
     }
 
+    public static Specification<WithdrawalRequest> hasStudentId(UUID studentId) {
+        return (root, query, criteriaBuilder) -> {
+            if (studentId == null) {
+                return null;
+            }
+            return criteriaBuilder.equal(root.get("studentEnrollment").get("student").get("id"), studentId);
+        };
+    }
+
     public static Specification<WithdrawalRequest> buildSpecification(WithdrawalRequestFilterDto filters) {
         return Specification.allOf(
                 hasReasonContaining(filters.getReason()),
-                hasStatus(filters.getStatus())
+                hasStatus(filters.getStatus()),
+                hasStudentId(filters.getStudentId())
         );
     }
 }

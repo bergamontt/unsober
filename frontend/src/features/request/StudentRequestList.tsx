@@ -17,17 +17,14 @@ type AnyRequest =
     | { type: "enrollment"; item: EnrollmentRequest }
     | { type: "withdrawal"; item: WithdrawalRequest };
 
-interface Request {
-    status: RequestStatus;
-}
-
 function StudentRequestList({ status, reason }: StudentRequestListProps) {
     const { t } = useTranslation("studentRequests");
     const { user: student } = useStudentStore();
     const filters = useMemo(() => ({
         status,
-        reason
-    }), [status, reason]);
+        reason,
+        studentId: student?.id
+    }), [status, reason, student]);
     const { data: enrollmentRequestsRaw } = useFetch(
         getAllEnrollmentRequests, [filters]);
     const { data: withdrawalRequestsRaw } = useFetch(
