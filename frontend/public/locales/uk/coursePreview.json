@@ -20,5 +20,6 @@
     "SPRING": "Весна",
     "SUMMER": "Літо",
     "BATCHELOR": "Бакалавр",
-    "MASTER": "Магістр"
+    "MASTER": "Магістр",
+    "noAnnotation": "Курс ще не має анотації."
 }

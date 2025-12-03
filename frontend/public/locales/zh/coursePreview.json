@@ -20,5 +20,6 @@
     "SPRING": "字符串",
     "SUMMER": "夏天",
     "BATCHELOR": "学士",
-    "MASTER": "硕士"
+    "MASTER": "硕士",
+    "noAnnotation": "该课程尚无摘要."
 }

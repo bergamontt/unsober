@@ -12,8 +12,7 @@ import { useEffect, useState } from 'react'
 import { getTermInfoByYearAndTerm } from '../../services/TermInfoService'
 import { EnrollmentStatus } from '../../models/StudentEnrollment'
 import CourseClassEvent from './CourseClassEvent'
-import PageWrapper from '../../common/pageWrapper/PageWrapper'
-import { Button, Group, Title } from '@mantine/core'
+import { Button, Group, Stack, Title, Text } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 import printer from '../../assets/printer.svg';
 import Icon from '../../common/icon/Icon'
@@ -158,9 +157,12 @@ function Schedule() {
     }, [events, eventsService]);
 
     return (
-        <PageWrapper>
+        <>
             <Group justify="space-between">
-                <Title>{t("schedule")} </Title>
+                <Stack gap="xs">
+                    <Title>{t("schedule")} </Title>
+                    <Text c="dimmed">{t("checkout")}</Text>
+                </Stack>
                 <Button
                     color='blue'
                     leftSection={<Icon src={printer} size="1.5em" />}
@@ -178,7 +180,7 @@ function Schedule() {
                     monthAgendaEvent: CourseClassEvent,
                 }}
             />
-        </PageWrapper>
+        </>
     );
 }
 

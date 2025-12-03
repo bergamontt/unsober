@@ -16,7 +16,7 @@ function CourseDetails({ course }: CourseDetailsProps) {
     return (
         <Stack align="stretch" justify="center" gap={0} >
             <Blockquote color="indigo" cite={t('annotation')} iconSize={35} icon={<Icon src={infoCircle} />} mt="0.8em" w="100%">
-                {course.subject?.annotation}
+                {course.subject?.annotation || t('noAnnotation')}
             </Blockquote>
 
             <Table mt="1em" variant="vertical" withTableBorder highlightOnHover captionSide="top">

@@ -20,5 +20,6 @@
     "SPRING": "String",
     "SUMMER": "Summer",
     "BATCHELOR": "Batchelor's",
-    "MASTER": "Master's"
+    "MASTER": "Master's",
+    "noAnnotation": "The course does not have an annotation yet."
 }

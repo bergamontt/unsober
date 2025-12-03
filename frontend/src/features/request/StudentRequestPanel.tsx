@@ -13,7 +13,7 @@ function StudentRequestPanel() {
     const [filter, setFilter] = useState<RequestStatus | undefined>();
 
     return (
-        <Stack pl="6em">
+        <Stack pl="2em">
             <Stack gap="4">
                 <Title order={2} pb="0.4em">
                     {t("studentRequestHeader")}
