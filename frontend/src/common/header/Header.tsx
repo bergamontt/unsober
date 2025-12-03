@@ -22,7 +22,7 @@ function Header() {
             className='header-container'
             pos="sticky"
         >
-            <Tabs.List>
+            <Tabs.List h={"60px"}>
                 <Tabs.Tab
                     value="logo"
                     bg="black"
