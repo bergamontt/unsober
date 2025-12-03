@@ -36,6 +36,7 @@ function AdminSidebar() {
             label={label}
             onClick={() => navigate(to)}
             leftSection={<Icon src={icon} />}
+            active={window.location.href.endsWith(to)}
         />
     ));
 
